@@ -444,6 +444,10 @@ table.wlt th:first-child, table.wlt td:first-child { text-align: left; }
 table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); font-size: 18px; font-weight: 900; }
 .ktag { display: inline-block; vertical-align: 2px; margin-left: 6px; font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: none; padding: 1px 8px; border: 1px solid var(--ring); border-radius: 999px; color: var(--fg); }
 .ktag.t { border-style: dashed; }
+/* Wrestler stats grid: a blank 8th card fills the second row on phones (Neil, 2026-11-15) */
+.strip .sblank { display: none; }
+.strip div:nth-child(7) { border-right: 0; }
+@media (max-width: 560px) { .strip .sblank { display: block; } .strip div:nth-child(7) { border-right: 1px solid var(--line); } }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -775,7 +779,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     var h = '<div class="thead"><span class="wt" style="font-size:22px;padding:6px 10px">' + esc(xv.weights.join('/')) + '</span><div class="t"><h1 style="margin:0">' + esc(x.name) + '</h1>' +
       '<div class="lede" style="margin:2px 0 0">' + LVL[xv.lvl] + ' · ' + GN[x.gender] + ' · ' + esc(D.season) + ' season ' + recTxt(s) + (LV === 'all' ? '' : ' (' + LVN[LV] + ' only)') + '</div></div></div>' + lvSwitch();
     if (!xv.M.length) return h + '<p class="note">No ' + LVN[LV] + ' matches yet this season. Switch to All to see every match.</p>' + (x.profile ? '<div class="links" style="margin-top:14px">' + ext(x.profile, 'FloWrestling profile') + '</div>' : '');
-    h += '<div class="strip">' + [['Record', recTxt(s)], ['Falls', s.F], ['Tech', s.TF], ['Major', s.MD], ['Dec', s.DEC], ['Forfeit', s.FOR], ['Bonus', bonus(s)]].map(function (p) { return '<div><b>' + esc(p[1]) + '</b><span>' + p[0] + '</span></div>'; }).join('') + '</div>';
+    h += '<div class="strip">' + [['Record', recTxt(s)], ['Falls', s.F], ['Tech', s.TF], ['Major', s.MD], ['Dec', s.DEC], ['Forfeit', s.FOR], ['Bonus', bonus(s)]].map(function (p) { return '<div><b>' + esc(p[1]) + '</b><span>' + p[0] + '</span></div>'; }).join('') + '<div class="sblank" aria-hidden="true"></div></div>';
     var du = mstats(xv.M.filter(function (m) { return m.kind === 'duals'; })), to = mstats(xv.M.filter(function (m) { return m.kind !== 'duals'; }));
     h += '<p class="typ">Duals <b>' + recTxt(du) + '</b> · Tournaments <b>' + recTxt(to) + '</b></p>';
     var rows = {};
