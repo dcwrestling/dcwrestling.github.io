@@ -501,6 +501,8 @@ a.fact, .facts3 .fact, .fact { text-align: center !important; display: flex !imp
 a.fact::after { display: none !important; }
 .facts3 .k { padding-right: 0 !important; }
 .fact .k, .fact .v, .fact .s, .fact .go-s { width: 100%; text-align: center; }
+/* Home title centered with room below it (Neil, 2026-11-15) */
+h1.hometitle { text-align: center; margin: 6px 0 14px; text-wrap: balance; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -716,7 +718,7 @@ a.fact::after { display: none !important; }
   function home() {
     var tt = teamTotals(), st = tt.st, nx = nextEvent(), lt = liveTour();
     var pct = st.w + st.l ? (100 * st.w / (st.w + st.l)).toFixed(1) + '%' : '–';
-    var h = saveBar() + '<h1>Davie County Wrestling ' + esc(D.season) + '</h1>' + gSwitch(true) + siteNav('home');
+    var h = saveBar() + '<h1 class="hometitle">Davie County Wrestling ' + esc(D.season) + '</h1>' + gSwitch(true) + siteNav('home');
     h += '<div class="facts facts3">' +
       (LV === 'JV' ? '<div class="fact"><div class="k">Duals</div><div class="v">–</div><div class="s">No JV duals</div></div>' : '<a class="fact" href="#results"><div class="k">Duals</div><div class="v">' + (tt.dw + tt.dl ? tt.dw + '–' + tt.dl : '–') + '</div><div class="s">' + (tt.dn ? tt.dn + ' pending' : tt.dw + tt.dl ? 'Team duals' : 'No duals yet') + '</div></a>') +
       '<a class="fact" href="#stats-matches"><div class="k">Matches</div><div class="v">' + recTxt(st) + '</div><div class="s">' + pct + ' wins</div></a>' +
