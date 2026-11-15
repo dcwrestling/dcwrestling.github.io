@@ -515,6 +515,8 @@ img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .bnav .seg a { padding: 5px 2px 4px !important; font-size: 13.5px !important; }
 .bnav .seg a svg { width: 20px; height: 20px; }
 body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
+/* Page titles nudged up so they aren't pressed against the Boys/Girls toggles; nothing else moves (Neil, 2026-11-15) */
+.view > h1:not(.hometitle) { position: relative; top: -8px; }
 </style>
 
 <header class="bar"><div class="wrap">
