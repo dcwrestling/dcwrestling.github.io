@@ -423,6 +423,14 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
 .slegend { margin: 12px 2px 0; color: var(--muted); font-size: 13px; line-height: 1.6; } .slegend b { color: var(--fg); }
 .facts3 .s.s2 { white-space: normal; line-height: 1.3; }
 .bonusnote { margin: 8px 2px 0; color: var(--muted); font-size: 13px; }
+.stabs { display: flex; gap: 6px; margin: 12px 0 6px; }
+.stab { flex: 1; text-align: center; padding: 8px 6px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); color: var(--fg); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 15px; }
+.stab.on { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.lrow { display: flex; align-items: center; gap: 10px; }
+.lrow .rk { flex: none; width: 1.4em; color: var(--muted); font-weight: 600; text-align: right; }
+.lrow .t { flex: 1; min-width: 0; } .lrow .n { display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .lv { flex: none; text-align: right; white-space: nowrap; padding-right: 14px; } .lrow .lv b { font-family: var(--display); font-size: 20px; } .lrow .lv span { color: var(--muted); font-size: 12.5px; margin-left: 5px; }
+.lrow { padding-top: 9px !important; padding-bottom: 9px !important; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -610,9 +618,9 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     var h = saveBar() + '<h1>Davie County Wrestling ' + esc(D.season) + '</h1>' + gSwitch() + siteNav('home');
     h += '<div class="facts facts3">' +
       '<a class="fact" href="#results"><div class="k">Duals</div><div class="v">' + (tt.dw + tt.dl ? tt.dw + '–' + tt.dl : '–') + '</div><div class="s">' + (tt.dn ? tt.dn + ' pending' : tt.dw + tt.dl ? 'Team duals' : 'No duals yet') + '</div></a>' +
-      '<a class="fact" href="#roster"><div class="k">Matches</div><div class="v">' + recTxt(st) + '</div><div class="s">' + pct + ' wins</div></a>' +
-      '<a class="fact" href="#roster"><div class="k">Falls</div><div class="v">' + st.F + '</div><div class="s">Pins</div></a>' +
-      '<a class="fact" href="#roster"><div class="k">Bonus</div><div class="v">' + (st.F + st.TF + st.MD) + '</div><div class="s">of ' + st.w + ' wins</div></a>' +
+      '<a class="fact" href="#stats-matches"><div class="k">Matches</div><div class="v">' + recTxt(st) + '</div><div class="s">' + pct + ' wins</div></a>' +
+      '<a class="fact" href="#stats-falls"><div class="k">Falls</div><div class="v">' + st.F + '</div><div class="s">Pins</div></a>' +
+      '<a class="fact" href="#stats-bonus"><div class="k">Bonus</div><div class="v">' + (st.F + st.TF + st.MD) + '</div><div class="s">of ' + st.w + ' wins</div></a>' +
       '</div>';
     var mine = seasonFavs();
     h += '<h2>My Wrestlers</h2>' + (mine || '<div class="mine-empty">Tap &#9734; next to any wrestler on the <a href="#roster">Roster</a> to keep them here with their record and latest match. Saved on this device only.</div>');
@@ -1119,7 +1127,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
   }
   function backFor(id) {
     if (!id || id === 'home') return null;
-    if (id === 'updates' || id === 'save' || id === 'share' || id === 'display' || id === 'sources') return ['home', 'home'];
+    if (id === 'updates' || id === 'save' || id === 'share' || id === 'display' || id === 'sources' || id.indexOf('stats-') === 0) return ['home', 'home'];
     if (id.indexOf('save-') === 0) return ['save', 'save choices'];
     if (id === 'roster' || id === 'schedule' || id === 'results' || id === 'tournaments') return null;
     if (id.indexOf('wr-') === 0) return ['roster', 'roster'];
@@ -1139,7 +1147,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     return out || ['home', 'home'];
   }
   function render() {
-    var id = (location.hash || '#home').slice(1), html = id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
+    var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
       id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'results' ? results() : id === 'tournaments' ? tourList() : null;
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
     if (id.indexOf('ev-') === 0) { var se = evById(id.slice(3)); if (se) html = evView(se); }
@@ -1154,8 +1162,10 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
       else if (t.rosters && id.indexOf(t.id + '-wt-') === 0) html = weightView(t, Number(id.slice((t.id + '-wt-').length)));
       else t.davie.forEach(function (x) { if (id === wHash(t, x)) html = wrestlerView(t, x); x.bouts.forEach(function (b, i) { if (id === mHash(t, x, i) && done(b)) html = matchView(t, x, i); }); });
     });
-    var bk = backFor(id);
-    app.innerHTML = '<section class="view show">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '">&#8249; Back<span> to ' + esc(bk[1]) + '</span></a>' : '') + (html || home()) + '</section>';
+    /* Back on every page but Home (Neil, 2026-11-15: installed as an app there's no browser back button). Tab pages go back to the previous screen, or Home. */
+    var bk = backFor(id), hb = false;
+    if (!bk && html && id !== 'home') { bk = ['home', '']; hb = true; }
+    app.innerHTML = '<section class="view show">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back' + (bk[1] ? '<span> to ' + esc(bk[1]) + '</span>' : '') + '</a>' : '') + (html || home()) + '</section>';
     tick();
     if (id === 'share') drawQR();
     if (JUMP) { JUMP = false; var pe = document.getElementById('pbp'); if (pe) { pe.scrollIntoView({ block: 'start' }); return; } }
@@ -1246,6 +1256,24 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
       '</div><div class="slegend"><b>Flo</b> flowrestling.org · <b>Map</b> google.com/maps<br><b>Coaches</b> the coaches\' 2026–27 schedule · <b>Video</b> gym scoreboard on video · <b>Scorebook</b> official scorebook.<br>Dashed tags are not online: that information came from the team, a parent, or the app\'s administrator.</div>' +
       '<p class="foot">This app is unofficial and isn\'t run by Davie County Schools, the NCHSAA or FloWrestling.</p>';
   }
+  /* Team leaders (Neil, 2026-11-15): Home's Matches, Falls and Bonus cards open these instead of the roster. */
+  function statsView(kind) {
+    var K = { matches: ['Matches', 'Every wrestler\'s record this season, most wins first.'], falls: ['Falls', 'Wins by fall (pin), most first.'], bonus: ['Bonus', 'Wins by pin, tech fall or major decision, most first. These earn extra team points.'] };
+    if (!K[kind]) kind = 'matches';
+    var L = WR().filter(function (x) { return x.matches.length; }).map(function (x) {
+      var s = x.stats, b = s.F + s.TF + s.MD;
+      var v = kind === 'matches' ? [s.w, -s.l, recTxt(s), s.w + s.l ? Math.round(100 * s.w / (s.w + s.l)) + '%' : '']
+            : kind === 'falls' ? [s.F, 0, String(s.F), '']
+            : [b, 0, String(b), 'of ' + s.w];
+      return { x: x, k1: v[0], k2: v[1], big: v[2], small: v[3] };
+    }).filter(function (r) { return kind === 'matches' || r.k1 > 0; });
+    L.sort(function (a, b) { return b.k1 - a.k1 || b.k2 - a.k2 || (a.x.latest || 0) - (b.x.latest || 0); });
+    var tabs = ['matches', 'falls', 'bonus'].map(function (k) { return '<a class="stab' + (k === kind ? ' on' : '') + '" href="#stats-' + k + '">' + K[k][0] + '</a>'; }).join('');
+    return '<h1>Team leaders</h1>' + gSwitch() + '<div class="stabs">' + tabs + '</div><p class="mine-t">' + K[kind][1] + '</p>' +
+      (L.length ? '<div class="list">' + L.map(function (r, i) {
+        return '<a class="row in lrow" href="#' + sHash(r.x) + '"><span class="rk">' + (i + 1) + '</span>' + wtBadge(r.x.latest || r.x.weights[0], r.x.level) + '<span class="t"><span class="n">' + esc(r.x.name) + '</span></span><span class="lv"><b>' + esc(r.big) + '</b><span>' + esc(r.small) + '</span></span></a>';
+      }).join('') + '</div>' : '<p class="note">None yet this season.</p>');
+  }
   function saveView(sub) {
     var url = D.pageUrl || '';
     /* iPhone: Safari's Add to Home Screen gives the DC logo icon (site on GitHub Pages since 2026-11-15; the Claude app/Shortcuts route is gone). */
@@ -1289,6 +1317,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     window.addEventListener('hashchange', function () { setOpen(false); });
   })();
   app.addEventListener('click', function (e) {
+    var hbk = e.target.closest('[data-hback]'); if (hbk && NAVN > 0) { e.preventDefault(); NAVN = Math.max(0, NAVN - 2); history.back(); return; }
     var tb = e.target.closest('[data-theme-set]'); if (tb) { try { localStorage.setItem(TKEY, tb.getAttribute('data-theme-set')); } catch (err) {} applyTheme(); render(); return; }
     var gb = e.target.closest('[data-g]'); if (gb) { setG(gb.getAttribute('data-g')); render(); return; }
     var f = e.target.closest('[data-fav]');
@@ -1306,6 +1335,8 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     }
   });
   app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && d.classList.contains('wfold')) OPEN[d.getAttribute('data-k')] = d.open; }, true);
+  var NAVN = 0;
+  window.addEventListener('hashchange', function () { NAVN++; });
   window.addEventListener('hashchange', render);
   /* Keep favorites and open rows across page updates: the viewer hands this state back after each new version loads. */
   try { if (window.claude && window.claude.hot && window.claude.hot.snapshot) window.claude.hot.snapshot(function () { return { favs: FAVS.slice(), open: Object.assign({}, OPEN), saveHidden: saveHidden }; }); } catch (e) {}
