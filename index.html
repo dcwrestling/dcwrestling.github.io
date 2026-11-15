@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match the phone). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1159,18 +1159,13 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
   }
   function saveView(sub) {
     var url = D.pageUrl || '';
-    var iphone = '<div class="card' + (ios ? ' mine-dev' : '') + '"><h3>iPhone, using Safari</h3><p class="k2">Works for everyone. No app or sign-in needed.</p><ol class="steps">' +
-      '<li><b>See "claude.ai" in an address bar at the bottom of your screen?</b> You\'re in Safari: skip to step 2. No address bar? The page opened in the <b>Claude app</b> (phones with the Claude app open these links there). <a href="' + esc(url) + '" target="_blank" rel="noopener">Open Claude in Safari &#8250;</a></li>' +
-      '<li>In Safari\'s bottom bar, tap the small icon <b>at the left of "claude.ai"</b>, then tap <b>Share</b>. (Not the share icon at the top of the page.)</li>' +
+    /* iPhone: Safari's Add to Home Screen gives the DC logo icon (site on GitHub Pages since 2026-11-15; the Claude app/Shortcuts route is gone). */
+    var iphone = '<div class="card' + (ios ? ' mine-dev' : '') + '"><h3>iPhone, using Safari</h3><p class="k2">No app or sign-in needed. Your icon will look like this:</p>' +
+      '<div style="display:flex;align-items:center;gap:12px;margin:8px 0 4px"><img src="img/apple-touch-icon.png" alt="DC logo icon" style="width:58px;height:58px;border-radius:13px;flex:none"><b>DC Wrestling</b></div><ol class="steps">' +
+      '<li><b>Open the page in Safari.</b> Opened it from a text, email or another app? <a href="' + esc(url) + '" target="_blank" rel="noopener">Open Davie Wrestling in Safari &#8250;</a></li>' +
+      '<li>In Safari\'s bottom bar, tap the small icon <b>at the left of the address</b>, then tap <b>Share</b>. (Not the share icon at the top of the page.)</li>' +
       '<li>Scroll to the bottom of the list and tap <b>Add to Home Screen</b>. If you don\'t see it, tap <b>View More</b> first.</li>' +
-      '<li>Keep the name <b>Davie Wrestling</b> (or type your own), leave <b>Open as Web App</b> on, and tap <b>Add</b>. The icon is a plain gray tile.</li></ol></div>';
-    var claudeApp = '<div class="card"><h3>iPhone with the Claude app</h3><p class="k2">Opens the page in the Claude app and lets you use the War Eagles icon. Just want to switch to the app now? In Safari, tap <b>OPEN</b> on the Claude banner at the top of the page.</p>' +
-      '<div class="iconbig"><img src="img/icon.png" alt="War Eagles DC icon"></div><p class="k2" style="margin:10px 0 0;text-align:center"><a href="https://lh3.googleusercontent.com/d/1yC2QV-ws-vH0aMbk7XDTLLslKjouiGcr" target="_blank" rel="noopener"><b>Open the War Eagles icon &#8599;</b></a><br>It opens as a picture. Press and hold it, tap <b>Save to Photos</b> (or <b>Add to Photos</b>), then come back here.</p><ol class="steps" style="margin-top:12px">' +
-      '<li><b>Have the Claude app?</b> Look for it on your phone and make sure you\'re signed in. Don\'t have it? ' + storeLinks() + ' Install it and sign in, then come back here. No Claude app? Use the <a href="#save-iphone">iPhone (Safari) steps</a> instead.</li>' +
-      '<li>Open the <b>Shortcuts</b> app and tap <b>+</b>.</li>' +
-      '<li>Tap <b>Add Action</b>, search <b>Open URLs</b> (on newer iPhones it\'s just <b>Open</b>), and tap it.</li>' +
-      '<li>Tap the blue <b>URL</b> in that action and paste this address: <code>' + esc(url) + '</code> The shortcut should be one block reading <b>Open https://claude.ai/…</b>. If it also has an <b>Ask for URL</b> block, tap its <b>&#9447;</b> to delete it, or it will ask you for an address every time.</li>' +
-      '<li>Rename the shortcut <b>Davie Wrestling</b>. Then tap <b>Add to Home Screen</b>, tap the small icon, choose <b>Choose Photo</b>, pick the War Eagles icon you saved, tap <b>Choose</b>, then tap <b>Add</b>.</li></ol></div>';
+      '<li>Keep the name <b>DC Wrestling</b> (or type your own), leave <b>Open as Web App</b> on, and tap <b>Add</b>.</li></ol></div>';
     var droid = '<div class="card' + (android ? ' mine-dev' : '') + '"><h3>Android</h3><ol class="steps">' +
       '<li>Open the page in <b>Chrome</b>: <a href="' + esc(url) + '" target="_blank" rel="noopener">Link to open Davie Wrestling in Chrome &#8250;</a></li>' +
       '<li>Tap the <b>&#8942;</b> menu at the top right.</li>' +
@@ -1178,12 +1173,11 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     var pc = '<div class="card"><h3>Computer</h3><p class="k2" style="margin:0">Bookmark this page in your browser (Ctrl+D, or &#8984;D on a Mac).</p></div>';
     var hide = saveHidden ? '<p class="foot">The Save bar and button are hidden on this device. <button type="button" class="lnk" id="saveshow" style="background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline">Show the Save bar and button again</button></p>' : '<p class="foot">Already saved it? <button type="button" class="lnk" id="savehide" style="background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline">Hide the Save button on this device</button></p>';
     var back = '<a class="back" href="#save">&#8249; Back to choices</a>';
-    var pages = { 'iphone': iphone, 'claude': claudeApp, 'android': droid, 'computer': pc };
+    var pages = { 'iphone': iphone, 'android': droid, 'computer': pc };
     if (sub && pages[sub]) return back + '<h1>Save to your phone</h1>' + pages[sub] + hide;
     var rec = android ? 'android' : 'iphone';
     var opts = [
-      ['iphone', 'iPhone using Safari', 'No app or sign-in needed. Plain gray icon.'],
-      ['claude', 'iPhone with the Claude app', 'Needs the free Claude app. Uses the Shortcuts app and the War Eagles icon.'],
+      ['iphone', 'iPhone', 'Using Safari. No app or sign-in needed.'],
       ['android', 'Android', 'Using Chrome.'],
       ['computer', 'Computer', 'Bookmark it in your browser.']];
     return '<a class="back" href="#home">&#8249; Home</a><h1>Save to your phone</h1>' +
