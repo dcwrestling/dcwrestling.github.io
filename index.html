@@ -448,6 +448,16 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
 .strip .sblank { display: none; }
 .strip div:nth-child(7) { border-right: 0; }
 @media (max-width: 560px) { .strip .sblank { display: block; } .strip div:nth-child(7) { border-right: 1px solid var(--line); } }
+.pastfold { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin: 0 0 12px; overflow: hidden; }
+.pastfold summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 13px 14px; }
+.pastfold summary::-webkit-details-marker { display: none; }
+.pf-t { font-weight: 700; font-size: 16px; } .pf-n { color: var(--muted); font-size: 14px; } .pf-c { margin-left: auto; color: var(--muted); font-size: 22px; line-height: 1; transform: rotate(90deg); transition: transform .15s; }
+.pastfold[open] .pf-c { transform: rotate(-90deg); }
+.pf-list { border-top: 1px solid var(--line); }
+.pf-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--fg); }
+.pf-list > .pf-row:first-child { border-top: 0; }
+.pf-d { flex: none; width: 52px; color: var(--muted); font-size: 13px; } .pf-e { flex: 1; min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pf-r { flex: none; color: var(--muted); font-size: 13px; white-space: nowrap; } .pf-go { flex: none; width: 10px; color: var(--muted); }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -625,7 +635,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     return withLevel ? '<div class="fbar">' + g + lvSwitch() + '</div>' : g;
   }
   function siteNav(on) {
-    var T = [['home', 'Home', 'home'], ['roster', 'Roster', 'wrestlers'], ['schedule', 'Schedule', 'schedule'], ['results', 'Results', 'results'], ['tournaments', 'Events', 'scores']];
+    var T = [['home', 'Home', 'home'], ['roster', 'Roster', 'wrestlers'], ['schedule', 'Schedule', 'schedule'], ['results', 'Results', 'results']];   /* Events tab dropped 2026-11-15 (Neil): Results covers finished events, Schedule upcoming, Home's Today a live tournament */
     return segNav(T.map(function (x) { return ['#' + x[0], x[1], x[2], x[0] === on]; }), on, 'snav');
   }
   function WR() { return D.wrestlers.filter(function (x) { return x.gender === G && (LV === 'all' || x.matches.some(function (m) { return (m.level || 'V') === LV; }) || (!x.matches.length && x.level === LV)); }); }
@@ -737,8 +747,13 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
   function schedule() {
     var L = gSched(), nx = nextEvent();
     var h = '<h1>Schedule</h1>' + gSwitch() + siteNav('schedule');
-    h += '<p class="mine-t">' + esc(D.season) + ' · drive times from Davie County HS. Tap an event for results or a map.</p><div class="list">' +
-      L.map(function (s) { return (nx && s === nx ? '<div class="nexttag">NEXT</div>' : '') + schedRow(s); }).join('') + '</div><p class="foot">* Building not confirmed. Check with your coach for bus and weigh-in times.</p>';
+    /* Past events fold into one row at the top (Neil, 2026-11-15); open it for one line per event with its result. */
+    var past = L.filter(function (s) { return s.date < D.today; }), up = L.filter(function (s) { return s.date >= D.today; });
+    h += '<p class="mine-t">' + esc(D.season) + ' · drive times from Davie County HS. Tap an event for results or a map.</p>';
+    if (past.length) h += '<details class="pastfold"' + (OPEN['sched-past'] ? ' open' : '') + ' data-k="sched-past"><summary><span class="pf-t">Earlier this season</span><span class="pf-n">' + past.length + ' event' + (past.length > 1 ? 's' : '') + '</span><span class="pf-c">&#8250;</span></summary><div class="pf-list">' +
+      past.map(function (s) { var res = resultFor(s); var inner = '<span class="pf-d">' + esc(s.label.replace(/^\w+, /, '')) + '</span><span class="pf-e">' + esc(s.name) + '</span><span class="pf-r">' + (res ? esc(res[1].replace(/^Results: /, '')) : '') + '</span>';
+        return res ? '<a class="pf-row" href="' + res[0] + '">' + inner + '<span class="pf-go">&#8250;</span></a>' : '<div class="pf-row">' + inner + '<span class="pf-go"></span></div>'; }).join('') + '</div></details>';
+    h += '<div class="list">' + up.map(function (s) { return (nx && s === nx ? '<div class="nexttag">NEXT</div>' : '') + schedRow(s); }).join('') + '</div><p class="foot">* Building not confirmed. Check with your coach for bus and weigh-in times.</p>';
     return h;
   }
   function results() {
@@ -1203,7 +1218,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     var out = null;
     D.tournaments.forEach(function (t) {
       if (out) return;
-      if (id === t.id || id === t.id + '-wrestlers' || id === t.id + '-teams' || id === t.id + '-info') { out = ['tournaments', 'tournaments']; return; }
+      if (id === t.id || id === t.id + '-wrestlers' || id === t.id + '-teams' || id === t.id + '-info') { out = ['results', 'results']; return; }
       if (id.indexOf(t.id + '-team-') === 0 || id.indexOf(t.id + '-wt-') === 0) { out = [t.id + '-teams', 'teams']; return; }
       t.davie.forEach(function (x) {
         if (out) return;
@@ -1215,7 +1230,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
   }
   function render() {
     var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
-      id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'results' ? results() : id === 'tournaments' ? tourList() : null;
+      id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
     if (id.indexOf('ev-') === 0) { var se = evById(id.slice(3)); if (se) html = evView(se); }
     D.events.forEach(function (e) { if (id.indexOf(e.id + '-') === 0) { var mm = id.slice(e.id.length + 1).match(/^(.*)-m(\d+)$/); if (mm) { var sx2 = wrBySlug(mm[1]); if (sx2) html = dualMatch(e, sx2, +mm[2]); } } });
@@ -1402,7 +1417,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
       try { navigator.clipboard.writeText(txt).then(done, sel); } catch (err) { sel(); }
     }
   });
-  app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && d.classList.contains('wfold')) OPEN[d.getAttribute('data-k')] = d.open; }, true);
+  app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && (d.classList.contains('wfold') || d.classList.contains('pastfold'))) OPEN[d.getAttribute('data-k')] = d.open; }, true);
   var NAVN = 0;
   window.addEventListener('hashchange', function () { NAVN++; });
   window.addEventListener('hashchange', render);
