@@ -517,6 +517,13 @@ img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
 /* Page titles nudged up so they aren't pressed against the Boys/Girls toggles; nothing else moves (Neil, 2026-11-15) */
 .view > h1:not(.hometitle) { position: relative; top: -8px; }
+.fsum2 { color: var(--muted); font-size: 14px; } .fsum2 b { color: var(--fg); }
+.flast { color: var(--muted); font-size: 13px; } .flast .wl { transform: scale(.8); vertical-align: -1px; }
+.favrow { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--fg); }
+.list > .favrow:first-child { border-top: 0; }
+.favrow .fn { flex: 1; min-width: 0; font-weight: 700; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.favrow .fr { flex: none; font-family: var(--display); font-weight: 900; font-size: 22px; }
+.favrow .fgo { flex: none; color: var(--muted); font-size: 22px; line-height: 1; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -727,7 +734,8 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
       if (tx) return '<a class="wr cdw" href="#' + wHash(t, tx) + '">' + wrestlerMatchCard(t, tx) + '</a>';
       var xv = XV(x), m = xv.M.length ? xv.M[xv.M.length - 1] : null, w = { name: x.name, level: xv.lvl, weight: xv.latest };
       if (!m) return '<a class="wr cdw" href="#' + sHash(x) + '">' + card({ weight: w.weight, level: w.level, name: w.name, l2: '<span class="cst">No matches yet</span>', l3: '', right: { k: '', big: '–', med: '' } }) + '</a>';
-      return '<a class="wr cdw" href="' + m.href + '">' + boutCard(null, w, m) + '</a>';
+      /* Simple: weight class, level (V, JV or V/JV), name and season record; tap for everything else (Neil, 2026-11-15) */
+      return '<a class="favrow" href="#' + sHash(x) + '">' + wtBadge(w.weight, w.level) + '<span class="fn">' + esc(x.name) + '</span><span class="fr">' + recTxt(xv.s) + '</span><span class="fgo">&#8250;</span></a>';
     }).join('') + '</div>';
   }
   function home() {
