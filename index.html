@@ -1,14 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<script>/* Display setting: dark (default), light, or auto (match the phone). Saved on this device only. */
+(function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: sticky team bar, then one view at a time (landing list -> tournament with its own tabs). Single dark War Eagles look, by choice. */
+/* Layout: sticky team bar, then one view at a time (landing list -> tournament with its own tabs). Dark War Eagles look by default; a Display setting offers Light or Match my phone (2026-11-15). */
 :root {
   color-scheme: dark;
   --bg: #0d0c0b; --panel: #171513; --panel2: #1f1c19; --line: #2e2a26;
   --fg: #f3efea; --muted: #a59d94; --accent: #f26a1b; --accent-soft: rgba(242,106,27,.14); --ink: #140c06;
   --red: #e5484d; --green: #3fb950;
   --win: #34a853; --loss: #d9443a; --wait: #6f675f; --live: #e8b21a;
+  --ul: rgba(243,239,234,.35); --ring: #3d3832; --note-line: rgba(242,106,27,.4); --pp-r: rgba(229,72,77,.22); --pp-r0: rgba(229,72,77,.04); --pp-g: rgba(63,185,80,.22); --pp-g0: rgba(63,185,80,.04);
   --display: 'Barlow Condensed', 'Avenir Next Condensed', 'Arial Narrow', sans-serif;
   --body: 'Barlow', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
 }
@@ -60,8 +63,8 @@ a.asof, a.fresh { text-decoration: none; color: var(--muted); } a.fresh .more { 
 .pph b { font-family: var(--display); font-size: 22px; font-weight: 800; } .pph span { font-size: 13px; color: var(--muted); }
 .pptiles { display: grid; grid-template-columns: 1fr 1fr; }
 .pptile { position: relative; padding: 10px 12px; min-height: 84px; }
-.pptile.r { background: linear-gradient(90deg, rgba(229,72,77,.22), rgba(229,72,77,.04)); border-left: 4px solid var(--red); }
-.pptile.g { background: linear-gradient(270deg, rgba(63,185,80,.22), rgba(63,185,80,.04)); border-right: 4px solid var(--green); text-align: right; }
+.pptile.r { background: linear-gradient(90deg, var(--pp-r), var(--pp-r0)); border-left: 4px solid var(--red); }
+.pptile.g { background: linear-gradient(270deg, var(--pp-g), var(--pp-g0)); border-right: 4px solid var(--green); text-align: right; }
 .ppnm { font-family: var(--display); font-size: 20px; font-weight: 800; line-height: 1.05; }
 .pptm { font-size: 12px; color: var(--muted); margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ppw { position: absolute; top: 8px; right: 10px; font-family: var(--display); font-weight: 800; font-size: 16px; color: var(--red); } .ppw.g { right: auto; left: 10px; color: var(--green); }
@@ -195,7 +198,7 @@ a.savebtn { text-decoration: none; }
 .row .lvl { flex: none; } .row .n a { text-decoration: none; color: var(--accent); }
 .h2row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .h2row a { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
-.note { background: var(--accent-soft); border: 1px solid rgba(242,106,27,.4); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.note { background: var(--accent-soft); border: 1px solid var(--note-line); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
 .wt { display: inline-block; min-width: 42px; text-align: center; font-family: var(--display); font-weight: 800; font-size: 15px; background: var(--accent); color: var(--ink); border-radius: 4px; padding: 1px 6px; font-variant-numeric: tabular-nums; }
 .wr { padding: 12px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
 .wr:last-child { border-bottom: 0; }
@@ -331,7 +334,7 @@ h2 { color: var(--muted) !important; }
 /* Boys/Girls toggle, subtle (Neil, 2026-11-15): small, gray, selected side just a shade lighter. */
 .gsw { border: 1px solid var(--line) !important; background: var(--panel); margin: 2px 0 10px !important; }
 .gsw button { font-size: 14px !important; padding: 4px 14px !important; color: var(--muted) !important; letter-spacing: .03em !important; }
-.gsw button.on { background: var(--panel2) !important; color: var(--fg) !important; box-shadow: inset 0 0 0 1px #3d3832; border-radius: 999px; }
+.gsw button.on { background: var(--panel2) !important; color: var(--fg) !important; box-shadow: inset 0 0 0 1px var(--ring); border-radius: 999px; }
 .tcard { border: 1px solid var(--line) !important; }
 .savebtn { border-color: var(--line) !important; color: var(--fg) !important; }
 .note { background: var(--panel) !important; border-color: var(--line) !important; }
@@ -345,22 +348,44 @@ a.fact::after, a.row.in::after { color: var(--muted) !important; }
 .row .when { color: var(--fg) !important; }
 .rr .star.on { color: var(--accent) !important; }
 /* Text links: light text, underlined, instead of orange. */
-a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink, .row .m span, a.boutlink .bl, div.boutlink .bl a { color: var(--fg) !important; text-decoration: underline; text-decoration-color: rgba(243,239,234,.35); text-underline-offset: 3px; }
+a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink, .row .m span, a.boutlink .bl, div.boutlink .bl a { color: var(--fg) !important; text-decoration: underline; text-decoration-color: var(--ul); text-underline-offset: 3px; }
 .asof .nx b { color: var(--fg) !important; }
 .note b, a.note b { color: var(--fg) !important; }
 .links a span { color: var(--muted) !important; }
 .wtgrid b { color: var(--fg) !important; }
-.row .m[style*="accent"], .row a[style*="accent"] { color: var(--fg) !important; text-decoration: underline; text-decoration-color: rgba(243,239,234,.35); text-underline-offset: 3px; }
+.row .m[style*="accent"], .row a[style*="accent"] { color: var(--fg) !important; text-decoration: underline; text-decoration-color: var(--ul); text-underline-offset: 3px; }
 .shareic { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 30px; margin-left: -4px; border-radius: 6px; color: var(--muted); text-decoration: none; }
 .shareic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .shareic:active { background: var(--panel2); }
 @media (max-width: 560px) { .bar .wrap { gap: 6px; } .brand b { font-size: 15.5px; } .brand span { font-size: 9.5px; letter-spacing: .14em; } .asof span { white-space: nowrap; } .shareic svg { width: 18px; height: 18px; } }
+/* Light look (Display setting, 2026-11-15). Dark stays the default; orange darkened so it reads on white. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f5f2ee; --panel: #ffffff; --panel2: #ece6df; --line: #dcd4ca;
+  --fg: #1b1815; --muted: #6a6159; --accent: #c9530c; --accent-soft: rgba(201,83,12,.09); --ink: #ffffff;
+  --red: #c9343a; --green: #23883a; --win: #23883a; --loss: #c9343a; --wait: #8c8379; --live: #a87b00;
+  --ul: rgba(27,24,21,.35); --ring: #cfc6bb; --note-line: rgba(201,83,12,.35);
+  --pp-r: rgba(201,52,58,.14); --pp-r0: rgba(201,52,58,.02); --pp-g: rgba(35,136,58,.14); --pp-g0: rgba(35,136,58,.02);
+}
+.dispic svg { width: 19px; height: 19px; }
+.shareic + .dispic { margin-left: -8px; }
+@media (max-width: 560px) { .shareic { width: 21px; } .brand b { white-space: nowrap; } }
+@media (max-width: 380px) { .brand b { font-size: 14.5px; } }
+.dispic svg .half { fill: currentColor; stroke: none; }
+.dopt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; margin: 0 0 10px; cursor: pointer; }
+.dopt .t { flex: 1; min-width: 0; } .dopt .n { font-weight: 700; font-size: 16px; } .dopt .m { color: var(--muted); font-size: 13.5px; }
+.dopt .ck { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line); display: inline-flex; align-items: center; justify-content: center; }
+.dopt.on { border-color: var(--accent); } .dopt.on .ck { border-color: var(--accent); background: var(--accent); }
+.dopt.on .ck::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); }
+.swatch { flex: none; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); }
+.swatch.dk { background: linear-gradient(135deg, #0d0c0b 55%, #f26a1b 55%); } .swatch.lt { background: linear-gradient(135deg, #f5f2ee 55%, #c9530c 55%); } .swatch.au { background: linear-gradient(90deg, #0d0c0b 50%, #f5f2ee 50%); }
 </style>
 
 <header class="bar"><div class="wrap">
   <a class="homelink" href="#home" aria-label="Davie Wrestling home"><img src="img/dc.png" alt=""><span class="brand"><b>WAR EAGLES WRESTLING</b><span>DAVIE COUNTY</span></span></a>
   <a class="savebtn" id="savebtn" href="#save"><span class="lg">Save to phone</span><span class="sh">Save</span></a>
   <a class="shareic" href="#share" aria-label="Share this app" title="Share this app"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></a>
+  <a class="shareic dispic" href="#display" aria-label="Display: dark or light" title="Display"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path class="half" d="M12 4a8 8 0 0 1 0 16z"/></svg></a>
   <a class="asof" href="#updates" aria-label="About these updates"><span class="u">Updated <b id="asof"></b> <i class="ago"></i></span><span class="nx">Next update <b class="cd"></b></span></a>
 </div></header>
 
@@ -1035,7 +1060,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
   }
   function backFor(id) {
     if (!id || id === 'home') return null;
-    if (id === 'updates' || id === 'save' || id === 'share') return ['home', 'home'];
+    if (id === 'updates' || id === 'save' || id === 'share' || id === 'display') return ['home', 'home'];
     if (id.indexOf('save-') === 0) return ['save', 'save choices'];
     if (id === 'roster' || id === 'schedule' || id === 'results' || id === 'tournaments') return null;
     if (id.indexOf('wr-') === 0) return ['roster', 'roster'];
@@ -1055,7 +1080,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     return out || ['home', 'home'];
   }
   function render() {
-    var id = (location.hash || '#home').slice(1), html = id === 'share' ? shareView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
+    var id = (location.hash || '#home').slice(1), html = id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
       id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'results' ? results() : id === 'tournaments' ? tourList() : null;
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
     if (id.indexOf('ev-') === 0) { var se = evById(id.slice(3)); if (se) html = evView(se); }
@@ -1114,6 +1139,24 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
     try { if (typeof QRCode === 'undefined' || !D.pageUrl) throw 0; new QRCode(el, { text: D.pageUrl, width: 190, height: 190, colorDark: '#0d0c0b', colorLight: '#ffffff' }); }
     catch (e) { if (card) card.hidden = true; }
   }
+  /* Display setting (2026-11-15): Dark is the War Eagles default; Light for bright sun; Auto follows the phone. */
+  var TKEY = 'davieTheme';
+  function getTheme() { try { var v = localStorage.getItem(TKEY); if (v === 'light' || v === 'auto' || v === 'dark') return v; } catch (e) {} return 'dark'; }
+  function applyTheme() {
+    var t = getTheme(), l = t === 'light';
+    try { if (t === 'auto') l = window.matchMedia('(prefers-color-scheme: light)').matches; } catch (e) {}
+    document.documentElement.setAttribute('data-theme', l ? 'light' : 'dark');
+  }
+  try { window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function () { if (getTheme() === 'auto') applyTheme(); }); } catch (e) {}
+  function displayView() {
+    var t = getTheme();
+    var opts = [['dark', 'dk', 'Dark', 'Black and orange. The standard War Eagles look.'],
+                ['light', 'lt', 'Light', 'Easier to read in bright sun or a bright gym.'],
+                ['auto', 'au', 'Match my phone', 'Follows your phone\'s light or dark setting.']];
+    return '<h1>Display</h1><p class="lede">Choose how the app looks on this device.</p><div style="margin-top:16px">' + opts.map(function (o) {
+      return '<button type="button" class="dopt' + (t === o[0] ? ' on' : '') + '" data-theme-set="' + o[0] + '" aria-pressed="' + (t === o[0]) + '"><span class="swatch ' + o[1] + '"></span><span class="t"><span class="n" style="display:block">' + o[2] + '</span><span class="m" style="display:block">' + o[3] + '</span></span><span class="ck"></span></button>';
+    }).join('') + '</div><p class="foot">Saved on this device only. Each phone keeps its own choice.</p>';
+  }
   function saveView(sub) {
     var url = D.pageUrl || '';
     var iphone = '<div class="card' + (ios ? ' mine-dev' : '') + '"><h3>iPhone, using Safari</h3><p class="k2">Works for everyone. No app or sign-in needed.</p><ol class="steps">' +
@@ -1151,6 +1194,7 @@ a.fact .go-s, .notelinks a, .h2row a, .note a, .srcl .go2, a.fresh .more, .wlink
   }
 
   app.addEventListener('click', function (e) {
+    var tb = e.target.closest('[data-theme-set]'); if (tb) { try { localStorage.setItem(TKEY, tb.getAttribute('data-theme-set')); } catch (err) {} applyTheme(); render(); return; }
     var gb = e.target.closest('[data-g]'); if (gb) { setG(gb.getAttribute('data-g')); render(); return; }
     var f = e.target.closest('[data-fav]');
     if (f) { e.preventDefault(); toggleFav(f.getAttribute('data-fav')); var y = window.scrollY; render(); window.scrollTo(0, y); return; }
