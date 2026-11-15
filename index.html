@@ -1305,7 +1305,8 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
     /* Back on every page but Home (Neil, 2026-11-15: installed as an app there's no browser back button). Tab pages go back to the previous screen, or Home. */
     var bk = backFor(id), hb = false;
     /* No Back where it would only go to Home: the bottom tab bar already has Home (Neil, 2026-11-15) */
-    if (bk && bk[0] === 'home') bk = null;
+    /* Back only when it leads to a detail screen, never to a screen that's on the tab bar or the ☰ menu (Neil, 2026-11-15) */
+    if (bk && ['home', 'roster', 'schedule', 'results', 'tournaments', 'save', 'share', 'display', 'sources', 'updates'].indexOf(bk[0]) >= 0) bk = null;
     app.innerHTML = '<section class="view show">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back</a>' : '') + (html || home()) + '</section>';
     /* One tab bar fixed at the bottom on every screen, so it never moves (Neil, 2026-11-15) */
     var sec = id === 'home' ? 'home' : (id === 'roster' || id.indexOf('wr-') === 0 || id.indexOf('stats-') === 0) ? 'roster' : id === 'schedule' ? 'schedule' :
