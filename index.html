@@ -458,6 +458,49 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
 .pf-list > .pf-row:first-child { border-top: 0; }
 .pf-d { flex: none; width: 52px; color: var(--muted); font-size: 13px; } .pf-e { flex: 1; min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pf-r { flex: none; color: var(--muted); font-size: 13px; white-space: nowrap; } .pf-go { flex: none; width: 10px; color: var(--muted); }
+/* Keycap look for every control (concept, 2026-11-15) */
+:root { --key-hi: #2b2723; --key-lo: #141210; --key-edge: #36322d; --key-shine: rgba(255,255,255,.10); --key-shade: rgba(0,0,0,.5); --key-drop: rgba(0,0,0,.6); }
+:root[data-theme="light"] { --key-hi: #ffffff; --key-lo: #ddd5cb; --key-edge: #b9ad9f; --key-shine: rgba(255,255,255,1); --key-shade: rgba(90,65,40,.32); --key-drop: rgba(70,50,30,.30); }
+/* Light keys need a visible ledge to read as 3-D */
+:root[data-theme="light"] .seg a, :root[data-theme="light"] .gsw button, :root[data-theme="light"] .menubtn, :root[data-theme="light"] .backbtn, :root[data-theme="light"] a.fact, :root[data-theme="light"] .facts3 .fact,
+:root[data-theme="light"] .stab, :root[data-theme="light"] .stag:not(.off), :root[data-theme="light"] .nlist a, :root[data-theme="light"] .dopt, :root[data-theme="light"] .strip div, :root[data-theme="light"] .pastfold summary {
+  box-shadow: inset 0 2px 0 var(--key-shine), inset 0 -3px 0 var(--key-shade), 0 2px 0 #c7bbad, 0 5px 10px var(--key-drop) !important; }
+.kc, .seg a, .gsw button, .menubtn, .backbtn, a.fact, .facts3 .fact, .stab, .stag:not(.off), .nlist a, .dopt, .strip div, .pastfold summary {
+  background: linear-gradient(160deg, var(--key-hi), var(--key-lo)) !important;
+  border: 1px solid var(--key-edge) !important; border-radius: 10px !important;
+  box-shadow: inset 0 2px 0 var(--key-shine), inset 0 -3px 0 var(--key-shade), 0 6px 14px var(--key-drop) !important;
+  transition: transform .06s, box-shadow .06s; }
+.seg a:active, .gsw button:active, .menubtn:active, .backbtn:active, a.fact:active, .stab:active, .nlist a:active, .dopt:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--key-shine), inset 0 -1px 0 var(--key-shade), 0 2px 5px var(--key-drop) !important; }
+/* selected keys: orange keycap */
+.seg a.on, .stab.on { background: linear-gradient(160deg, #f37428 0%, #c9530c 70%, #b14a0b 100%) !important; color: #140c06 !important; border-color: #8a3707 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.28), inset 0 -3px 0 rgba(70,25,0,.5), 0 6px 14px var(--key-drop) !important; }
+/* separate keys instead of joined bars */
+.seg { display: grid !important; gap: 6px; border: 0 !important; background: transparent !important; overflow: visible !important; }
+.seg a { border-right: 1px solid var(--key-edge) !important; }
+.gsw { border: 0 !important; background: transparent !important; gap: 5px; overflow: visible !important; padding: 0 !important; }
+.gsw button { border-radius: 999px !important; }
+.strip { gap: 8px; border: 0 !important; background: transparent !important; overflow: visible !important; grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+.strip .sblank { visibility: hidden; }
+.facts.facts3 { gap: 8px; }
+.pastfold { border: 0 !important; background: transparent !important; overflow: visible !important; }
+.pastfold .pf-list { margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+/* selected toggle = key pressed in (gray, not orange) */
+.gsw button.on { background: linear-gradient(160deg, var(--key-lo), var(--key-hi)) !important; color: var(--fg) !important; transform: translateY(2px);
+  box-shadow: inset 0 3px 6px var(--key-shade), inset 0 -1px 0 var(--key-shine) !important; }
+/* Selected toggle: pressed in, orange ring and orange text (Neil, 2026-11-15) */
+.gsw button.on { background: linear-gradient(160deg, var(--key-lo), var(--key-hi)) !important; color: var(--accent) !important; border: 1px solid var(--accent) !important;
+  transform: none !important; box-shadow: inset 0 0 0 1px var(--accent), inset 0 4px 8px var(--key-shade) !important; }   /* same size and position as the other keys (Neil, 2026-11-15) */
+:root[data-theme="light"] .seg a.on, :root[data-theme="light"] .stab.on { box-shadow: inset 0 2px 0 rgba(255,255,255,.3), inset 0 -3px 0 rgba(70,25,0,.5), 0 2px 0 #8a3707, 0 5px 10px var(--key-drop) !important; }:root[data-theme="light"] .gsw button.on { color: var(--fg) !important; }
+
+/* Pushed-in while pressed (Neil, 2026-11-15) */
+.seg a:active, .gsw button:active, .menubtn:active, .backbtn:active, a.fact:active, .stab:active, .nlist a:active, .dopt:active, .stag:active, .pastfold summary:active {
+  transform: translateY(4px) scale(.97) !important; filter: brightness(.75);
+  box-shadow: inset 0 4px 10px rgba(0,0,0,.6), inset 0 -1px 0 var(--key-shine) !important; }
+/* Card contents centered both ways (Neil, 2026-11-15); the key look already says "tap me", so no corner arrow */
+a.fact, .facts3 .fact, .fact { text-align: center !important; display: flex !important; flex-direction: column; align-items: center; justify-content: center; padding-left: 8px !important; padding-right: 8px !important; }
+a.fact::after { display: none !important; }
+.facts3 .k { padding-right: 0 !important; }
+.fact .k, .fact .v, .fact .s, .fact .go-s { width: 100%; text-align: center; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -860,7 +903,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     return segNav(T.map(function (x) { return ['#' + t.id + x[0], x[1], x[2], x[0] === on]; }), on);
   }
   function head(t) {
-    return '<a class="back" href="#home">&#8249; Home</a><div class="thead">' + logo(t.logo) +
+    return '<a class="back" href="#home">&#8249; Back</a><div class="thead">' + logo(t.logo) +
       '<div class="t"><div>' + pill(t) + '</div><h1>' + esc(t.year + ' ' + t.name) + '</h1>' +
       '<div class="lede" style="margin:2px 0 0">' + esc(t.day + ', ' + t.date + ' · ' + t.venue) + '</div></div></div>';
   }
@@ -1167,7 +1210,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     var t = D.tournaments[0] || {};
     var flo = t.flo || 'https://www.flowrestling.org';
     var card = function (title, body) { return '<div class="card"><h3>' + title + '</h3>' + body + '</div>'; };
-    return '<a class="back" href="#home">&#8249; Home</a><h1>About these updates</h1>' +
+    return '<a class="back" href="#home">&#8249; Back</a><h1>About these updates</h1>' +
       '<p class="lede">This page gathers public information so you don\'t have to dig through several websites. It is only as good as the information from its sources.</p>' +
       '<div class="card warn" style="margin-top:14px"><h3>Please keep in mind</h3><p class="k2" style="margin:0;font-size:14px;color:var(--fg)">' +
         'Results, brackets and team scores can post late, change, or be corrected after they first appear. The page copies what the sources show at each update and can be up to about 10 minutes behind them, longer if a source is slow. ' +
@@ -1247,7 +1290,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
     /* Back on every page but Home (Neil, 2026-11-15: installed as an app there's no browser back button). Tab pages go back to the previous screen, or Home. */
     var bk = backFor(id), hb = false;
     if (!bk && html && id !== 'home') { bk = ['home', '']; hb = true; }
-    app.innerHTML = '<section class="view show">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back' + (bk[1] ? '<span> to ' + esc(bk[1]) + '</span>' : '') + '</a>' : '') + (html || home()) + '</section>';
+    app.innerHTML = '<section class="view show">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back</a>' : '') + (html || home()) + '</section>';
     tick();
     if (id === 'share') drawQR();
     if (JUMP) { JUMP = false; var pe = document.getElementById('pbp'); if (pe) { pe.scrollIntoView({ block: 'start' }); return; } }
@@ -1371,7 +1414,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
       '<li>Tap <b>Add to Home screen</b> (or <b>Install</b>), name it, and tap <b>Add</b>.</li></ol></div>';
     var pc = '<div class="card"><h3>Computer</h3><p class="k2" style="margin:0">Bookmark this page in your browser (Ctrl+D, or &#8984;D on a Mac).</p></div>';
     var hide = saveHidden ? '<p class="foot">The save reminder on Home is hidden on this device. <button type="button" class="lnk" id="saveshow" style="background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline">Show it again</button></p>' : '<p class="foot">Already saved it? <button type="button" class="lnk" id="savehide" style="background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline">Hide the save reminder on this device</button></p>';
-    var back = '<a class="back" href="#save">&#8249; Back to choices</a>';
+    var back = '<a class="back" href="#save">&#8249; Back</a>';
     var pages = { 'iphone': iphone, 'android': droid, 'computer': pc };
     if (sub && pages[sub]) return back + '<h1>Save to your phone</h1>' + pages[sub] + hide;
     var rec = android ? 'android' : 'iphone';
@@ -1380,7 +1423,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
       ['iphone', 'iPhone', 'Using Safari.'],
       ['android', 'Android', 'Using Chrome.'],
       ['computer', 'Computer', 'Bookmark it in your browser.']];
-    return '<a class="back" href="#home">&#8249; Home</a><h1>Save to your phone</h1>' +
+    return '<a class="back" href="#home">&#8249; Back</a><h1>Save to your phone</h1>' +
       '<p class="lede">Put an icon on your home screen that opens straight to Davie Wrestling, with the latest updates every time. Pick your device:</p>' +
       '<div class="list" style="margin-top:14px">' + opts.map(function (o) {
         return '<a class="row in devrow" href="#save-' + o[0] + '"><span class="devic">' + DEVIC[o[0]] + '</span><div class="t"><div class="n" style="font-size:17px">' + o[1] + '</div><div class="m">' + o[2] + '</div></div></a>';
@@ -1421,6 +1464,7 @@ table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); fo
   var NAVN = 0;
   window.addEventListener('hashchange', function () { NAVN++; });
   window.addEventListener('hashchange', render);
+  document.addEventListener('touchstart', function () {}, { passive: true });   /* lets iPhone show the pushed-in key */
   /* Keep favorites and open rows across page updates: the viewer hands this state back after each new version loads. */
   try { if (window.claude && window.claude.hot && window.claude.hot.snapshot) window.claude.hot.snapshot(function () { return { favs: FAVS.slice(), open: Object.assign({}, OPEN), saveHidden: saveHidden }; }); } catch (e) {}
   function boot(data) {
