@@ -505,7 +505,8 @@ a.fact::after { display: none !important; }
 h1.hometitle { text-align: center; margin: 6px 0 14px; text-wrap: balance; }
 /* No iPhone link-preview menu or text selection on a long press of a button or card (Neil, 2026-11-15) */
 a, button, .seg a, .gsw button, .menubtn, .backbtn, .fact, .stab, .stag, .nlist a, .dopt, .strip div, .pastfold summary, .rr, .row, .wr, .pf-row, .lrow, summary {
-  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; -webkit-user-drag: none; }
+img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -1469,7 +1470,10 @@ a, button, .seg a, .gsw button, .menubtn, .backbtn, .fact, .stab, .stag, .nlist 
   var NAVN = 0;
   window.addEventListener('hashchange', function () { NAVN++; });
   window.addEventListener('hashchange', render);
-  document.addEventListener('touchstart', function () {}, { passive: true });   /* lets iPhone show the pushed-in key */
+  document.addEventListener('touchstart', function () {}, { passive: true });
+  /* No picking up and dragging links or images on a long press (Neil, 2026-11-15) */
+  document.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  new MutationObserver(function () { document.querySelectorAll('a:not([draggable]), img:not([draggable])').forEach(function (el) { el.setAttribute('draggable', 'false'); }); }).observe(document.documentElement, { childList: true, subtree: true });   /* lets iPhone show the pushed-in key */
   /* Keep favorites and open rows across page updates: the viewer hands this state back after each new version loads. */
   try { if (window.claude && window.claude.hot && window.claude.hot.snapshot) window.claude.hot.snapshot(function () { return { favs: FAVS.slice(), open: Object.assign({}, OPEN), saveHidden: saveHidden }; }); } catch (e) {}
   function boot(data) {
