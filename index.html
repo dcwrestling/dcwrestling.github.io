@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261115205716"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261115210053"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match the phone). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -531,6 +531,13 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
 /* Every selected tab (bottom bar, tournament tabs, Team leaders): pressed in with an orange ring, like the toggles (Neil, 2026-11-15, option B) */
 .bnav .seg a.on, .seg a.on, .stab.on, :root[data-theme="light"] .seg a.on, :root[data-theme="light"] .stab.on { background: linear-gradient(160deg, var(--key-lo), var(--key-hi)) !important; color: var(--accent) !important; border: 1px solid var(--accent) !important;
   box-shadow: inset 0 0 0 1px var(--accent), inset 0 4px 8px var(--key-shade) !important; }
+.resrow { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--fg); }
+.list > .resrow:first-child { border-top: 0; }
+.resrow .rl { flex: none; width: 38px; height: 38px; border-radius: 50%; object-fit: contain; background: #fff; }
+.resrow .rt { flex: 1; min-width: 0; } .resrow .rn { display: block; font-weight: 700; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.resrow .rm { display: block; color: var(--muted); font-size: 13px; } .resrow .rlive { color: var(--live); }
+.resrow .rr2 { flex: none; font-family: var(--display); font-weight: 800; font-size: 17px; white-space: nowrap; }
+.resrow .rgo { flex: none; color: var(--muted); font-size: 22px; line-height: 1; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -831,12 +838,23 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
     h += '<div class="list">' + up.map(function (s) { return (nx && s === nx ? '<div class="nexttag">NEXT</div>' : '') + schedRow(s); }).join('') + '</div><p class="foot">* Building not confirmed. Check with your coach for bus and weigh-in times.</p>';
     return h;
   }
+  /* Results: one compact row per event, the whole row taps through; no OPEN button (Neil, 2026-11-15) */
   function results() {
     var h = '<h1>Results</h1>' + gSwitch() + siteNav('results'), items = [];
-    gEvents().forEach(function (e) { items.push({ d: e.date, html: evCard(e) }); });
-    gTours().forEach(function (t) { if (t.status !== 'upcoming') items.push({ d: t.iso, html: tCard(t) }); });
+    var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var md = function (iso) { var p = String(iso).split('-'); return MON[+p[1] - 1] + ' ' + (+p[2]); };
+    var row = function (href, lg, name, date, res, kind, live) {
+      return '<a class="resrow" href="' + href + '">' + (lg ? '<img class="rl" src="' + esc(lg) + '" alt="">' : '<span class="rl ph"></span>') +
+        '<span class="rt"><span class="rn">' + esc(name) + '</span><span class="rm">' + esc(date) + ' · ' + kind + (live ? ' · <b class="rlive">Live</b>' : '') + '</span></span>' +
+        '<span class="rr2">' + esc(res) + '</span><span class="rgo">&#8250;</span></a>';
+    };
+    gEvents().forEach(function (e) { var w = 0, l = 0; e.duals.forEach(function (d) { if (d.wl === 'W') w++; if (d.wl === 'L') l++; });
+      items.push({ d: e.date, html: row('#ev-' + e.id, e.logo, e.name, md(e.date), 'Duals ' + w + '–' + l, 'Dual meet') }); });
+    gTours().forEach(function (t) { if (t.status === 'upcoming') return;
+      var sc = (t.davieScore || '').split('·')[0].trim();
+      items.push({ d: t.iso, html: row('#' + t.id, t.logo, t.name.replace(/\s*\(Girls\)/, ''), md(t.iso), sc ? sc + ' place' : (t.status === 'live' ? 'In progress' : 'Final'), 'Tournament', t.status === 'live') }); });
     items.sort(function (a, b) { return a.d < b.d ? 1 : -1; });
-    return h + (items.length ? items.map(function (i) { return i.html; }).join('') : '<p class="note">No results yet this season.</p>');
+    return h + (items.length ? '<div class="list">' + items.map(function (i) { return i.html; }).join('') + '</div>' : '<p class="note">No results yet this season.</p>');
   }
   function evCard(e) {
     var w = 0, l = 0; e.duals.forEach(function (d) { if (d.wl === 'W') w++; if (d.wl === 'L') l++; });
