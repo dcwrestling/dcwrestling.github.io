@@ -527,7 +527,7 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
 /* Light mode: DC logo with the black outline (Neil's file, 2026-11-15) */
 :root[data-theme="light"] .homelink img { content: url(img/dc-light.png); }
 /* Display choices all the same height (Neil, 2026-11-15) */
-.dopt { min-height: 92px; }
+.dopt { min-height: 0; }   /* names only, one line each (Neil, 2026-11-15) */
 </style>
 
 <header class="bar"><div class="wrap">
@@ -1383,7 +1383,7 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
                 ['light', 'lt', 'Light', 'Easier to read in bright sun or a bright gym.'],
                 ['auto', 'au', 'Match my phone', 'Follows your phone\'s light or dark setting.']];
     return '<h1>Display</h1><p class="lede">Choose how the app looks on this device.</p><div style="margin-top:16px">' + opts.map(function (o) {
-      return '<button type="button" class="dopt' + (t === o[0] ? ' on' : '') + '" data-theme-set="' + o[0] + '" aria-pressed="' + (t === o[0]) + '"><span class="swatch ' + o[1] + '"></span><span class="t"><span class="n" style="display:block">' + o[2] + '</span><span class="m" style="display:block">' + o[3] + '</span></span><span class="ck"></span></button>';
+      return '<button type="button" class="dopt' + (t === o[0] ? ' on' : '') + '" data-theme-set="' + o[0] + '" aria-pressed="' + (t === o[0]) + '"><span class="swatch ' + o[1] + '"></span><span class="t"><span class="n" style="display:block">' + o[2] + '</span></span><span class="ck"></span></button>';
     }).join('') + '</div><p class="foot">Saved on this device only. Each phone keeps its own choice.</p>';
   }
   /* Sources page (Neil, 2026-11-15): one line per event (date, name, source tags). Tags link to the source; "not online" tags are plain. Legend gives the web addresses. */
