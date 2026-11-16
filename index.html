@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261115204950"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match the phone). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1500,6 +1500,25 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   window.addEventListener('hashchange', function () { NAVN++; });
   window.addEventListener('hashchange', render);
   document.addEventListener('touchstart', function () {}, { passive: true });
+  /* Stay current (Neil, 2026-11-15): the home-screen app keeps the old page open, so check for a newer published version
+     when the app opens or comes back to the front, and every 5 minutes while open. Favorites and settings are kept (saved on the phone). */
+  (function () {
+    var mine = (document.querySelector('meta[name=build]') || {}).content;
+    if (!mine || !window.fetch) return;
+    var busy = false, last = 0;
+    function check(force) {
+      if (busy || (!force && Date.now() - last < 60000)) return;
+      busy = true; last = Date.now();
+      fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+        var m = t.match(/<meta name="build" content="(\d+)"/);
+        if (m && m[1] > mine) location.reload();
+      }).catch(function () {}).then(function () { busy = false; });
+    }
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') check(true); });
+    window.addEventListener('pageshow', function () { check(true); });
+    setInterval(function () { if (document.visibilityState === 'visible') check(false); }, 300000);
+    setTimeout(function () { check(true); }, 3000);
+  })();
   /* No picking up and dragging links or images on a long press (Neil, 2026-11-15) */
   document.addEventListener('dragstart', function (e) { e.preventDefault(); });
   new MutationObserver(function () { document.querySelectorAll('a:not([draggable]), img:not([draggable])').forEach(function (el) { el.setAttribute('draggable', 'false'); }); }).observe(document.documentElement, { childList: true, subtree: true });   /* lets iPhone show the pushed-in key */
