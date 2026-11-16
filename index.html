@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261116090833"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
-<script>/* Display setting: dark (default), light, or auto (match the phone). Saved on this device only. */
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261116094705"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap">
@@ -792,7 +792,7 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
     return h + '<p class="foot">Each tournament has live bout numbers, mats, results and team scores while it runs.</p>';
   }
   function roster() {
-    var h = '<h1>Roster</h1>' + gSwitch(true) + siteNav('roster') + '<p class="mine-t">Tap a wrestler for their season and every match. Tap &#9734; to add them to My Wrestlers on Home (saved on this phone).</p>';
+    var h = '<h1>Roster</h1>' + gSwitch(true) + siteNav('roster') + '<p class="mine-t">Tap a wrestler for their season and every match. Tap &#9734; to add them to My Wrestlers on Home (saved on this device).</p>';
     var L = WR();
     if (!L.length) return h + '<p class="note">No ' + (LV === 'all' ? '' : LVN[LV] + ' ') + GN[G].toLowerCase() + '\'s matches recorded yet.</p>';
     [['V', 'Varsity'], ['JV', 'JV']].forEach(function (lv) {
@@ -1024,7 +1024,7 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
   function wrestlers(t) {
-    var h = head(t) + tabs(t, '-wrestlers') + '<p class="mine-t" style="margin-top:12px">Tap a wrestler for every match. Tap &#9734; to add them to My Wrestlers on the Overview (saved on this phone).</p>';
+    var h = head(t) + tabs(t, '-wrestlers') + '<p class="mine-t" style="margin-top:12px">Tap a wrestler for every match. Tap &#9734; to add them to My Wrestlers on the Overview (saved on this device).</p>';
     h += lvSwitch();
     [['V', 'Varsity'], ['JV', 'JV']].forEach(function (lv) {
       if (LV !== 'all' && LV !== lv[0]) return;
@@ -1389,7 +1389,7 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
     try { if (typeof QRCode === 'undefined' || !D.pageUrl) throw 0; new QRCode(el, { text: D.pageUrl, width: 190, height: 190, colorDark: '#0d0c0b', colorLight: '#ffffff' }); }
     catch (e) { if (card) card.hidden = true; }
   }
-  /* Display setting (2026-11-15): Dark is the War Eagles default; Light for bright sun; Auto follows the phone. */
+  /* Display setting (2026-11-15): Dark is the War Eagles default; Light for bright sun; Match system follows the device. */
   var TKEY = 'davieTheme';
   function getTheme() { try { var v = localStorage.getItem(TKEY); if (v === 'light' || v === 'auto' || v === 'dark') return v; } catch (e) {} return 'dark'; }
   function applyTheme() {
