@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261116104203"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261116121550"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -582,6 +582,11 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   .vwide .list.mcols > a.wr.cdw.c1 { border-right: 1px solid var(--line) !important; }
   .vwide .list.mcols > a.wr.cdw.c2top { border-top: 0 !important; }
 }
+.shic { display: inline-flex; vertical-align: -4px; width: 22px; height: 22px; border: 1px solid var(--line); border-radius: 5px; align-items: center; justify-content: center; }
+.shic svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.note.obw { margin: 0 0 12px; }
+.illbox { margin: 8px 0 4px; } .illt { display: block; color: var(--muted); font-size: 13.5px; margin: 6px 0 4px; }
+svg.ill { display: block; width: 100%; max-width: 300px; height: auto; }
 </style>
 
 <header class="bar"><div class="wrap">
@@ -1530,12 +1535,45 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   function saveView(sub) {
     var url = D.pageUrl || '';
     /* iPhone: Safari's Add to Home Screen gives the DC logo icon (site on GitHub Pages since 2026-11-15; the Claude app/Shortcuts route is gone). */
-    var iphone = '<div class="card' + (ios ? ' mine-dev' : '') + '"><h3>iPhone, using Safari</h3><p class="k2">Your icon will look like this:</p>' +
+    /* iPhone steps cover both Safari layouts and warn when opened in another browser (Neil, 2026-11-16: Brave and an older iPhone tripped up a parent). */
+    var otherBrowser = ios && (/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua) || !!navigator.brave);
+    var shareIc = '<span class="shic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></span>';
+    /* Drawn illustrations of what to tap (not Apple screenshots): newer and older Safari bars, the share-sheet row, the Add button. */
+    var SH = '<path d="M12 3v11M8 7l4-4 4 4M6 11v8a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19v-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+    var ring = function (x, y, r) { return '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="none" stroke="#f26a1b" stroke-width="3"/>'; };
+    var ill = {
+      newer: '<svg class="ill" viewBox="0 0 300 64" aria-label="Newer iPhone: Safari address bar at the bottom"><rect x="6" y="10" width="288" height="44" rx="22" fill="#2a2a2c"/>' +
+        '<g transform="translate(22,20)" color="#fff"><rect x="0" y="2" width="20" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 8h10M5 12h10M5 16h6" stroke="currentColor" stroke-width="1.6"/></g>' +
+        ring(32, 32, 19) + '<text x="150" y="37" fill="#fff" font-size="15" text-anchor="middle" font-family="-apple-system,Helvetica,Arial">dcwrestling.github.io</text>' +
+        '<g transform="translate(262,23)" color="#fff"><path d="M3 9a6.5 6.5 0 1 1 1.9 4.6M3 14V9h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g></svg>',
+      menu: '<svg class="ill" viewBox="0 0 300 96" aria-label="The menu that opens, with Share"><rect x="6" y="6" width="210" height="84" rx="14" fill="#2a2a2c"/>' +
+        '<text x="24" y="34" fill="#9a9a9e" font-size="14" font-family="-apple-system,Helvetica,Arial">Aa  Text size</text><line x1="18" y1="48" x2="204" y2="48" stroke="#3a3a3c"/>' +
+        '<g transform="translate(22,58)" color="#fff"><svg width="22" height="22" viewBox="0 0 24 24">' + SH + '</svg></g><text x="54" y="75" fill="#fff" font-size="15" font-weight="600" font-family="-apple-system,Helvetica,Arial">Share</text>' +
+        '<rect x="12" y="52" width="198" height="32" rx="9" fill="none" stroke="#f26a1b" stroke-width="3"/></svg>',
+      older: '<svg class="ill" viewBox="0 0 300 64" aria-label="Older iPhone: buttons along the bottom of Safari"><rect x="0" y="6" width="300" height="52" fill="#1c1c1e"/>' +
+        '<g color="#0a84ff" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M34 22l-8 10 8 10"/><path d="M82 22l8 10-8 10"/>' +
+        '<g transform="translate(138,20)"><svg width="24" height="24" viewBox="0 0 24 24" color="#0a84ff">' + SH + '</svg></g>' +
+        '<path d="M200 22h8a4 4 0 0 1 4 4v16a3 3 0 0 0-3-3h-9zM224 22h-8a4 4 0 0 0-4 4v16a3 3 0 0 1 3-3h9z"/><rect x="254" y="24" width="14" height="14" rx="2"/><rect x="258" y="20" width="14" height="14" rx="2"/></g>' +
+        ring(150, 32, 19) + '</svg>',
+      add: '<svg class="ill" viewBox="0 0 300 56" aria-label="Add to Home Screen in the list"><rect x="6" y="6" width="288" height="44" rx="12" fill="#2a2a2c"/>' +
+        '<text x="22" y="34" fill="#fff" font-size="15" font-family="-apple-system,Helvetica,Arial">Add to Home Screen</text>' +
+        '<g transform="translate(252,16)" fill="none" stroke="#fff" stroke-width="1.8"><rect x="0" y="0" width="22" height="22" rx="5"/><path d="M11 6v10M6 11h10" stroke-linecap="round"/></g>' +
+        '<rect x="8" y="8" width="284" height="40" rx="11" fill="none" stroke="#f26a1b" stroke-width="3"/></svg>',
+      addbtn: '<svg class="ill" viewBox="0 0 300 52" aria-label="The Add button, top right"><rect x="0" y="4" width="300" height="44" fill="#1c1c1e"/>' +
+        '<text x="16" y="31" fill="#0a84ff" font-size="15" font-family="-apple-system,Helvetica,Arial">Cancel</text><text x="150" y="31" fill="#fff" font-size="15" font-weight="600" text-anchor="middle" font-family="-apple-system,Helvetica,Arial">Add to Home Screen</text>' +
+        '<text x="284" y="31" fill="#0a84ff" font-size="15" font-weight="600" text-anchor="end" font-family="-apple-system,Helvetica,Arial">Add</text>' + ring(270, 26, 18) + '</svg>'
+    };
+    var iphone = (otherBrowser ? '<div class="note obw"><b>You\'re in a different browser.</b> Saving the icon only works in <b>Safari</b>. Copy the link, open Safari, paste it in, then follow the steps below.' +
+        '<button type="button" class="btn solid" data-copy="' + esc(url) + '" style="width:100%;margin-top:10px;padding:10px">Copy the link</button></div>' : '') +
+      '<div class="card' + (ios ? ' mine-dev' : '') + '"><h3>iPhone</h3><p class="k2">Works in <b>Safari</b> only, not Brave or Chrome. Your icon will look like this:</p>' +
       '<div style="display:flex;align-items:center;gap:12px;margin:8px 0 4px"><img src="img/apple-touch-icon.png" alt="DC logo icon" style="width:58px;height:58px;border-radius:13px;flex:none"><b>DC Wrestling</b></div><ol class="steps">' +
-      '<li><b>Open the page in Safari.</b> Opened it from a text, email or another app? <a href="' + esc(url) + '" target="_blank" rel="noopener">Open Davie Wrestling in Safari &#8250;</a></li>' +
-      '<li>In Safari\'s bottom bar, tap the small icon <b>at the left of the address</b>, then tap <b>Share</b>. (Not the share icon at the top of the page.)</li>' +
-      '<li>Scroll to the bottom of the list and tap <b>Add to Home Screen</b>. If you don\'t see it, tap <b>View More</b> first.</li>' +
-      '<li>Keep the name <b>DC Wrestling</b> (or type your own), leave <b>Open as Web App</b> on, and tap <b>Add</b>.</li></ol></div>';
+      '<li>Open <b>dcwrestling.github.io</b> in <b>Safari</b>.</li>' +
+      '<li>Tap <b>Share</b>. Where it is depends on your iPhone:' +
+        '<div class="illbox"><span class="illt">Newer iPhones: tap the small icon at the left of the address…</span>' + ill.newer + '<span class="illt">…then tap <b>Share</b>:</span>' + ill.menu + '</div>' +
+        '<div class="illbox"><span class="illt">Older iPhones: tap the Share button in the bar at the bottom (scroll up a little if it\'s hidden):</span>' + ill.older + '</div></li>' +
+      '<li>Scroll down and tap <b>Add to Home Screen</b>. Don\'t see it? Tap <b>View More</b> or <b>Edit Actions</b> first.' + '<div class="illbox">' + ill.add + '</div></li>' +
+      '<li>Tap <b>Add</b> at the top right.' + '<div class="illbox">' + ill.addbtn + '</div></li></ol>' +
+      '<p class="k2" style="margin:8px 0 0">Drawings show where to tap; your screen may look slightly different.</p></div>';
     var droid = '<div class="card' + (android ? ' mine-dev' : '') + '"><h3>Android</h3><ol class="steps">' +
       '<li>Open the page in <b>Chrome</b>: <a href="' + esc(url) + '" target="_blank" rel="noopener">Link to open Davie Wrestling in Chrome &#8250;</a></li>' +
       '<li>Tap the <b>&#8942;</b> menu at the top right.</li>' +
