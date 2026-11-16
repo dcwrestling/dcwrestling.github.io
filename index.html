@@ -524,6 +524,10 @@ body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
 .favrow .fn { flex: 1; min-width: 0; font-weight: 700; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .favrow .fr { flex: none; font-family: var(--display); font-weight: 900; font-size: 22px; }
 .favrow .fgo { flex: none; color: var(--muted); font-size: 22px; line-height: 1; }
+/* Light mode: DC logo with the black outline (Neil's file, 2026-11-15) */
+:root[data-theme="light"] .homelink img { content: url(img/dc-light.png); }
+/* Display choices all the same height (Neil, 2026-11-15) */
+.dopt { min-height: 92px; }
 </style>
 
 <header class="bar"><div class="wrap">
