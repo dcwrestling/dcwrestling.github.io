@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261118074933"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261118075434"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -614,7 +614,7 @@ svg.ill { display: block; width: 100%; max-width: 300px; height: auto; }
 .wfold .dlist { margin: 10px 0 4px; }
 .tst { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; } .tst .ds-pill { font-size: 12px; padding: 2px 9px; } .tsc { font-size: 14px; color: var(--muted); } .tsc b { color: var(--fg); font-family: var(--display); font-size: 18px; }
 /* Rank tab (Neil, 2026-11-18): team and wrestler rankings; every row opens its numbers and a link to the source (rule 6a) */
-.rk-tabs { margin: 6px 0 4px; }
+.rk-tabs { margin: 6px 0 4px; max-width: 340px; }   /* button-sized on a computer, not full width (Neil, 2026-11-18) */
 .rk-hero { display: flex; gap: 16px; align-items: center; } .rk-hero .big { font-family: var(--display); font-weight: 800; font-size: 56px; line-height: 1; color: var(--muted); }
 .rk-sub { font-size: 13px; color: var(--muted); margin: 8px 0 0; } .rk-sub b { color: var(--fg); }
 .rk-badge { display: inline-block; font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; background: var(--accent); color: var(--ink); white-space: nowrap; }
@@ -1618,9 +1618,8 @@ tr.rk-x td { background: var(--panel2); font-size: 13px; color: var(--muted); pa
   function rkTabs(on) { return '<nav class="seg rk-tabs" style="grid-template-columns:repeat(2,minmax(0,1fr))"><a href="#rankings"' + (on === 't' ? ' class="on" aria-current="page"' : '') + '>Team</a><a href="#rankings-wrestlers"' + (on === 'w' ? ' class="on" aria-current="page"' : '') + '>Wrestlers</a></nav>'; }
   function rkTable(head, body) { return '<div class="tbl rk-tbl"><table><thead><tr>' + head.map(function (h) { return '<th' + (h[1] ? ' class="num"' : '') + '>' + h[0] + '</th>'; }).join('') + '</tr></thead><tbody>' + body + '</tbody></table></div>'; }
   function rankView(tab) {
-    var R = D.rankings, h = '<h1>Rankings</h1>' + gSwitch(true) + rkTabs(tab);
+    var R = D.rankings, h = '<h1>Rankings</h1>' + gSwitch() + rkTabs(tab);   /* no All/Varsity/JV here: rankings are varsity only (Neil, 2026-11-18: no buttons that don't apply) */
     if (!R) return h + '<div class="card">Rankings aren\'t available right now.</div>';
-    if (LV === 'JV') return h + '<div class="card rk-empty">Rankings count varsity matches only, so there are no JV rankings. Switch to <b>All</b> or <b>Varsity</b> to see them.</div>';
     return h + (tab === 'w' ? rankWrestlers(R) : rankTeam(R));
   }
   function rankTeam(R) {
