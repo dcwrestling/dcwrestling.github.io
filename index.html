@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261118090339"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261118094815"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -619,6 +619,8 @@ svg.ill { display: block; width: 100%; max-width: 300px; height: auto; }
 .rk-sub { font-size: 13px; color: var(--muted); margin: 8px 0 0; } .rk-sub b { color: var(--fg); }
 .rk-badge { display: inline-block; font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; background: var(--accent); color: var(--ink); white-space: nowrap; }
 .rk-rank { white-space: nowrap; color: var(--muted); } .rk-note { font-size: 12px; color: var(--muted); margin: 8px 2px 0; }
+.rk-sum a.fact { padding: 12px 10px; } .rk-sum a.fact::after { top: 8px; right: 9px; transform: none; font-size: 17px; }
+.rk-sum a.fact.on { border: 1.5px solid var(--accent); } .rk-sum a.fact.on .k { color: var(--accent); }
 .rk-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
 .rk-r { font-family: var(--display); font-weight: 800; font-size: 17px; white-space: nowrap; color: var(--muted); } .rk-r.top { color: var(--accent); }
 .rk-alt td { color: var(--muted); }
@@ -1522,7 +1524,7 @@ tr.rk-x td { background: var(--panel2); font-size: 13px; color: var(--muted); pa
   }
   function render() {
     var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
-      id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
+      id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : /^rankings-top(1|5|10)$/.test(id) ? rankView('w', +id.slice(12)) : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
     if (id.indexOf('ev-') === 0) { var se = evById(id.slice(3)); if (se) html = evView(se); }
     if (id.indexOf('day-') === 0) html = dayView(id.slice(4));
@@ -1619,13 +1621,13 @@ tr.rk-x td { background: var(--panel2); font-size: 13px; color: var(--muted); pa
   function rkMatch(r) { var k = rkKey(r.name); for (var i = 0; i < D.wrestlers.length; i++) { var x = D.wrestlers[i]; if (x.gender === G && rkKey(x.name) === k) return x; } return null; }
   function rkTabs(on) { return '<nav class="seg rk-tabs" style="grid-template-columns:repeat(2,minmax(0,1fr))"><a href="#rankings"' + (on === 't' ? ' class="on" aria-current="page"' : '') + '>Team</a><a href="#rankings-wrestlers"' + (on === 'w' ? ' class="on" aria-current="page"' : '') + '>Wrestlers</a></nav>'; }
   function rkTable(head, body) { return '<div class="tbl rk-tbl"><table><thead><tr>' + head.map(function (h) { return '<th' + (h[1] ? ' class="num"' : '') + '>' + h[0] + '</th>'; }).join('') + '</tr></thead><tbody>' + body + '</tbody></table></div>'; }
-  function rankView(tab) {
+  function rankView(tab, top) {
     var R = D.rankings, h = '<h1>Rankings</h1>' + gSwitch() + rkTabs(tab);   /* no All/Varsity/JV here: rankings are varsity only (Neil, 2026-11-18: no buttons that don't apply) */
     if (!R) return h + '<div class="card">Rankings aren\'t available right now.</div>';
     /* last-updated note (Neil, 2026-11-18) */
     var wd = new Date(R.wrestlers.readAt), up = isNaN(wd) ? '' : wd.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
     h += '<p class="rk-upd">' + (tab === 'w' ? 'Wrestler ranks updated <b>' + esc(up) + '</b> from RankWrestlers. Updated every morning.' : 'Team ranks: the NCHSAA\'s ' + esc(R.team.current ? R.team.current.asOf : R.team.lastSeason.asOf) + ' list' + (R.team.current ? '' : ' (last season); 2026–27 rankings start in January') + '. Records: this app\'s results.') + '</p>';
-    return h + (tab === 'w' ? rankWrestlers(R) : rankTeam(R));
+    return h + (tab === 'w' ? rankWrestlers(R, top) : rankTeam(R));
   }
   function rankTeam(R) {
     var T = R.team, h = '', ly = T.lastYr || {};
@@ -1672,12 +1674,15 @@ tr.rk-x td { background: var(--panel2); font-size: 13px; color: var(--muted); pa
     }
     return h;
   }
-  function rankWrestlers(R) {
+  function RKHOW(boys, R) { return '<b>Source:</b> RankWrestlers, the ranking system the NCHSAA uses to seed the State Duals. It reads varsity results from TrackWrestling (FloWrestling fills gaps) and recalculates every night, so its records can differ from this app\'s. This app reads it every morning.<br><br><b>What goes in:</b> adjusted win % (wins count more against stronger opponents), the strength of the 3 best wins, and a head-to-head adjustment when two close wrestlers have met. RankWrestlers combines them into the RW Score; it doesn\'t publish the exact formula.<br><br><b>Who they\'re ranked against:</b> ' + (boys ? esc(R.team['class']) + ' varsity wrestlers' : 'girls varsity wrestlers in the group RankWrestlers ranks Davie in') + ' at the same weight, statewide. The weight is the one wrestled most in the last 10 matches.<br><br><b>Early season:</b> each wrestler\'s 3 best wins from last year carry forward until this year\'s are better, so a 1–0 wrestler can rank high.<br><br><b>Orange:</b> top 8, the places that score at states.'; }
+  function rankWrestlers(R, top) {   /* top: 1, 5 or 10 = only wrestlers ranked that high (tapped from the cards; Neil, 2026-11-18) */
     var W = R.wrestlers, rows = (G === 'girls' ? W.girls : W.boys) || [], boys = G === 'boys', h = '';
     var cls = boys ? R.team['class'] + ' ' : '', teamUrl = 'https://www.rankwrestlers.com/teams/' + W.team + '?gender=' + (boys ? 'b' : 'g');
     var n = function (k) { return rows.filter(function (r) { return r.rank <= k; }).length; };
     if (!rows.length) return h + '<div class="card rk-empty">No ranked wrestlers on RankWrestlers right now. ' + rkOut('Davie on RankWrestlers', teamUrl) + '</div>';
-    h += '<div class="rk-sum"><div class="fact"><div class="k">#1 ' + (boys ? 'in ' + esc(R.team['class']) : 'ranked') + '</div><div class="v">' + n(1) + '</div><div class="s">wrestlers</div></div><div class="fact"><div class="k">Top 5</div><div class="v">' + n(5) + '</div><div class="s">wrestlers</div></div><div class="fact"><div class="k">Top 10</div><div class="v">' + n(10) + '</div><div class="s">wrestlers</div></div></div>';
+    var card = function (k, label) { return '<a class="fact' + (top === k ? ' on' : '') + '" href="#' + (top === k ? 'rankings-wrestlers' : 'rankings-top' + k) + '"' + (top === k ? ' aria-current="page"' : '') + '><div class="k">' + label + '</div><div class="v">' + n(k) + '</div><div class="s">wrestlers</div></a>'; };
+    h += '<div class="rk-sum">' + card(1, '#1 ' + (boys ? 'in ' + esc(R.team['class']) : 'ranked')) + card(5, 'Top 5') + card(10, 'Top 10') + '</div>';
+    if (top) rows = rows.filter(function (r) { return r.rank <= top; });
     var last = 0, body = '';
     rows.slice().sort(function (a, b) { return a.wt - b.wt || a.rank - b.rank; }).forEach(function (r) {
       var first = r.wt !== last; last = r.wt; var x = rkMatch(r), nm = x ? x.name : r.name, f1 = function (v) { return Number(v).toFixed(1); };
@@ -1685,9 +1690,11 @@ tr.rk-x td { background: var(--panel2); font-size: 13px; color: var(--muted); pa
       body += '<tr class="rk-x" hidden><td colspan="4"><div class="g"><span>Win %</span><span>' + f1(r.win) + '</span><span>Adjusted win % (opponent strength)</span><span>' + f1(r.adj) + '</span><span>3 best wins</span><span>' + f1(r.top3) + '</span><span>Head-to-head adjustment</span><span>' + (r.h2h > 0 ? '+' : '') + f1(r.h2h) + '</span><span><b style="color:var(--fg)">RW Score</b></span><span><b>' + Number(r.score).toFixed(3) + '</b></span><span>' + cls + 'rank at ' + r.wt + ' (statewide)</span><span>#' + r.rank + '</span></div>' +
         '<div class="lk">' + (x ? '<a href="#wr-' + esc(x.slug) + '">See matches &#8250;</a>' : '') + (r.id ? rkOut('Open on RankWrestlers', 'https://www.rankwrestlers.com/wrestler/' + r.id) : '') + '</div>' + (x && x.name.toLowerCase().replace(/[^a-z]/g, '') !== r.name.toLowerCase().replace(/[^a-z]/g, '') ? '<div style="margin-top:6px">RankWrestlers lists this wrestler as ' + esc(r.name) + '.</div>' : '') + '</td></tr>';
     });
-    h += '<h2>' + (boys ? esc(R.team['class']) + ' rank' : 'Rank') + ' at each weight</h2>' + rkTable([['Wt'], ['Wrestler'], ['W–L', 1], [boys ? esc(R.team['class']) + ' rank' : 'Rank', 1]], body);
+    var cl = boys ? esc(R.team['class']) + ' ' : '';
+    h += (top ? '<div class="h2row"><h2>' + (top === 1 ? 'Ranked #1 ' + (boys ? 'in ' + cl.trim() : '') : 'Top ' + top + ' ' + (boys ? 'in ' + cl.trim() : '')) + ' at their weight</h2><a href="#rankings-wrestlers">All wrestlers &#8250;</a></div>' : '<h2>' + (boys ? cl + 'rank' : 'Rank') + ' at each weight</h2>') + (rows.length ? '' : '<div class="card rk-empty">None right now.</div>') + (!rows.length ? '' : rkTable([['Wt'], ['Wrestler'], ['W–L', 1], [boys ? esc(R.team['class']) + ' rank' : 'Rank', 1]], body));
     h += '<p class="rk-src">Tap a wrestler to see how the rank is figured. ' + rkOut('Davie on RankWrestlers', teamUrl) + '</p>';
-    h += rkFold('How the rank is figured', '<b>Source:</b> RankWrestlers, the ranking system the NCHSAA uses to seed the State Duals. It reads varsity results from TrackWrestling (FloWrestling fills gaps) and recalculates every night, so its records can differ from this app\'s. This app reads it every morning.<br><br><b>What goes in:</b> adjusted win % (wins count more against stronger opponents), the strength of the 3 best wins, and a head-to-head adjustment when two close wrestlers have met. RankWrestlers combines them into the RW Score; it doesn\'t publish the exact formula.<br><br><b>Who they\'re ranked against:</b> ' + (boys ? esc(R.team['class']) + ' varsity wrestlers' : 'girls varsity wrestlers in the group RankWrestlers ranks Davie in') + ' at the same weight, statewide. The weight is the one wrestled most in the last 10 matches.<br><br><b>Early season:</b> each wrestler\'s 3 best wins from last year carry forward until this year\'s are better, so a 1–0 wrestler can rank high.<br><br><b>Orange:</b> top 8, the places that score at states.');
+    if (top) return h + rkFold('How the rank is figured', RKHOW(boys, R));
+    h += rkFold('How the rank is figured', RKHOW(boys, R));
     /* regional seeding points: the NCHSAA formula applied to this app's varsity results */
     var MIN = boys ? 15 : 7, ST = (R.state2026 && boys) ? R.state2026.places : {};
     var S = WR().map(function (x) {
