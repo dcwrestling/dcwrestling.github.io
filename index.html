@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121090104"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121090348"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -618,6 +618,7 @@ svg.ill { display: block; width: 100%; max-width: 300px; height: auto; }
 .dbouts .bout .rd { min-width: 0; } .dbouts .bout .op .lvl { display: block; letter-spacing: 0; font-weight: 500; font-size: 13px; margin-top: 1px; }
 .dbouts .bout .res { text-align: right; font-size: 14px; }
 .wfold .dlist { margin: 10px 0 4px; }
+.mu-note { color: var(--muted); font-size: 13.5px; margin: -2px 2px 10px; } .mu-cls { color: var(--muted); font-style: normal; font-weight: 400; margin-left: 6px; }
 .ds-chk { margin-top: 8px; flex-wrap: wrap; } .ds-chk span { color: var(--muted); }
 .tsc .cd { font-family: var(--body); font-size: 14px; font-weight: 700; } .ds-s .cd { color: var(--fg); }
 .tst { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 6px; } .tst .ds-pill { font-size: 12px; padding: 2px 9px; } .tsc { font-size: 14px; color: var(--muted); } .tsc b { color: var(--fg); font-family: var(--display); font-size: 18px; }
@@ -1088,9 +1089,9 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     });
     /* Today's event page shows everything known (Neil, 2026-11-21): the event details, open, and the likely matchups */
     var XI = evInfo(s);
-    if (XI && XI.lineups && XI.lineups.length) h += '<h2>Likely matchups' + (/Women/.test(s.team) ? ' (boys)' : '') + '</h2><p class="note" style="margin:0 0 8px">Davie\'s likely wrestler at each weight against each team\'s roster, from RankWrestlers. A projection, not the real lineup.</p><div class="links">' +
-      XI.lineups.map(function (n) { var o = oppOf(n); return '<a href="#' + luHash(s, n) + '">vs ' + esc(n) + (o && o.cls ? ' <i style="color:var(--muted);font-style:normal;font-weight:400">' + esc(o.cls) + '</i>' : '') + ' <span>&#8250;</span></a>'; }).join('') + '</div>';
     if (XI) h += '<h2>Event details</h2>' + mxBlock(s, '', true).replace('<details class="mx-d">', '<details class="mx-d" open>');
+    if (XI && XI.lineups && XI.lineups.length) h += '<h2>Possible matchups' + (/Women/.test(s.team) ? ' (boys)' : '') + '</h2><p class="mu-note">Davie\'s most recent varsity wrestler at each weight vs each team\'s RankWrestlers roster. Not the official lineup.</p><div class="links">' +
+      XI.lineups.map(function (n) { var o = oppOf(n); return '<a href="#' + luHash(s, n) + '"><span>vs ' + esc(n) + (o && o.cls ? ' <i class="mu-cls">' + esc(o.cls) + '</i>' : '') + '</span><span>&#8250;</span></a>'; }).join('') + '</div>';
     var links = (s.address ? ext('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address), 'Map') : '') + (duals.length ? floL(s).map(function (f) { return ext(f[1], f[0]); }).join('') : '');   /* before results, the status card carries the Flo links */
     if (links) h += '<div class="links" style="margin-top:14px">' + links + '</div>';
     return h;
@@ -1733,7 +1734,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     var gen = [], L = X.lineups || [];
     if (L.length) {
       if (!X.teams) gen.push([L.length > 1 ? 'Teams' : 'Opponent', L.map(function (n) { var o = oppOf(n), ly = lastYr(n); return '<b>' + esc(n) + '</b>' + (o && o.cls ? ' (' + esc(o.cls) + ')' : '') + (ly ? ' · ' + esc(ly) : ''); }).join('<br>'), ['NCHSAA', NCHL]]);
-      if (!noLu) gen.push(['Lineup', L.map(function (n) { return '<a href="#' + luHash(s, n) + '">Potential lineup vs ' + esc(n) + (/Women/.test(s.team) ? ' (boys)' : '') + ' &#8250;</a>'; }).join('<br>'), null]);
+      if (!noLu) gen.push(['Matchups', L.map(function (n) { return '<a href="#' + luHash(s, n) + '">Possible matchups vs ' + esc(n) + (/Women/.test(s.team) ? ' (boys)' : '') + ' &#8250;</a>'; }).join('<br>'), null]);
     }
     if (X.teams) gen.push([X.teams.label || 'Teams', X.teams.list.length + ' teams<details class="mx-tl"><summary>Show all ' + X.teams.list.length + '</summary><div>' +
       X.teams.list.map(function (n) { var ly = lastYr(n); return '<span>' + esc(n) + (ly ? ' <i>' + esc(ly) + '</i>' : '') + '</span>'; }).join('') + '</div></details>', X.teams.src]);
@@ -1764,7 +1765,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     if (E) D.schedule.forEach(function (s) { var X = E.events[s.date + '|' + s.team]; if (X && X.lineups) X.lineups.forEach(function (n) { if (!hit && id === luHash(s, n)) hit = [s, n, X]; }); });
     if (!hit) return null;
     var s = hit[0], n = hit[1], X = hit[2], o = oppOf(n), R = D.rankings;
-    var h = '<h1>Potential lineup</h1><div class="lu-meet"><b>' + esc(s.name) + '</b> · ' + esc(s.label) + ' · ' + esc(s.venue) + '</div>';
+    var h = '<h1>Possible matchups</h1><div class="lu-meet"><b>' + esc(s.name) + '</b> · ' + esc(s.label) + ' · ' + esc(s.venue) + '</div>';
     if (X.lineups.length > 1) h += '<nav class="seg lu-tabs" style="grid-template-columns:repeat(' + Math.min(X.lineups.length, 4) + ',minmax(0,1fr))">' + X.lineups.map(function (m) { return '<a href="#' + luHash(s, m) + '"' + (m === n ? ' class="on" aria-current="page"' : '') + '>' + esc(m) + '</a>'; }).join('') + '</nav>';
     if (!o) return h + '<div class="card" style="margin-top:12px">' + esc(n) + '\'s roster isn\'t available right now. It\'s read from RankWrestlers every morning.</div>';
     var cls = o.cls, by = luDavie(), ob = {}, other = [];
@@ -1912,7 +1913,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
         line('', 'Wrestler pages, event listings', tag('Flo', 'https://www.flowrestling.org')) +
         line('', 'Rank: wrestler rankings', tag('RankWrestlers', 'https://www.rankwrestlers.com/teams/1902928150?gender=b')) +
         line('', 'Rank: team rankings, state results', tag('NCHSAA', 'https://www.nchsaa.org/championships/wrestling-state-championships/')) +
-        line('', 'Potential lineups: opponents\' rosters', tag('RankWrestlers', 'https://www.rankwrestlers.com/')) +
+        line('', 'Possible matchups: opponents\' rosters', tag('RankWrestlers', 'https://www.rankwrestlers.com/')) +
         line('', 'Event details: start times, teams', tag('Flo', 'https://www.flowrestling.org')) +
       '</div><div class="slegend"><b>Flo</b> flowrestling.org · <b>Map</b> google.com/maps · <b>RankWrestlers</b> rankwrestlers.com · <b>NCHSAA</b> nchsaa.org<br><b>Coaches</b> the coaches\' 2026–27 schedule · <b>Video</b> gym scoreboard on video · <b>Scorebook</b> official scorebook.<br>Dashed tags are not online: that information came from the team, a parent, or the app\'s administrator.</div>' +
       '<p class="foot">This app is unofficial and isn\'t run by Davie County Schools, the NCHSAA, FloWrestling or RankWrestlers.</p>';
