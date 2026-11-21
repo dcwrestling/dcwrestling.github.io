@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121092440"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121092631"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -667,7 +667,8 @@ a.mx-src { font-size: 12px; color: var(--muted) !important; font-weight: 600; wh
 .tcard:has(.mx-d) { align-items: flex-start; } .tcard:has(.mx-d) > img, .tcard:has(.mx-d) > .ph { margin-top: 2px; }
 .lu-meet { font-size: 14px; color: var(--muted); margin: 2px 0 10px; } .lu-meet b { color: var(--fg); }
 .lu-tabs { max-width: 420px; margin: 10px 0 4px; } .lu-tabs a { white-space: nowrap; overflow: hidden; }
-.lu-tabs a { display: flex; align-items: center; justify-content: center; gap: 5px; } .lu-tlogo { width: 16px; height: 16px; object-fit: contain; flex: none; background: #fff; border-radius: 50%; padding: 1px; }   /* small school logos (Neil, 2026-11-21) */
+.lu-tabs a { display: flex; align-items: center; justify-content: center; gap: 5px; } .lu-th { display: inline-flex; align-items: center; gap: 6px; }
+.lu-tlogo { width: 16px; height: 16px; object-fit: contain; flex: none; background: #fff; border-radius: 50%; padding: 1px; }   /* small school logos (Neil, 2026-11-21) */
 .lu-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
 .lu-t td { vertical-align: top; } .lu-t .nm { font-weight: 600; } .lu-t .sm { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
 .lu-t .sm b { color: var(--accent); font-weight: 700; } .lu-t .sm b.op { color: var(--fg); } .lu-t .nobody { color: var(--muted); font-style: italic; } .lu-t .alt { display: block; font-size: 12px; color: var(--muted); margin-top: 3px; }
@@ -1796,6 +1797,8 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
       if (ae.flo) h += '<p class="mu-note" style="margin-top:8px">See for yourself: <a href="' + esc(ae.flo) + '" target="_blank" rel="noopener">FloWrestling &#8599;</a></p>';
     }
     var cls = o.cls, by = luDavie(), ob = {}, other = [];
+    var sn = (D.eventInfo.short && D.eventInfo.short[n]) || n, ol = D.eventInfo.logos && D.eventInfo.logos[n];
+    var lg = function (src) { return src ? '<img class="lu-tlogo" src="' + esc(src) + '" alt="">' : ''; };
     o.boys.forEach(function (r) { if (WTS.indexOf(r.wt) < 0) other.push(r); else (ob[r.wt] = ob[r.wt] || []).push(r); });
     Object.keys(ob).forEach(function (k) { ob[k].sort(function (a, b) { return a.rank - b.rank; }); });
     var noVars = o.boys.every(function (r) { return r.rec === '0-0'; });
@@ -1803,7 +1806,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     var tid = D.eventInfo.opponents[n], turl = 'https://www.rankwrestlers.com/teams/' + tid + '?gender=b';
     if (AD) h += '<h2>Projection made before the dual</h2>';
     h += '<p class="rk-upd">A projection from past results, not a weigh-in. Weigh-in weights aren\'t published, and a wrestler can wrestle up a weight. Davie\'s side uses each wrestler\'s most recent varsity match, including any earlier dual today, so it moves as soon as FloWrestling posts one. ' + esc(n) + '\'s roster: RankWrestlers, read <b>' + esc(rkWhen(o.readAt)) + '</b>.' + (AD ? '' : ' Once FloWrestling posts this dual, the real lineup replaces this.') + '</p>';
-    h += '<div class="lu-sum"><div class="fact"><div class="k">Davie</div><div class="v">' + dn + '/14</div><div class="s">weights filled</div></div><div class="fact"><div class="k">' + esc(n.split(' ')[0]) + '</div><div class="v">' + on + '/14</div><div class="s">weights listed</div></div><div class="fact"><div class="k">Open</div><div class="v">' + (14 - on) + '</div><div class="s">possible forfeits</div></div></div>';
+    h += '<div class="lu-sum"><div class="fact"><div class="k">Davie</div><div class="v">' + dn + '/14</div><div class="s">weights filled</div></div><div class="fact"><div class="k">' + esc(sn) + '</div><div class="v">' + on + '/14</div><div class="s">weights listed</div></div><div class="fact"><div class="k">Open</div><div class="v">' + (14 - on) + '</div><div class="s">possible forfeits</div></div></div>';
     var body = '';
     WTS.forEach(function (w) {
       var d = by[w] || [], t = ob[w] || [], d0 = d[0], t0 = t[0];
@@ -1813,7 +1816,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
       var od = t0 ? '<div><b>' + esc(t0.name) + '</b><br>Varsity ' + esc(t0.rec.replace('-', '–')) + '<br>' + (t0.score != null ? 'RW Score ' + t0.score.toFixed(3) + '<br>' : '') + '#' + t0.rank + ' in ' + esc(cls) + ' at ' + w + '<br>' + (t0.id ? rkOut('RankWrestlers', 'https://www.rankwrestlers.com/wrestler/' + t0.id) : '') + '</div>' : '<div>' + esc(n) + ' has no one listed at ' + w + '. If no one weighs in, Davie gets 6 points by forfeit.</div>';
       body += '<tr class="lu-x" hidden><td colspan="3"><div class="g">' + dd + od + '</div></td></tr>';
     });
-    h += '<h2>By weight</h2><div class="tbl lu-t"><table><thead><tr><th>Wt</th><th>Davie</th><th>' + esc(n) + '</th></tr></thead><tbody>' + body + '</tbody></table></div>';
+    h += '<h2>By weight</h2><div class="tbl lu-t"><table><thead><tr><th>Wt</th><th><span class="lu-th">' + lg('img/dc.png') + 'Davie</span></th><th><span class="lu-th">' + lg(ol) + esc(sn) + '</span></th></tr></thead><tbody>' + body + '</tbody></table></div>';
     h += '<p class="lu-note">Tap a weight for both wrestlers\' numbers. Orange = Davie wrestler\'s ' + esc(R.team['class']) + ' rank.</p>';
     if (other.length) h += '<p class="lu-note">Listed at a weight that isn\'t used in boys\' duals: ' + other.map(function (r) { return esc(r.name) + ' (' + r.wt + ')'; }).join(', ') + '.</p>';
     if (noVars) h += '<div class="card lu-card"><b>No varsity matches yet.</b> ' + esc(n) + '\'s coach has entered this roster, but none of these wrestlers has a varsity result this season, so their ranks are placeholders and the weights are the coach\'s entries.</div>';
