@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121094005"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121094700"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -669,6 +669,7 @@ a.mx-src { font-size: 12px; color: var(--muted) !important; font-weight: 600; wh
 .lu-tabs { max-width: 420px; margin: 10px 0 4px; } .lu-tabs a { white-space: nowrap; overflow: hidden; }
 .lu-tabs a { display: flex; align-items: center; justify-content: center; gap: 5px; } .lu-state { font-family: var(--body); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); vertical-align: middle; margin-left: 8px; } .lu-state.act { color: var(--accent); }   /* Projected until the dual posts, then Actual (Neil, 2026-11-21) */
 .h2h-t table { width: 100%; } .h2h-t tbody th { text-align: left; color: var(--muted); font-weight: 600; font-size: 13px; white-space: nowrap; } .h2h-t td { font-weight: 700; } .h2h-t .lu-tlogo { margin-right: 6px; vertical-align: -3px; }
+.h2h-t a.h2v { color: var(--fg); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; } .h2h-t a.h2v i { font-style: normal; color: var(--muted); font-weight: 400; }
 .h2h-m .wl { margin-right: 6px; } .h2h-chev { color: var(--muted); font-size: 22px; flex: none; margin-left: 8px; }
 .lu-th { display: inline-flex; align-items: center; gap: 6px; }
 .lu-tlogo { width: 16px; height: 16px; object-fit: contain; flex: none; background: #fff; border-radius: 50%; padding: 1px; }   /* small school logos (Neil, 2026-11-21) */
@@ -1815,19 +1816,25 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var dm = d0 ? d0.x.matches.filter(function (m) { return (m.level || 'V') === 'V' && (m.wl === 'W' || m.wl === 'L'); }) : [], ds = mstats(dm);
     var row = function (k, a, b) { return '<tr><th>' + k + '</th><td>' + a + '</td><td>' + b + '</td></tr>'; };
     var dr = d0 && d0.rk, tr = t0;
+    /* Every value opens what supports it (Neil, 2026-11-21): Davie's own numbers open the matching match list in this app
+       (varsity only); RankWrestlers numbers open that wrestler's RankWrestlers page, which lists the matches behind them. */
+    var dW = d0 ? '#' + sHash(d0.x) + '-only-' : '', rwD = dr && dr.id ? 'https://www.rankwrestlers.com/wrestler/' + dr.id : '', rwT = tr && tr.id ? 'https://www.rankwrestlers.com/wrestler/' + tr.id : '';
+    var inA = function (v, k) { return d0 && v !== '–' ? '<a class="h2v" data-setlv="V" href="' + dW + k + '">' + v + ' <i>&#8250;</i></a>' : v; };
+    var exA = function (v, u) { return u && v !== '–' ? '<a class="h2v" href="' + u + '" target="_blank" rel="noopener">' + v + ' <i>&#8599;</i></a>' : v; };
+    var tm = function (v, u) { return u && v !== '–' ? '<a class="h2v" href="' + u + '" target="_blank" rel="noopener">' + v + ' <i>&#8599;</i></a>' : v; };
     var body = row('School', lg('img/dc.png') + 'Davie', lg(ol) + esc(sn)) +
       row('Grade', esc((dr && dr.gr) || '–'), esc((tr && tr.gr) || '–')) +
-      row('Varsity record', d0 ? ds.w + '–' + ds.l : '–', tr ? esc(tr.rec.replace('-', '–')) : '–') +
-      row('Falls · tech · major', d0 ? ds.F + ' · ' + ds.TF + ' · ' + ds.MD : '–', '–') +
-      row('Bonus %', d0 ? bonus(ds) : '–', '–') +
-      row('Win %', dr ? f1(dr.win) : '–', tr ? f1(tr.win) : '–') +
-      row('Adjusted win %', dr ? f1(dr.adj) : '–', tr ? f1(tr.adj) : '–') +
-      row('3 best wins', dr ? f1(dr.top3) : '–', tr ? f1(tr.top3) : '–') +
-      row('Head-to-head adj.', dr ? (dr.h2h > 0 ? '+' : '') + f1(dr.h2h) : '–', tr ? (tr.h2h > 0 ? '+' : '') + f1(tr.h2h) : '–') +
-      row('RW Score', dr && dr.score != null ? dr.score.toFixed(3) : '–', tr && tr.score != null ? tr.score.toFixed(3) : '–') +
-      row('Rank at ' + w, dr ? '#' + dr.rank + ' ' + esc(R.team['class']) : '–', tr && tr.rec !== '0-0' ? '#' + tr.rank + ' ' + esc(o.cls) : '–') +
+      row('Varsity record', inA(d0 ? ds.w + '–' + ds.l : '–', 'record'), exA(tr ? esc(tr.rec.replace('-', '–')) : '–', rwT)) +
+      row('Falls · tech · major', inA(d0 ? ds.F + ' · ' + ds.TF + ' · ' + ds.MD : '–', 'bonus'), '–') +
+      row('Bonus %', inA(d0 ? bonus(ds) : '–', 'bonus'), '–') +
+      row('Win %', exA(dr ? f1(dr.win) : '–', rwD), exA(tr ? f1(tr.win) : '–', rwT)) +
+      row('Adjusted win %', exA(dr ? f1(dr.adj) : '–', rwD), exA(tr ? f1(tr.adj) : '–', rwT)) +
+      row('3 best wins', exA(dr ? f1(dr.top3) : '–', rwD), exA(tr ? f1(tr.top3) : '–', rwT)) +
+      row('Head-to-head adj.', exA(dr ? (dr.h2h > 0 ? '+' : '') + f1(dr.h2h) : '–', rwD), exA(tr ? (tr.h2h > 0 ? '+' : '') + f1(tr.h2h) : '–', rwT)) +
+      row('RW Score', exA(dr && dr.score != null ? dr.score.toFixed(3) : '–', rwD), exA(tr && tr.score != null ? tr.score.toFixed(3) : '–', rwT)) +
+      row('Rank at ' + w, dr ? '<a class="h2v" href="#rankings-wrestlers">#' + dr.rank + ' ' + esc(R.team['class']) + ' <i>&#8250;</i></a>' : '–', exA(tr && tr.rec !== '0-0' ? '#' + tr.rank + ' ' + esc(o.cls) : '–', rwT)) +
       row('All-American', dr && dr.aa ? 'Yes' : '–', tr && tr.aa ? 'Yes' : '–');
-    h += '<div class="tbl h2h-t"><table><thead><tr><th></th><th>' + (d0 ? esc(d0.x.name) : 'No one listed') + '</th><th>' + (t0 ? esc(t0.name) : 'No one listed') + '</th></tr></thead><tbody>' + body + '</tbody></table></div>';
+    h += '<p class="mu-note" style="margin:0 2px 8px">Tap a number to see what\'s behind it: › opens it in this app, ↗ opens RankWrestlers.</p><div class="tbl h2h-t"><table><thead><tr><th></th><th>' + (d0 ? esc(d0.x.name) : 'No one listed') + '</th><th>' + (t0 ? esc(t0.name) : 'No one listed') + '</th></tr></thead><tbody>' + body + '</tbody></table></div>';
     if (!t0) h += '<p class="mu-note">' + esc(n) + ' has no one listed at ' + w + '. If no one weighs in, Davie gets 6 points by forfeit.</p>';
     if (d.length > 1 || t.length > 1) h += '<p class="mu-note">Also at ' + w + ': ' + [d.slice(1).map(function (a) { return esc(a.x.name) + ' (Davie)'; }).join(', '), t.slice(1).map(function (a) { return esc(a.name) + ' (' + esc(sn) + ')'; }).join(', ')].filter(Boolean).join('; ') + '.</p>';
     if (dm.length) h += '<h2>' + esc(d0.x.name) + '\'s varsity matches</h2><div class="list h2h-m">' + dm.slice().reverse().slice(0, 6).map(function (m) {
@@ -2117,6 +2124,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var lr = e.target.closest('tr.lu-row'); if (lr && !e.target.closest('a')) { var lx = lr.nextElementSibling; if (lx) { lx.hidden = !lx.hidden; lr.classList.toggle('open', !lx.hidden); } return; }   /* Potential lineup: tap a weight */
     var rr = e.target.closest('tr.rk-row'); if (rr && !e.target.closest('a')) { var rx = rr.nextElementSibling; if (rx && rx.classList.contains('rk-x')) { rx.hidden = !rx.hidden; rr.classList.toggle('open', !rx.hidden); } return; }   /* Rank: tap a row for its numbers */
     var gb = e.target.closest('[data-g]'); if (gb) { setG(gb.getAttribute('data-g')); render(); return; }
+    var slv = e.target.closest('[data-setlv]'); if (slv) setL(slv.getAttribute('data-setlv'));   /* comparison links open varsity-only lists (2026-11-21) */
     var lb = e.target.closest('[data-l]'); if (lb) { var y = window.scrollY; setL(lb.getAttribute('data-l')); render(); window.scrollTo(0, y); return; }
     var f = e.target.closest('[data-fav]');
     if (f) { e.preventDefault(); toggleFav(f.getAttribute('data-fav')); var y = window.scrollY; render(); window.scrollTo(0, y); return; }
