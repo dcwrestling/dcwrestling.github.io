@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121063105"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121065611"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -441,6 +441,10 @@ table.wlt { width: 100%; border-collapse: collapse; background: var(--panel); bo
 table.wlt th { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; text-align: right; padding: 8px 12px; border-bottom: 1px solid var(--line); }
 table.wlt td { padding: 8px 12px; border-top: 1px solid var(--line); text-align: right; font-weight: 700; }
 table.wlt th:first-child, table.wlt td:first-child { text-align: left; }
+.strip .stap { cursor: pointer; position: relative; } .strip .stap::after { content: '\203A'; position: absolute; top: 4px; right: 7px; color: var(--muted); font-size: 14px; }
+@media (hover: hover) { .strip .stap:hover { background: var(--panel2); } }
+.typ a { color: inherit; text-decoration: none; } .typ a b { text-decoration: underline; text-underline-offset: 3px; }
+a.plink { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-decoration: none; color: var(--muted); } a.plink .pgo { color: var(--accent); font-weight: 700; white-space: nowrap; }
 table.wlt tr.wtap { cursor: pointer; } table.wlt th:last-child::after { content: '\203A'; visibility: hidden; margin-left: 10px; } table.wlt tr.wtap td:last-child::after { content: '\203A'; color: var(--muted); margin-left: 10px; font-weight: 400; }
 @media (hover: hover) { table.wlt tr.wtap:hover td { background: var(--panel2); } }
 table.wlt tr.tot td { background: var(--panel2); font-family: var(--display); font-size: 18px; font-weight: 900; }
@@ -1110,9 +1114,13 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     var h = '<div class="thead"><span class="wt" style="font-size:22px;padding:6px 10px">' + esc(xv.weights.join('/')) + '</span><div class="t"><h1 style="margin:0">' + esc(x.name) + '</h1>' +
       '<div class="lede" style="margin:2px 0 0">' + LVL[xv.lvl] + ' · ' + GN[x.gender] + ' · ' + esc(D.season) + ' season ' + recTxt(s) + (LV === 'all' ? '' : ' (' + LVN[LV] + ' only)') + '</div></div></div>' + lvSwitch();
     if (!xv.M.length) return h + '<p class="note">No ' + LVN[LV] + ' matches yet this season. Switch to All to see every match.</p>' + (x.profile ? '<div class="links" style="margin-top:14px">' + ext(x.profile, 'FloWrestling profile') + '</div>' : '');
-    h += '<div class="strip">' + [['Record', recTxt(s)], ['Falls', s.F], ['Tech', s.TF], ['Major', s.MD], ['Dec', s.DEC], ['Forfeit', s.FOR], ['Bonus', bonus(s)]].map(function (p) { return '<div><b>' + esc(p[1]) + '</b><span>' + p[0] + '</span></div>'; }).join('') + '<div class="sblank" aria-hidden="true"></div></div>';
+    /* Stat boxes, Duals/Tournaments and placings open just those matches (Neil, 2026-11-21) */
+    var oh = function (k) { return '#' + sHash(x) + '-only-' + k; };
+    h += '<div class="strip">' + [['Record', recTxt(s), 'record', s.w + s.l], ['Falls', s.F, 'f', s.F], ['Tech', s.TF, 'tf', s.TF], ['Major', s.MD, 'md', s.MD], ['Dec', s.DEC, 'dec', s.DEC], ['Forfeit', s.FOR, 'for', s.FOR], ['Bonus', bonus(s), 'bonus', s.F + s.TF + s.MD]].map(function (p) {
+      return '<div' + (p[3] ? ' class="stap" data-go="' + oh(p[2]) + '"' : '') + '><b>' + esc(p[1]) + '</b><span>' + p[0] + '</span></div>'; }).join('') + '<div class="sblank" aria-hidden="true"></div></div>';
     var du = mstats(xv.M.filter(function (m) { return m.kind === 'duals'; })), to = mstats(xv.M.filter(function (m) { return m.kind !== 'duals'; }));
-    h += '<p class="typ">Duals <b>' + recTxt(du) + '</b> · Tournaments <b>' + recTxt(to) + '</b></p>';
+    var ty = function (lbl, st, k) { return st.w + st.l ? '<a href="' + oh(k) + '">' + lbl + ' <b>' + recTxt(st) + '</b> &#8250;</a>' : lbl + ' <b>' + recTxt(st) + '</b>'; };
+    h += '<p class="typ">' + ty('Duals', du, 'duals') + ' · ' + ty('Tournaments', to, 'tour') + '</p>';
     var rows = {};
     xv.M.forEach(function (m) { var k = m.weight + '|' + (m.level || 'V'); (rows[k] = rows[k] || []).push(m); });
     var keys = Object.keys(rows).sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10) || (a < b ? -1 : 1); });
@@ -1122,7 +1130,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
         '<tr class="tot wtap" data-scroll=".evfold"><td>' + ({ all: 'Season total', V: 'Varsity total', JV: 'JV total' })[LV] + '</td><td>' + recTxt(s) + '</td><td>' + s.F + '</td><td>' + (s.F + s.TF + s.MD) + '</td></tr></table>';
     }
     if (s.w) h += '<p class="bonusnote">Bonus: share of wins by pin, tech fall or major decision. These earn extra team points: in dual meets 6, 5 or 4 instead of 3; at tournaments 2, 1.5 or 1 bonus points on top of advancement points.</p>';
-    (x.places || []).forEach(function (p) { if (p.place) h += '<p class="note" style="margin:8px 0 0"><b style="color:var(--fg)">' + esc(p.place) + '</b> at ' + esc(p.evName) + '</p>'; });
+    (x.places || []).forEach(function (p) { if (p.place) h += '<a class="note plink" style="margin:8px 0 0" href="#' + p.ev + '-' + esc((x.tslug && x.tslug[p.ev]) || slug(x.name)) + '"><span><b style="color:var(--fg)">' + esc(p.place) + '</b> at ' + esc(p.evName) + '</span><span class="pgo">Bracket path &#8250;</span></a>'; });
     h += evFolds(x, xv.M);
     var L = gTours().filter(function (t) { return t.status === 'live' && x.tslug && x.tslug[t.id]; });
     L.forEach(function (t) { h += '<p class="note"><a href="#' + t.id + '-' + x.tslug[t.id] + '">Today at ' + esc(t.name) + ': next bout and mat &#8250;</a></p>'; });
@@ -1140,13 +1148,37 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     h += '<div class="links" style="margin-top:14px"><a href="#' + sHash(x) + '">All of ' + esc(x.name) + '\'s matches <span>&#8250;</span></a></div>';
     return h;
   }
-  function evFolds(x, M) {
+  var ONLY = { record: 'Record', f: 'Falls', tf: 'Tech falls', md: 'Major decisions', dec: 'Decisions', 'for': 'Forfeits', bonus: 'Bonus wins', duals: 'Dual meets', tour: 'Tournaments' };
+  function mcls(m) { return ({ MFF: 'FOR', INJ: 'FOR', DQ: 'FOR', SV: 'DEC', TB: 'DEC' })[m.type] || m.type; }
+  function onlyView(x, k) {
+    var xv = XV(x), A = xv.M, sa = xv.s, W = function (c) { return function (m) { return m.wl === 'W' && c.indexOf(mcls(m)) >= 0; }; };
+    var f = { f: W(['F']), tf: W(['TF']), md: W(['MD']), dec: W(['DEC']), 'for': W(['FOR']), bonus: W(['F', 'TF', 'MD']),
+              duals: function (m) { return m.kind === 'duals'; }, tour: function (m) { return m.kind !== 'duals'; } }[k];
+    var lvTxt = LV === 'all' ? '' : ' (' + LVN[LV] + ' only)';
+    var h = '<div class="thead"><span class="wt" style="font-size:22px;padding:6px 10px">' + esc(xv.weights.join('/')) + '</span><div class="t"><h1 style="margin:0">' + esc(x.name) + '</h1>' +
+      '<div class="lede" style="margin:2px 0 0">' + ONLY[k] + ' · ' + esc(D.season) + ' season' + lvTxt + '</div></div></div>';
+    if (k === 'record') {
+      var Wn = A.filter(function (m) { return m.wl === 'W'; }), Ls = A.filter(function (m) { return m.wl === 'L'; });
+      h += '<p class="typ">Won <b>' + Wn.length + '</b> · Lost <b>' + Ls.length + '</b></p>';
+      h += '<h2>Wins (' + Wn.length + ')</h2>' + (Wn.length ? evFolds(x, Wn, 'w') : '<p class="note">No wins yet.</p>');
+      h += '<h2>Losses (' + Ls.length + ')</h2>' + (Ls.length ? evFolds(x, Ls, 'l') : '<p class="note">No losses.</p>');
+    } else {
+      var M = A.filter(f), s = mstats(M);
+      if (k === 'bonus') h += '<p class="typ">Bonus = wins by pin, tech fall or major ÷ all wins = (' + sa.F + ' + ' + sa.TF + ' + ' + sa.MD + ') ÷ ' + sa.w + ' = <b>' + bonus(sa) + '</b></p>';
+      else if (k === 'duals' || k === 'tour') h += '<p class="typ">Record <b>' + recTxt(s) + '</b> · Falls <b>' + s.F + '</b> · Bonus <b>' + bonus(s) + '</b></p>';
+      else h += '<p class="typ"><b>' + M.length + '</b> of ' + sa.w + ' wins</p>';
+      h += M.length ? evFolds(x, M, k) : '<p class="note">None this season' + lvTxt + '.</p>';
+    }
+    h += '<div class="links" style="margin-top:14px"><a href="#' + sHash(x) + '">All of ' + esc(x.name) + '\'s matches <span>&#8250;</span></a></div>';
+    return h;
+  }
+  function evFolds(x, M, tag) {
     var h = '', by = [];
     M.forEach(function (m) { var g = by.filter(function (g) { return g.ev === m.ev; })[0]; if (!g) { g = { ev: m.ev, name: m.evName, date: m.date, kind: m.kind, M: [] }; by.push(g); } g.M.push(m); });
     by.reverse().forEach(function (g) {
       var link = g.kind === 'duals' ? '#ev-' + g.ev : '#' + g.ev;
       /* Each event folds (Neil, 2026-11-16); match cards are two rows: weight, W/L, round, bout number / opponent */
-      var key = 'wr-' + x.slug + '-' + g.ev, st = mstats(g.M);
+      var key = 'wr-' + x.slug + '-' + g.ev + (tag ? '-' + tag : ''), st = mstats(g.M);
       h += '<details class="evfold"' + (OPEN[key] === false ? '' : ' open') + ' data-k="' + key + '"><summary class="h2row"><h2>' + esc(g.name) + ' <span class="ktag' + (g.kind === 'duals' ? '' : ' t') + '">' + (g.kind === 'duals' ? 'Dual' : 'Tournament') + '</span> <span class="evrec">' + recTxt(st) + '</span></h2><span class="evchev">&#8250;</span></summary>' +
         '<div class="list mcols" style="--r:' + Math.ceil(g.M.length / 2) + '">' + g.M.map(function (m, mi) {
         var colc = mi < Math.ceil(g.M.length / 2) ? ' c1' : (mi === Math.ceil(g.M.length / 2) ? ' c2top' : '');
@@ -1551,7 +1583,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     if (id === 'updates' || id === 'save' || id === 'share' || id === 'display' || id === 'sources' || id.indexOf('stats-') === 0) return ['home', 'home'];
     if (id.indexOf('save-') === 0) return ['save', 'save choices'];
     if (id === 'roster' || id === 'schedule' || id === 'results' || id === 'tournaments' || id.indexOf('rankings') === 0) return null;
-    var wb = id.match(/^wr-(.+)-at-\d+-(v|jv)$/); if (wb) { var bx = wrBySlug(wb[1]); return bx ? [sHash(bx), bx.name] : ['roster', 'roster']; }
+    var wb = id.match(/^wr-(.+)-(?:at-\d+-(?:v|jv)|only-[a-z]+)$/); if (wb) { var bx = wrBySlug(wb[1]); return bx ? [sHash(bx), bx.name] : ['roster', 'roster']; }
     if (id.indexOf('wr-') === 0) return ['roster', 'roster'];
     if (id.indexOf('lineup-') === 0) return ['schedule', 'schedule'];
     if (id.indexOf('ev-') === 0) return ['results', 'results'];
@@ -1574,6 +1606,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
       id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : /^rankings-top(1|5|10)$/.test(id) ? rankView('w', +id.slice(12)) : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
     if (id.indexOf('lineup-') === 0) { if (G !== 'boys') setG('boys'); html = lineupView(id); }   /* Potential lineup (2026-11-18) */
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
+    var om = id.match(/^wr-(.+)-only-(record|f|tf|md|dec|for|bonus|duals|tour)$/); if (om) { var ox = wrBySlug(om[1]); if (ox) { if (ox.gender !== G) setG(ox.gender); html = onlyView(ox, om[2]); } }
     var wlm = id.match(/^wr-(.+)-at-(\d+)-(v|jv)$/); if (wlm) { var wx = wrBySlug(wlm[1]); if (wx) { if (wx.gender !== G) setG(wx.gender); html = wtLevelView(wx, wlm[2], wlm[3].toUpperCase()); } }
     if (id.indexOf('ev-') === 0) { var se = evById(id.slice(3)); if (se) html = evView(se); }
     if (id.indexOf('day-') === 0) html = dayView(id.slice(4));
