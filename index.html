@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121093007"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121093214"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -952,7 +952,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
   /* LIVE / FINAL line on today's Home card, same tag as the event page (Neil, 2026-11-17) */
   function todayStatus(s) {
     if (s.date !== D.today) return '';
-    var e = D.events.filter(function (x) { return x.date === s.date && x.gender === G; })[0], d = e && e.duals[0];
+    var e = D.events.filter(function (x) { return x.date === s.date && x.gender === G; })[0], SD = e ? e.duals.filter(function (x) { return x.started !== false; }) : [], d = SD.filter(function (x) { return !x.wl; })[0] || SD[SD.length - 1];
     if (d) {
       var B = dualB(e, d), last = B.length ? B[B.length - 1].weight : null, live = !d.wl;
       return '<div class="tst"><span class="ds-pill' + (live ? ' live' : ' ' + d.wl) + '">' + (live ? 'Live' : d.wl === 'W' ? 'Final · Won' : d.wl === 'L' ? 'Final · Lost' : 'Final · Tied') + '</span>' +
@@ -1080,7 +1080,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     var opp = (s.name || '').replace(/^Dual:\s*/, '');
     var h = '<h1>' + esc(s.name) + '</h1><p class="lede" style="margin-top:2px">' + esc(s.label) + (s.time ? ' · <b>' + esc(s.time) + '</b>' : '') + ' · ' + esc(s.venue) +
       (s.drive && s.drive !== 'Home' && s.drive !== '–' ? ' · ' + esc(s.drive) + ' drive' : '') + ' · ' + esc(s.team) + '</p>';
-    var duals = e ? e.duals : [];
+    var duals = e ? e.duals.filter(function (d) { return d.started !== false; }) : [];
     if (!duals.length) {
       h += '<div class="daystat"><div class="ds-k">' + (started ? 'Underway' : 'This event has not started yet') + '</div><div class="ds-s">' +
         (started ? 'No results posted on FloWrestling yet. They\'ll show here as soon as they are.' : (s.time ? 'Wrestling starts at ' + esc(s.time) + '. ' : '') + 'Results will show here as FloWrestling posts them.') + '</div>' +
@@ -1103,7 +1103,7 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     var mapA = s.address ? '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address) + '" target="_blank" rel="noopener">Google Maps &#8599;</a>' : '';   /* the map sits inside Event details (Neil, 2026-11-21) */
     if (XI) { var mb = mxBlock(s, mapA, true).replace('<details class="mx-d"><summary>Details and sources</summary>', '<div class="mx-d">'); h += fold('day-' + s.date + '-details', 'Event details', mb.slice(0, mb.lastIndexOf('</details>')) + '</div>'); }
     if (XI && XI.lineups && XI.lineups.length) h += fold('day-' + s.date + '-matchups', 'Matchups' + (/Women/.test(s.team) ? ' (boys)' : ''), '<p class="mu-note">Projected until each dual is wrestled: Davie\'s most recent varsity wrestler at each weight vs each team\'s RankWrestlers roster. Each becomes the actual lineup when FloWrestling posts that dual.</p><div class="mu-list">' +
-      XI.lineups.map(function (n) { var o = oppOf(n), ad = actualDual(s.date, n), sn = (D.eventInfo.short && D.eventInfo.short[n]) || n; return '<a href="#' + luHash(s, n) + '"><span class="mu-n">' + (D.eventInfo.logos && D.eventInfo.logos[n] ? '<img class="mu-logo" src="' + esc(D.eventInfo.logos[n]) + '" alt="">' : '') + '<span>' + esc(sn) + '<i class="mu-cls">' + (ad ? (ad[1].wl ? (ad[1].wl === 'W' ? 'Won ' : ad[1].wl === 'L' ? 'Lost ' : 'Tied ') : 'Live ') + ad[1].us + '–' + ad[1].them : (o && o.cls ? esc(o.cls) : '')) + '</i></span></span><span>&#8250;</span></a>'; }).join('') + '</div>');
+      muOrder(s, XI).map(function (n) { var o = oppOf(n), ad = actualDual(s.date, n), sn = (D.eventInfo.short && D.eventInfo.short[n]) || n; return '<a href="#' + luHash(s, n) + '"><span class="mu-n">' + (D.eventInfo.logos && D.eventInfo.logos[n] ? '<img class="mu-logo" src="' + esc(D.eventInfo.logos[n]) + '" alt="">' : '') + '<span>' + esc(sn) + '<i class="mu-cls">' + (ad && !dualStarted(ad) ? (ad[1].round ? 'Round ' + ad[1].round + ' · ' : 'Up next · ') + (o && o.cls ? esc(o.cls) : '') : ad ? (ad[1].wl ? (ad[1].wl === 'W' ? 'Won ' : ad[1].wl === 'L' ? 'Lost ' : 'Tied ') : 'Live ') + ad[1].us + '–' + ad[1].them : (o && o.cls ? esc(o.cls) : '')) + '</i></span></span><span>&#8250;</span></a>'; }).join('') + '</div>');
     var links = (s.address && !XI ? ext('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address), 'Map') : '') + '';   /* Flo links: the status card before results, a compact line after (below) */
     if (duals.length && floL(s).length) h += '<p class="ds-chk" style="margin:12px 2px 0">See for yourself: ' + floL(s).map(function (f) { return '<a href="' + esc(f[1]) + '" target="_blank" rel="noopener">' + esc(f[0]) + ' &#8599;</a>'; }).join(' · ') + '</p>';
     if (links) h += '<div class="links" style="margin-top:14px">' + links + '</div>';
@@ -1780,15 +1780,27 @@ tr.lu-row { cursor: pointer; } tr.lu-x td { background: var(--panel2); font-size
     D.events.forEach(function (e) { if (!hit && e.date === date && e.gender === 'boys') e.duals.forEach(function (d) { if (!hit && nkey(d.opp) === nkey(n)) hit = [e, d]; }); });
     return hit;
   }
+  function dualStarted(ad) { return !!ad && ad[1].started !== false; }   /* a dual Flo has only scheduled (no bout yet) isn't "actual" */
+  /* Matchups follow the day's schedule (Neil, 2026-11-21): the dual on now, then the next ones by Flo round, then any whose
+     order isn't known yet, then finished ones. Before Flo posts rounds, events.json "order" can set it by hand. */
+  function muOrder(s, X) {
+    var L = X.lineups.slice(), base = X.order || L;
+    var rank = function (n) { var ad = actualDual(s.date, n), d = ad && ad[1];
+      if (d && dualStarted(ad) && !d.wl) return [0, d.round || 0];
+      if (d && !dualStarted(ad)) return [1, d.round || 0];
+      if (!d) return [2, base.indexOf(n) < 0 ? 99 : base.indexOf(n)];
+      return [3, d.round || 0]; };
+    return L.map(function (n, i) { return [rank(n), i, n]; }).sort(function (a, b) { return a[0][0] - b[0][0] || a[0][1] - b[0][1] || a[1] - b[1]; }).map(function (x) { return x[2]; });
+  }
   function lineupView(id) {
     var E = D.eventInfo, hit = null;
     if (E) D.schedule.forEach(function (s) { var X = E.events[s.date + '|' + s.team]; if (X && X.lineups) X.lineups.forEach(function (n) { if (!hit && id === luHash(s, n)) hit = [s, n, X]; }); });
     if (!hit) return null;
     var s = hit[0], n = hit[1], X = hit[2], o = oppOf(n), R = D.rankings;
-    var h = '<h1>Matchups <span class="lu-state' + (actualDual(s.date, n) ? ' act' : '') + '">' + (actualDual(s.date, n) ? 'Actual' : 'Projected') + '</span></h1><div class="lu-meet"><b>' + esc(s.name) + '</b> · ' + esc(s.label) + ' · ' + esc(s.venue) + '</div>';
-    if (X.lineups.length > 1) h += '<nav class="seg lu-tabs" style="grid-template-columns:repeat(' + Math.min(X.lineups.length, 3) + ',minmax(0,1fr))">' + X.lineups.map(function (m) { return '<a href="#' + luHash(s, m) + '"' + (m === n ? ' class="on" aria-current="page"' : '') + '>' + (D.eventInfo.logos && D.eventInfo.logos[m] ? '<img class="lu-tlogo" src="' + esc(D.eventInfo.logos[m]) + '" alt="">' : '') + esc((D.eventInfo.short && D.eventInfo.short[m]) || m) + '</a>'; }).join('') + '</nav>';
+    var h = '<h1>Matchups <span class="lu-state' + (dualStarted(actualDual(s.date, n)) ? ' act' : '') + '">' + (dualStarted(actualDual(s.date, n)) ? 'Actual' : 'Projected') + '</span></h1><div class="lu-meet"><b>' + esc(s.name) + '</b> · ' + esc(s.label) + ' · ' + esc(s.venue) + '</div>';
+    if (X.lineups.length > 1) h += '<nav class="seg lu-tabs" style="grid-template-columns:repeat(' + Math.min(X.lineups.length, 3) + ',minmax(0,1fr))">' + muOrder(s, X).map(function (m) { return '<a href="#' + luHash(s, m) + '"' + (m === n ? ' class="on" aria-current="page"' : '') + '>' + (D.eventInfo.logos && D.eventInfo.logos[m] ? '<img class="lu-tlogo" src="' + esc(D.eventInfo.logos[m]) + '" alt="">' : '') + esc((D.eventInfo.short && D.eventInfo.short[m]) || m) + '</a>'; }).join('') + '</nav>';
     if (!o) return h + '<div class="card" style="margin-top:12px">' + esc(n) + '\'s roster isn\'t available right now. It\'s read from RankWrestlers every morning.</div>';
-    var AD = actualDual(s.date, n);
+    var AD0 = actualDual(s.date, n), AD = dualStarted(AD0) ? AD0 : null;
     if (AD) {
       var ae = AD[0], ad = AD[1], AB = ae.bouts.filter(function (b) { return b.dual === ad.opp; }).sort(function (a, b) { return a.weight - b.weight; });
       h += '<div class="daystat score" style="margin-top:12px"><div class="ds-top"><span class="ds-pill' + (ad.wl ? ' ' + ad.wl : ' live') + '">' + (ad.wl === 'W' ? 'Final · Won' : ad.wl === 'L' ? 'Final · Lost' : ad.wl === 'T' ? 'Final · Tied' : 'Live') + '</span></div>' +
