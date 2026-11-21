@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121094700"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121094924"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -669,6 +669,7 @@ a.mx-src { font-size: 12px; color: var(--muted) !important; font-weight: 600; wh
 .lu-tabs { max-width: 420px; margin: 10px 0 4px; } .lu-tabs a { white-space: nowrap; overflow: hidden; }
 .lu-tabs a { display: flex; align-items: center; justify-content: center; gap: 5px; } .lu-state { font-family: var(--body); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); vertical-align: middle; margin-left: 8px; } .lu-state.act { color: var(--accent); }   /* Projected until the dual posts, then Actual (Neil, 2026-11-21) */
 .h2h-t table { width: 100%; } .h2h-t tbody th { text-align: left; color: var(--muted); font-weight: 600; font-size: 13px; white-space: nowrap; } .h2h-t td { font-weight: 700; } .h2h-t .lu-tlogo { margin-right: 6px; vertical-align: -3px; }
+.h2h-t table { width: auto; min-width: 100%; } .h2h-t th, .h2h-t td { white-space: nowrap; } .h2h-t tbody th { font-size: 11px !important; padding-right: 8px; } .h2h-t tbody th, .h2h-t thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--panel); } .h2h-t thead th { vertical-align: bottom; } .h2tag { display: block; font-size: 10px; letter-spacing: .06em; color: var(--muted); font-weight: 600; margin-top: 2px; } .h2h-t td.op:first-of-type, .h2h-t th.op:first-of-type { border-left: 1px solid var(--line); }
 .h2h-t a.h2v { color: var(--fg); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; } .h2h-t a.h2v i { font-style: normal; color: var(--muted); font-weight: 400; }
 .h2h-m .wl { margin-right: 6px; } .h2h-chev { color: var(--muted); font-size: 22px; flex: none; margin-left: 8px; }
 .lu-th { display: inline-flex; align-items: center; gap: 6px; }
@@ -1807,44 +1808,48 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (E) D.schedule.forEach(function (s) { var X = E.events[s.date + '|' + s.team]; if (X && X.lineups) X.lineups.forEach(function (n) { WTS.forEach(function (w) { if (!hit && id === h2hHash(s, n, w)) hit = [s, n, w]; }); }); });
     if (!hit) return null;
     var s = hit[0], n = hit[1], w = hit[2], o = oppOf(n), R = D.rankings, sn = (E.short && E.short[n]) || n, ol = E.logos && E.logos[n];
-    var d = luDavie()[w] || [], d0 = d[0], t = o ? o.boys.filter(function (r) { return r.wt === w; }).sort(function (a, b) { return a.rank - b.rank; }) : [], t0 = t[0];
+    var d = luDavie()[w] || [], t = o ? o.boys.filter(function (r) { return r.wt === w; }).sort(function (a, b) { return a.rank - b.rank; }) : [];
     var AD0 = actualDual(s.date, n), AD = dualStarted(AD0) ? AD0 : null, AB = AD ? AD[0].bouts.filter(function (b) { return b.dual === AD[1].opp && b.weight === w; }) : [];
     var lg = function (src) { return src ? '<img class="lu-tlogo" src="' + esc(src) + '" alt="">' : ''; }, f1 = function (v) { return v == null ? '–' : Number(v).toFixed(1); };
     var h = '<h1>' + w + ' lb <span class="lu-state' + (AB.length ? ' act' : '') + '">' + (AB.length ? 'Actual' : 'Projected') + '</span></h1><div class="lu-meet"><b>' + esc(s.name) + '</b> · Davie vs ' + esc(n) + '</div>';
     if (AB.length) h += '<h2>Actual bout</h2>' + boutRows(AD[0], AB);
     else if (AD) h += '<p class="mu-note">This dual is under way and no ' + w + ' bout is posted yet. The names below are the projection.</p>';
-    var dm = d0 ? d0.x.matches.filter(function (m) { return (m.level || 'V') === 'V' && (m.wl === 'W' || m.wl === 'L'); }) : [], ds = mstats(dm);
-    var row = function (k, a, b) { return '<tr><th>' + k + '</th><td>' + a + '</td><td>' + b + '</td></tr>'; };
-    var dr = d0 && d0.rk, tr = t0;
-    /* Every value opens what supports it (Neil, 2026-11-21): Davie's own numbers open the matching match list in this app
-       (varsity only); RankWrestlers numbers open that wrestler's RankWrestlers page, which lists the matches behind them. */
-    var dW = d0 ? '#' + sHash(d0.x) + '-only-' : '', rwD = dr && dr.id ? 'https://www.rankwrestlers.com/wrestler/' + dr.id : '', rwT = tr && tr.id ? 'https://www.rankwrestlers.com/wrestler/' + tr.id : '';
-    var inA = function (v, k) { return d0 && v !== '–' ? '<a class="h2v" data-setlv="V" href="' + dW + k + '">' + v + ' <i>&#8250;</i></a>' : v; };
+    /* One column per wrestler at this weight, Davie's then the opponent's, likeliest first (Neil, 2026-11-21: more than one wrestler = more columns).
+       Every value opens what supports it: › this app (Davie's own numbers, varsity only), ↗ RankWrestlers (numbers only RankWrestlers has). */
+    var inA = function (v, base, k) { return base && v !== '–' ? '<a class="h2v" data-setlv="V" href="' + base + k + '">' + v + ' <i>&#8250;</i></a>' : v; };
     var exA = function (v, u) { return u && v !== '–' ? '<a class="h2v" href="' + u + '" target="_blank" rel="noopener">' + v + ' <i>&#8599;</i></a>' : v; };
-    var tm = function (v, u) { return u && v !== '–' ? '<a class="h2v" href="' + u + '" target="_blank" rel="noopener">' + v + ' <i>&#8599;</i></a>' : v; };
-    var body = row('School', lg('img/dc.png') + 'Davie', lg(ol) + esc(sn)) +
-      row('Grade', esc((dr && dr.gr) || '–'), esc((tr && tr.gr) || '–')) +
-      row('Varsity record', inA(d0 ? ds.w + '–' + ds.l : '–', 'record'), exA(tr ? esc(tr.rec.replace('-', '–')) : '–', rwT)) +
-      row('Falls · tech · major', inA(d0 ? ds.F + ' · ' + ds.TF + ' · ' + ds.MD : '–', 'bonus'), '–') +
-      row('Bonus %', inA(d0 ? bonus(ds) : '–', 'bonus'), '–') +
-      row('Win %', exA(dr ? f1(dr.win) : '–', rwD), exA(tr ? f1(tr.win) : '–', rwT)) +
-      row('Adjusted win %', exA(dr ? f1(dr.adj) : '–', rwD), exA(tr ? f1(tr.adj) : '–', rwT)) +
-      row('3 best wins', exA(dr ? f1(dr.top3) : '–', rwD), exA(tr ? f1(tr.top3) : '–', rwT)) +
-      row('Head-to-head adj.', exA(dr ? (dr.h2h > 0 ? '+' : '') + f1(dr.h2h) : '–', rwD), exA(tr ? (tr.h2h > 0 ? '+' : '') + f1(tr.h2h) : '–', rwT)) +
-      row('RW Score', exA(dr && dr.score != null ? dr.score.toFixed(3) : '–', rwD), exA(tr && tr.score != null ? tr.score.toFixed(3) : '–', rwT)) +
-      row('Rank at ' + w, dr ? '<a class="h2v" href="#rankings-wrestlers">#' + dr.rank + ' ' + esc(R.team['class']) + ' <i>&#8250;</i></a>' : '–', exA(tr && tr.rec !== '0-0' ? '#' + tr.rank + ' ' + esc(o.cls) : '–', rwT)) +
-      row('All-American', dr && dr.aa ? 'Yes' : '–', tr && tr.aa ? 'Yes' : '–');
-    h += '<p class="mu-note" style="margin:0 2px 8px">Tap a number to see what\'s behind it: › opens it in this app, ↗ opens RankWrestlers.</p><div class="tbl h2h-t"><table><thead><tr><th></th><th>' + (d0 ? esc(d0.x.name) : 'No one listed') + '</th><th>' + (t0 ? esc(t0.name) : 'No one listed') + '</th></tr></thead><tbody>' + body + '</tbody></table></div>';
-    if (!t0) h += '<p class="mu-note">' + esc(n) + ' has no one listed at ' + w + '. If no one weighs in, Davie gets 6 points by forfeit.</p>';
-    if (d.length > 1 || t.length > 1) h += '<p class="mu-note">Also at ' + w + ': ' + [d.slice(1).map(function (a) { return esc(a.x.name) + ' (Davie)'; }).join(', '), t.slice(1).map(function (a) { return esc(a.name) + ' (' + esc(sn) + ')'; }).join(', ')].filter(Boolean).join('; ') + '.</p>';
-    if (dm.length) h += '<h2>' + esc(d0.x.name) + '\'s varsity matches</h2><div class="list h2h-m">' + dm.slice().reverse().slice(0, 6).map(function (m) {
-      return '<a class="row" href="' + m.href + '"><div class="t"><div class="n"><span class="wl ' + m.wl + '">' + m.wl + '</span> ' + esc(m.result || '') + '</div><div class="m">vs ' + esc(m.opp || 'opponent not posted') + (m.oppTeam ? ' · ' + esc(m.oppTeam) : '') + ' · ' + esc(m.evName || '') + '</div></div><span class="h2h-chev">&#8250;</span></a>'; }).join('') + '</div>' +
-      (dm.length > 6 ? '<p class="mu-note"><a href="#' + sHash(d0.x) + '">All ' + dm.length + ' varsity matches &#8250;</a></p>' : '');
-    h += rkFold('How these numbers work', RKHOW(true, R) + '<br><br><b>Falls, tech, major and bonus %</b> come from this app\'s results for Davie; RankWrestlers doesn\'t publish them for other teams.');
+    var cols = [];
+    d.forEach(function (a, i) {
+      var dm = a.x.matches.filter(function (m) { return (m.level || 'V') === 'V' && (m.wl === 'W' || m.wl === 'L'); }), ds = mstats(dm), r = a.rk, u = r && r.id ? 'https://www.rankwrestlers.com/wrestler/' + r.id : '', base = '#' + sHash(a.x) + '-only-';
+      cols.push({ name: a.x.name, tag: i ? 'also' : 'likely', school: lg('img/dc.png') + 'Davie', grade: esc((r && r.gr) || '–'), rec: inA(ds.w + '–' + ds.l, base, 'record'),
+        ftm: inA(ds.F + ' · ' + ds.TF + ' · ' + ds.MD, base, 'bonus'), bonus: inA(bonus(ds), base, 'bonus'), win: exA(r ? f1(r.win) : '–', u), adj: exA(r ? f1(r.adj) : '–', u),
+        top3: exA(r ? f1(r.top3) : '–', u), h2h: exA(r ? (r.h2h > 0 ? '+' : '') + f1(r.h2h) : '–', u), score: exA(r && r.score != null ? r.score.toFixed(3) : '–', u),
+        rank: r ? '<a class="h2v" href="#rankings-wrestlers">#' + r.rank + ' ' + esc(R.team['class']) + ' <i>&#8250;</i></a>' : '–', aa: r && r.aa ? 'Yes' : '–', rw: u, x: a.x, dm: dm });
+    });
+    if (!d.length) cols.push({ name: 'No one listed', tag: 'Davie', school: lg('img/dc.png') + 'Davie', empty: true });
+    t.forEach(function (r, i) {
+      var u = r.id ? 'https://www.rankwrestlers.com/wrestler/' + r.id : '';
+      cols.push({ name: r.name, tag: i ? 'or' : 'likely', school: lg(ol) + esc(sn), grade: esc(r.gr || '–'), rec: exA(esc(r.rec.replace('-', '–')), u), ftm: '–', bonus: '–',
+        win: exA(f1(r.win), u), adj: exA(f1(r.adj), u), top3: exA(f1(r.top3), u), h2h: exA((r.h2h > 0 ? '+' : '') + f1(r.h2h), u), score: exA(r.score != null ? r.score.toFixed(3) : '–', u),
+        rank: exA(r.rec !== '0-0' ? '#' + r.rank + ' ' + esc(o.cls) : '–', u), aa: r.aa ? 'Yes' : '–', rw: u, opp: true });
+    });
+    if (!t.length) cols.push({ name: 'No one listed', tag: sn, school: lg(ol) + esc(sn), empty: true, opp: true });
+    var rows = [['School', 'school'], ['Grade', 'grade'], ['Varsity', 'rec'], ['Pin · TF · MD', 'ftm'], ['Bonus', 'bonus'], ['Win %', 'win'], ['Adj. win %', 'adj'],
+      ['Best 3 wins', 'top3'], ['Head-to-head', 'h2h'], ['RW Score', 'score'], ['Rank', 'rank'], ['All-Am.', 'aa']];   /* short labels: room for more wrestler columns */
+    var body = rows.map(function (rw) { return '<tr><th>' + rw[0] + '</th>' + cols.map(function (c) { return '<td' + (c.opp ? ' class="op"' : '') + '>' + (rw[1] === 'school' ? c.school : c.empty ? '–' : c[rw[1]]) + '</td>'; }).join('') + '</tr>'; }).join('');
+    h += '<p class="mu-note" style="margin:0 2px 8px">Tap a number to see what\'s behind it: › opens it in this app, ↗ opens RankWrestlers.' + (cols.length > 2 ? ' More than one wrestler is listed at ' + w + ', so each has a column; swipe the table sideways to see them all.' : '') + '</p>';
+    h += '<div class="tbl h2h-t"><table><thead><tr><th></th>' + cols.map(function (c) { return '<th' + (c.opp ? ' class="op"' : '') + '>' + esc(c.name) + '<span class="h2tag">' + esc(c.tag) + '</span></th>'; }).join('') + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+    if (!t.length) h += '<p class="mu-note">' + esc(n) + ' has no one listed at ' + w + '. If no one weighs in, Davie gets 6 points by forfeit.</p>';
+    cols.forEach(function (c) {
+      if (!c.dm || !c.dm.length) return;
+      h += '<h2>' + esc(c.name) + '\'s varsity matches</h2><div class="list h2h-m">' + c.dm.slice().reverse().slice(0, 6).map(function (m) {
+        return '<a class="row" href="' + m.href + '"><div class="t"><div class="n"><span class="wl ' + m.wl + '">' + m.wl + '</span> ' + esc(m.result || '') + '</div><div class="m">vs ' + esc(m.opp || 'opponent not posted') + (m.oppTeam ? ' · ' + esc(m.oppTeam) : '') + ' · ' + esc(m.evName || '') + '</div></div><span class="h2h-chev">&#8250;</span></a>'; }).join('') + '</div>' +
+        (c.dm.length > 6 ? '<p class="mu-note"><a href="#' + sHash(c.x) + '">All ' + c.dm.length + ' varsity matches &#8250;</a></p>' : '');
+    });
+    h += rkFold('How these numbers work', RKHOW(true, R) + '<br><br><b>Likely, also, or:</b> the first name on each side is the likeliest at ' + w + ' (Davie: most recent varsity match there; ' + esc(n) + ': highest ranked listed there). The others are listed at the same weight.<br><br><b>Falls, tech, major and bonus %</b> come from this app\'s results for Davie; RankWrestlers doesn\'t publish them for other teams.');
     var src = [];
-    if (dr && dr.id) src.push('<a href="https://www.rankwrestlers.com/wrestler/' + dr.id + '" target="_blank" rel="noopener">RankWrestlers &#8599;</a> (' + esc(d0.x.name) + ')');
-    if (tr && tr.id) src.push('<a href="https://www.rankwrestlers.com/wrestler/' + tr.id + '" target="_blank" rel="noopener">RankWrestlers &#8599;</a> (' + esc(t0.name) + ')');
-    if (d0 && d0.x.profile) src.push('<a href="' + esc(d0.x.profile) + '" target="_blank" rel="noopener">FloWrestling &#8599;</a> (' + esc(d0.x.name) + ')');
+    cols.forEach(function (c) { if (c.rw) src.push('<a href="' + c.rw + '" target="_blank" rel="noopener">RankWrestlers &#8599;</a> (' + esc(c.name) + ')'); });
+    cols.forEach(function (c) { if (c.x && c.x.profile) src.push('<a href="' + esc(c.x.profile) + '" target="_blank" rel="noopener">FloWrestling &#8599;</a> (' + esc(c.name) + ')'); });
     if (src.length) h += '<p class="ds-chk" style="margin:14px 2px 0">See for yourself: ' + src.join(' · ') + '</p>';
     return h;
   }
