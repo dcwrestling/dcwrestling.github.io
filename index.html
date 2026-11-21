@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121104342"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261121105114"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -672,6 +672,11 @@ a.mx-src { font-size: 12px; color: var(--muted) !important; font-weight: 600; wh
 .h2h-t table { width: auto; min-width: 100%; } .h2h-t th, .h2h-t td { white-space: nowrap; } .h2h-t tbody th { font-size: 11px !important; padding-right: 8px; } .h2h-t tbody th, .h2h-t thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--panel); } .h2h-t thead th { vertical-align: bottom; } .h2tag { display: block; font-size: 10px; letter-spacing: .06em; color: var(--muted); font-weight: 600; margin-top: 2px; } .h2h-t .dprim { border-right: 2px solid var(--line); }
 .h2h-t a.h2v { color: var(--fg); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; } .h2h-t a.h2v i { font-style: normal; color: var(--muted); font-weight: 400; }
 .h2h-m .wl { margin-right: 6px; } .h2h-chev { color: var(--muted); font-size: 22px; flex: none; margin-left: 8px; }
+.ktag.today { background: var(--accent); color: var(--ink, #111); border-color: var(--accent); } .wt-fold .wt-sub2 { color: var(--muted); font-size: 13.5px; margin: -2px 2px 6px; } .wt-sub a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.wtoday { margin: 6px 0 10px; border: 1px solid var(--accent); border-radius: 12px; background: var(--panel); overflow: hidden; }
+.wtoday .wt-h { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px; color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); } .wt-k { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); } .wt-m { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; } .wt-go { color: var(--muted); }
+.wt-sub { padding: 8px 12px 4px; font-size: 12px; color: var(--muted); } .wt-sub b { color: var(--fg); }
+.wt-r { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 12px; color: var(--fg); text-decoration: none; border-top: 1px solid var(--line); font-size: 14px; } .wt-r img { width: 18px; height: 18px; object-fit: contain; background: #fff; border-radius: 50%; padding: 1px; } .wt-r .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; } .wt-r .n i { font-style: normal; font-weight: 400; color: var(--muted); margin-left: 4px; } .wt-r .r { font-size: 12.5px; color: var(--muted); white-space: nowrap; } .wt-r .r b { color: var(--fg); }
 .lu-th { display: inline-flex; align-items: center; gap: 6px; }
 .lu-tlogo { width: 16px; height: 16px; object-fit: contain; flex: none; background: #fff; border-radius: 50%; padding: 1px; }   /* small school logos (Neil, 2026-11-21) */
 .lu-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
@@ -1151,6 +1156,36 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       return m ? '<a class="wr cdw" href="' + m.href + '">' + c + '</a>' : '<div class="wr cdw">' + c + '</div>';
     }).join('') + '</div>';
   }
+  /* Today's event at the top of a wrestler's page (Neil, 2026-11-21): where and when, his results so far today, and,
+     before he wrestles, his projected opponent from each school (in the day's order), each opening the comparison page. */
+  function wrToday(x) {
+    var s = D.schedule.filter(function (q) { return q.date === D.today && q.genders.indexOf(x.gender) >= 0; })[0];
+    if (!s) return '';
+    var h = '<div class="wtoday">';
+    var TM = x.matches.filter(function (m) { return m.date === D.today && (m.wl === 'W' || m.wl === 'L'); });
+    if (TM.length) { var st = mstats(TM); h += '<div class="wt-sub">Today so far <b>' + recTxt(st) + '</b></div>' + TM.map(function (m) { return '<a class="wt-r" href="' + m.href + '"><span class="wl ' + m.wl + '">' + m.wl + '</span><span class="n">vs ' + esc(m.opp || 'opponent not posted') + (m.oppTeam ? ' <i>' + esc(m.oppTeam) + '</i>' : '') + '</span><span class="r">' + esc(m.result || '') + '</span></a>'; }).join(''); }
+    var X = evInfo(s), E = D.eventInfo;
+    if (x.gender === 'boys' && X && X.lineups && X.lineups.length) {
+      var w = null, alsoTxt = '', by = luDavie(), all = luAllDavie();
+      WTS.forEach(function (k) { if (!w && by[k] && by[k][0] && by[k][0].x === x) w = k; });
+      if (!w) WTS.forEach(function (k) { if (!w && all[k] && all[k].some(function (a) { return a.x === x; })) { w = k; alsoTxt = ' (another Davie wrestler is projected there)'; } });
+      if (w) {
+        var rows = muOrder(s, X).map(function (n) {
+          var o = oppOf(n), sn = (E.short && E.short[n]) || n, lg = E.logos && E.logos[n], AD = actualDual(s.date, n);
+          var mine = AD && dualStarted(AD) ? AD[0].bouts.filter(function (b) { return b.dual === AD[1].opp && b.name === x.name; })[0] : null;
+          var t0 = o ? o.boys.filter(function (r) { return r.wt === w; }).sort(function (a, b) { return a.rank - b.rank; })[0] : null;
+          var right = mine ? '<span class="wl ' + mine.wl + '">' + mine.wl + '</span>' : t0 ? esc(t0.rec.replace('-', '–')) + (t0.rec !== '0-0' ? ' · <b>#' + t0.rank + '</b>' : '') : '';
+          return '<a class="wt-r" href="#' + h2hHash(s, n, w) + '">' + (lg ? '<img src="' + esc(lg) + '" alt="">' : '') + '<span class="n">' + esc(sn) + ' <i>' + (mine ? 'vs ' + esc(mine.opp || '') : t0 ? esc(t0.name) : 'no one listed') + '</i></span><span class="r">' + right + '</span></a>';
+        }).join('');
+        h += '<div class="wt-sub">Projected at <b>' + w + '</b>' + esc(alsoTxt) + ' · each school\'s likely opponent</div>' + rows;
+        var proj = w;
+      }
+    }
+    h += '<div class="wt-sub"><a href="#day-' + s.date + '">' + esc(s.name) + ' event page &#8250;</a></div></div>';
+    /* one event heading at the top of his event list, opening in place like the others (Neil, 2026-11-21: no new screen when one exists) */
+    var sub = (s.time ? esc(s.time) + ' · ' : '') + esc(s.venue) + (proj ? ' · projected at ' + proj : '') + (TM.length ? ' · today ' + recTxt(mstats(TM)) : '');
+    return '<section class="wt-fold"><div class="h2row"><h2>' + esc(s.name) + ' <span class="ktag today">Today</span></h2></div><div class="wt-sub2">' + sub + '</div>' + h + '</section>';   /* always open; past events below start collapsed (Neil, 2026-11-21) */
+  }
   function seasonWrestler(x) {
     /* Follows the All / Varsity / JV filter: record, Duals · Tournaments line, weight/level table with a total, and the match list (2026-11-15). */
     var xv = XV(x), s = xv.s, LVL = { V: 'Varsity', JV: 'JV', 'V/JV': 'Varsity and JV' };
@@ -1174,7 +1209,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     }
     if (s.w) h += '<p class="bonusnote">Bonus: share of wins by pin, tech fall or major decision. These earn extra team points: in dual meets 6, 5 or 4 instead of 3; at tournaments 2, 1.5 or 1 bonus points on top of advancement points.</p>';
     (x.places || []).forEach(function (p) { if (p.place) h += '<a class="note plink" style="margin:8px 0 0" href="#' + p.ev + '-' + esc((x.tslug && x.tslug[p.ev]) || slug(x.name)) + '"><span><b style="color:var(--fg)">' + esc(p.place) + '</b> at ' + esc(p.evName) + '</span><span class="pgo">Bracket path &#8250;</span></a>'; });
-    h += evFolds(x, xv.M);
+    h += wrToday(x) + evFolds(x, xv.M);
     var L = gTours().filter(function (t) { return t.status === 'live' && x.tslug && x.tslug[t.id]; });
     L.forEach(function (t) { h += '<p class="note"><a href="#' + t.id + '-' + x.tslug[t.id] + '">Today at ' + esc(t.name) + ': next bout and mat &#8250;</a></p>'; });
     if (x.profile) h += '<div class="links" style="margin-top:14px">' + ext(x.profile, 'FloWrestling profile') + '</div>';
@@ -1222,7 +1257,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       var link = g.kind === 'duals' ? '#ev-' + g.ev : '#' + g.ev;
       /* Each event folds (Neil, 2026-11-16); match cards are two rows: weight, W/L, round, bout number / opponent */
       var key = 'wr-' + x.slug + '-' + g.ev + (tag ? '-' + tag : ''), st = mstats(g.M);
-      h += '<details class="evfold"' + (OPEN[key] === false ? '' : ' open') + ' data-k="' + key + '"><summary class="h2row"><h2>' + esc(g.name) + ' <span class="ktag' + (g.kind === 'duals' ? '' : ' t') + '">' + (g.kind === 'duals' ? 'Dual' : 'Tournament') + '</span> <span class="evrec">' + recTxt(st) + '</span></h2><span class="evchev">&#8250;</span></summary>' +
+      h += '<details class="evfold"' + (OPEN[key] ? ' open' : '') + ' data-k="' + key + '"><summary class="h2row"><h2>' + esc(g.name) + ' <span class="ktag' + (g.kind === 'duals' ? '' : ' t') + '">' + (g.kind === 'duals' ? 'Dual' : 'Tournament') + '</span> <span class="evrec">' + recTxt(st) + '</span></h2><span class="evchev">&#8250;</span></summary>' +
         '<div class="list mcols" style="--r:' + Math.ceil(g.M.length / 2) + '">' + g.M.map(function (m, mi) {
         var colc = mi < Math.ceil(g.M.length / 2) ? ' c1' : (mi === Math.ceil(g.M.length / 2) ? ' c2top' : '');
         var b = { wl: m.wl, round: m.round, opp: m.opp || (/^(FOR|MFF)$/.test(m.type) ? 'No opponent (forfeit)' : ''), oppTeam: m.opp ? m.oppTeam : '', result: m.result, weight: m.weight };
