@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261122075921"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261122115203"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -325,7 +325,7 @@ td.num, th.num { text-align: right; }
 .rr { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
 .rr:last-child { border-bottom: 0; }
 .rr .rra { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; text-decoration: none; color: var(--fg); min-height: 36px; }
-.rr .star { border: 0; background: transparent; width: 40px; height: 40px; font-size: 24px; color: var(--muted); }
+.rr .star { border: 0; background: transparent; width: 40px; height: 40px; font-size: 15px; color: var(--muted); }   /* ~40% smaller (Neil, 2026-11-22) */
 .rr .star.on { color: var(--accent); background: transparent; }
 /* Orange text means it can be tapped (Neil, 2026-11-21: "Misleading to have items in orange that are not linked"). Less orange (Neil approved the mockup, 2026-11-15): orange marks only "you are here" and "tap this first" (selected tab, main buttons, NEXT, starred favorite, brand line). */
 h2 { color: var(--muted) !important; }
@@ -523,7 +523,24 @@ img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .bnav .seg a svg { width: 20px; height: 20px; }
 body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
 /* Page titles nudged up so they aren't pressed against the Boys/Girls toggles; nothing else moves (Neil, 2026-11-15) */
-.view > h1:not(.hometitle) { position: relative; top: -8px; }
+.view > h1:not(.hometitle) { position: relative; top: -8px; text-align: center; text-wrap: balance; }   /* page titles centered (Neil, 2026-11-22) */
+/* Home directory (Neil, 2026-11-22) */
+.dir { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; max-width: 560px; margin-left: auto; margin-right: auto; }
+.dir a { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; text-decoration: none; color: var(--fg); box-shadow: 0 2px 0 rgba(0,0,0,.35); }
+.dir .dsq { flex: none; display: grid; grid-template-columns: repeat(2, var(--sq, 160px)); gap: 10px; justify-content: center; }
+.dir .dsq a { width: var(--sq, 160px); height: var(--sq, 160px); }
+.dir .dbar { flex: 1 1 0; min-height: 54px; flex-direction: row; gap: 12px; padding: 0 14px; }
+.dir svg { width: 38px; height: 38px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: var(--accent); flex: none; }
+.dir .dbar svg { width: 30px; height: 30px; }
+.dir b { font-family: var(--display); font-size: 19px; font-weight: 800; text-align: center; line-height: 1.08; }
+.dir .dsq b { height: 2.2em; display: flex; align-items: center; justify-content: center; }
+.dir .dbt { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; } .dir .dbt b { text-align: left; }
+.dir .dbt i { font-style: normal; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; max-width: 100%; }
+.dir a.lv { border-color: var(--live); } .dir a.lv svg { stroke: var(--live); color: var(--live); }
+.addw { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 0 0; padding: 12px; border: 1.5px dashed var(--accent); border-radius: 12px; color: var(--accent); font-weight: 700; text-decoration: none; font-size: 15px; }
+.mu-r { display: flex; align-items: center; gap: 10px; }
+#app *, #bnav * { text-overflow: clip !important; }
+.fadeon { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
 .fsum2 { color: var(--muted); font-size: 14px; } .fsum2 b { color: var(--fg); }
 .flast { color: var(--muted); font-size: 13px; } .flast .wl { transform: scale(.8); vertical-align: -1px; }
 .favrow { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--fg); }
@@ -711,7 +728,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     <a href="#share"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share this app</a>
     <a href="#display"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path class="half" d="M12 4a8 8 0 0 1 0 16z"/></svg>Display<span class="v" id="menutheme"></span></a>
     <a href="#updates"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>About these updates</a>
-    <a href="#sources"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Sources</a>
+    <a href="#sources"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Data Sources</a>
   </nav>
 </div></header>
 
@@ -899,7 +916,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     return withLevel ? '<div class="fbar">' + g + lvSwitch() + '</div>' : g;
   }
   function siteNav(on) {
-    var T = [['home', 'Home', 'home'], ['roster', 'Roster', 'wrestlers'], ['schedule', 'Schedule', 'schedule'], ['results', 'Results', 'results'], ['rankings', 'Rank', 'rank']];   /* Rank tab added 2026-11-18 (Neil) */   /* Events tab dropped 2026-11-15 (Neil): Results covers finished events, Schedule upcoming, Home's Today a live tournament */
+    var T = [['home', 'Home', 'home'], ['schedule', 'Schedule', 'schedule'], ['results', 'Results', 'results'], ['roster', 'Roster', 'roster'], ['rankings', 'Team', 'rank']];   /* same order as the Home cards; Rank renamed Team (Neil, 2026-11-22) */   /* Rank tab added 2026-11-18 (Neil) */   /* Events tab dropped 2026-11-15 (Neil): Results covers finished events, Schedule upcoming, Home's Today a live tournament */
     return segNav(T.map(function (x) { return ['#' + x[0], x[1], x[2], x[0] === on]; }), on, 'snav');
   }
   function WR() { return D.wrestlers.filter(function (x) { return x.gender === G && (LV === 'all' || x.matches.some(function (m) { return (m.level || 'V') === LV; }) || (!x.matches.length && x.level === LV)); }); }
@@ -935,32 +952,66 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       return '<a class="favrow" href="#' + sHash(x) + '">' + wtBadge(w.weight, w.level) + '<span class="fn">' + esc(x.name) + '</span><span class="fr">' + recTxt(xv.s) + '</span><span class="fgo">&#8250;</span></a>';
     }).join('') + '</div>';
   }
-  function home() {
-    var tt = teamTotals(), st = tt.st, nx = nextEvent(), lt = liveTour();
-    var pct = st.w + st.l ? (100 * st.w / (st.w + st.l)).toFixed(1) + '%' : '–';
-    var h = saveBar() + '<h1 class="hometitle">Davie County Wrestling ' + esc(D.season) + '</h1>' + gSwitch(true) + siteNav('home');
-    h += '<div class="facts facts3">' +
+  function seasonFacts() {
+    var tt = teamTotals(), st = tt.st, pct = st.w + st.l ? (100 * st.w / (st.w + st.l)).toFixed(1) + '%' : '–';
+    return '<div class="facts facts3">' +
       (LV === 'JV' ? '<div class="fact"><div class="k">Duals</div><div class="v">–</div><div class="s">No JV duals</div></div>' : '<a class="fact" href="#results"><div class="k">Duals</div><div class="v">' + (tt.dw + tt.dl ? tt.dw + '–' + tt.dl : '–') + '</div><div class="s">' + (tt.dn ? tt.dn + ' pending' : tt.dw + tt.dl ? 'Team duals' : 'No duals yet') + '</div></a>') +
       '<a class="fact" href="#stats-matches"><div class="k">Matches</div><div class="v">' + recTxt(st) + '</div><div class="s">' + pct + ' wins</div></a>' +
       '<a class="fact" href="#stats-falls"><div class="k">Falls</div><div class="v">' + st.F + '</div><div class="s">Pins</div></a>' +
       '<a class="fact" href="#stats-bonus"><div class="k">Bonus</div><div class="v">' + (st.F + st.TF + st.MD) + '</div><div class="s">of ' + st.w + ' wins</div></a>' +
       '</div>';
-    var mine = seasonFavs();
-    h += '<div class="hcols"><div class="hcol">';
-    h += '<h2>My Wrestlers</h2>' + (mine || '<div class="mine-empty">Tap &#9734; next to any wrestler on the <a href="#roster">Roster</a> to keep them here with their record and latest match. Saved on this device only.</div>');
-    /* Homepage shows only today's event (live) or the next one (Neil, 2026-11-15). Past tournaments live under Results and Events. */
-    h += '<div class="dk-only">' + '<p class="foot">Season records combine dual meets and tournaments. Updated from FloWrestling.<br><a href="#save" style="color:var(--accent)">Save this page to your phone &#8250;</a></p>' + '</div>';
-    h += '</div><div class="hcol">';
-    var td = gSched().filter(function (s) { return s.date === D.today; })[0];
-    if (lt) h += '<h2>Today</h2><a class="tcard live" href="#' + lt.id + '">' + logo(lt.logo) + '<div class="t"><div>' + pill(lt) + '</div><div class="n">' + esc(lt.name) + '</div><div class="m">' + esc(lt.statusNote || (lt.day + ', ' + lt.date)) + '</div></div><span class="go">OPEN &#8250;</span></a>';
-    else if (td) h += '<h2>Today</h2>' + nextCard(td);
-    else if (nx) h += '<h2>Next up</h2>' + nextCard(nx);
-    var shown = lt ? null : (td || nx);
-    var up = gSched().filter(function (s) { return s.date > D.today && s !== shown; }).slice(0, 3);
-    if (up.length) h += '<div class="h2row"><h2>Coming up</h2><a href="#schedule">Full schedule &#8250;</a></div><div class="list">' + up.map(schedRow).join('') + '</div>';
-    h += '</div></div>';
-    h += '<div class="ph-only">' + '<p class="foot">Season records combine dual meets and tournaments. Updated from FloWrestling.<br><a href="#save" style="color:var(--accent)">Save this page to your phone &#8250;</a></p>' + '</div>';
-    return h;
+  }
+  /* Home is a directory (Neil, 2026-11-22): a header card (Up Next, or Live Now on an event day), six square cards, a Data Sources bar.
+     Squares are one size every day and everything fits one screen above the bottom menu (fitHome sizes them). */
+  function svgI(k) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[k] + '</svg>'; }
+  function kindOf(s) { return s.name.indexOf(':') > 0 ? s.name.split(':')[0] : s.name; }
+  function homeHead() {
+    var lt = liveTour(), td = gSched().filter(function (s) { return s.date === D.today; })[0], nx = nextEvent();
+    var bar = function (href, ic, title, sub, lv) { return '<a href="' + href + '" class="dbar' + (lv ? ' lv' : '') + '">' + svgI(ic) + '<span class="dbt"><b>' + title + '</b><i>' + sub + '</i></span></a>'; };
+    if (lt) return bar('#' + lt.id, 'live', 'Live Now', esc(lt.name + (lt.statusNote ? ' · ' + lt.statusNote : '')), true);
+    if (td) {   /* event day: the score so far, opening today's event page */
+      var e = D.events.filter(function (x) { return x.date === td.date && x.gender === G; })[0], SD = e ? e.duals.filter(function (x) { return x.started !== false; }) : [], d = SD.filter(function (x) { return !x.wl; })[0] || SD[SD.length - 1];
+      if (d && !d.wl) return bar('#day-' + td.date, 'live', isOver(td.date) ? 'Pending Updates' : 'Live Now', esc(kindOf(td)) + ' · Davie ' + (d.us != null ? d.us : '–') + '–' + (d.them != null ? d.them : '–') + ' ' + esc(d.opp), true);
+      if (d) return bar('#day-' + td.date, 'calck', 'Today · Final', esc(kindOf(td)) + ' · ' + (d.wl === 'W' ? 'Won ' : d.wl === 'L' ? 'Lost ' : 'Tied ') + d.us + '–' + d.them + ' vs ' + esc(d.opp), false);
+      var st = startMs(td), lv = LIVE && !isNaN(st) && Date.now() >= st;
+      return bar('#day-' + td.date, lv ? 'live' : 'calck', lv ? 'Live Now' : 'Today', esc(kindOf(td)) + (td.time ? ' · ' + esc(td.time) : '') + (lv ? ' · no results yet' : ''), lv);
+    }
+    if (nx) return bar('#schedule-next', 'calck', 'Up Next', esc(kindOf(nx)) + ' · ' + esc(nx.label) + (nx.time ? ' · ' + esc(nx.time) : ''), false);   /* opens the Schedule at the next event, expanded */
+    return bar('#schedule', 'cal', 'Season Schedule', 'No more events this season', false);
+  }
+  function home() {
+    var sq = [['#schedule', 'schedule', 'Season', 'Schedule'], ['#results', 'results', 'Match', 'Results'], ['#roster', 'roster', 'Davie', 'Roster'],
+              ['#mywrestlers', 'star', 'My', 'Wrestlers'], ['#rankings', 'rank', 'Team', 'Stats'], ['#matchups', 'vs', 'Opponent', 'Matchups']];
+    return '<div class="dir">' + homeHead() + '<div class="dsq">' + sq.map(function (x) { return '<a href="' + x[0] + '">' + svgI(x[1]) + '<b>' + x[2] + '<br>' + x[3] + '</b></a>'; }).join('') + '</div>' +
+      '<a href="#sources" class="dbar">' + svgI('src') + '<span class="dbt"><b>Data Sources</b></span></a></div>';
+  }
+  function fitHome() {
+    var dr = app.querySelector('.dir'); if (!dr) return;
+    var nav = document.getElementById('bnav').getBoundingClientRect(), top = dr.getBoundingClientRect().top + window.scrollY;
+    var H = Math.max(420, nav.top - top - 12); dr.style.height = H + 'px';
+    var W = dr.getBoundingClientRect().width, sq = Math.min((W - 10) / 2, (H - 2 * 54 - 4 * 10) / 3, 230);
+    dr.style.setProperty('--sq', Math.floor(sq) + 'px');
+  }
+  /* My Wrestlers (Neil, 2026-11-22): its own page from Home; the starred wrestlers, then a way to add one */
+  function myWrestlersView() {
+    return '<h1>My Wrestlers</h1>' + gSwitch(true) + '<div style="margin-top:12px">' + seasonFavs() + '</div><a class="addw" href="#roster">&#9734; Add a wrestler</a>';
+  }
+  /* Opponent Matchups (Neil, 2026-11-22): the next event's schools, then every later scheduled opponent with its date and class.
+     Same matchup pages as the event cards; projected until each dual is wrestled. Boys only (RankWrestlers rosters). */
+  function muRow(s, n, sub) {
+    var lg = D.eventInfo.logos && D.eventInfo.logos[n], sn = (D.eventInfo.short && D.eventInfo.short[n]) || n;
+    return '<a class="row in" href="#' + luHash(s, n) + '"><div class="t mu-r">' + (lg ? '<img class="mu-logo" src="' + esc(lg) + '" alt="">' : '') + '<div><div class="n">' + esc(sn) + '</div><div class="m">' + sub + '</div></div></div></a>';
+  }
+  function matchupsView() {
+    var h = '<h1>Opponent Matchups</h1>', E = D.eventInfo;
+    var L = D.schedule.filter(function (s) { var X = evInfo(s); return s.date >= D.today && X && X.lineups && X.lineups.length && s.genders.indexOf('boys') >= 0; });
+    if (!E || !L.length) return h + '<p class="note">No upcoming matchups yet. They appear here once the schedule lists the opponents.</p>';
+    var nx = L[0], XI = evInfo(nx);
+    h += '<h2>' + (nx.date === D.today ? 'Today' : 'Next event') + ' · ' + esc(nx.label) + '</h2><p class="mu-note" style="margin:0 2px 8px">' + esc(nx.name) + (nx.time ? ' · ' + esc(nx.time) : '') + ' · ' + esc(nx.venue) + '</p>' + muList(nx, XI);
+    var rest = [];
+    L.slice(1).forEach(function (s) { evInfo(s).lineups.forEach(function (n) { var o = oppOf(n); rest.push(muRow(s, n, esc(s.label) + (o && o.cls ? ' · ' + esc(o.cls) : ''))); }); });
+    if (rest.length) h += '<h2>Other matchups</h2><div class="list">' + rest.join('') + '</div>';
+    return h;   /* no closing disclaimer (Neil, 2026-11-22); each matchup page says Projected or Actual */
   }
   /* start time and the coaches' note for a schedule entry, when the coaches give one (2026-11-16) */
   function snote(s) {
@@ -1012,7 +1063,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     return h + '<p class="foot">Each tournament has live bout numbers, mats, results and team scores while it runs.</p>';
   }
   function roster() {
-    var h = '<h1>Roster</h1>' + gSwitch(true) + siteNav('roster') ;
+    var h = '<h1>Davie Roster</h1>' + gSwitch(true) + siteNav('roster') ;
     var L = WR();
     if (!L.length) return h + '<p class="note">No ' + (LV === 'all' ? '' : LVN[LV] + ' ') + GN[G].toLowerCase() + '\'s matches recorded yet.</p>';
     h += '<div class="rcols">';
@@ -1056,7 +1107,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   function schedule() {
     var L = gSched(), nx = nextEvent();
-    var h = '<h1>Schedule</h1>' + gSwitch() + siteNav('schedule');
+    var h = '<h1>Season Schedule</h1>' + gSwitch() + siteNav('schedule');
     /* Past events fold into one row at the top (Neil, 2026-11-15); open it for one line per event with its result. */
     var past = L.filter(function (s) { return s.date < D.today; }), up = L.filter(function (s) { return s.date >= D.today; });
     h += '<p class="mine-t">' + esc(D.season) + ' · drive times from Davie County HS. Tap an event for results or a map.</p>';
@@ -1068,7 +1119,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   /* Results: one compact row per event, the whole row taps through; no OPEN button (Neil, 2026-11-15) */
   function results() {
-    var h = '<h1>Results</h1>' + gSwitch() + siteNav('results'), items = [];
+    var h = '<h1>Match Results</h1>' + gSwitch() + siteNav('results'), items = [];
     var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var md = function (iso) { var p = String(iso).split('-'); return MON[+p[1] - 1] + ' ' + (+p[2]); };
     var row = function (href, lg, name, date, res, kind, live) {
@@ -1131,8 +1182,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var fold = function (k, title, body) { return '<details class="evfold"' + ' data-k="' + k + '"><summary class="h2row"><h2>' + title + '</h2><span class="evchev">&#8250;</span></summary>' + body + '</details>'; };
     var mapA = s.address ? '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address) + '" target="_blank" rel="noopener">Google Maps &#8599;</a>' : '';   /* the map sits inside Event details (Neil, 2026-11-21) */
     if (XI) { var mb = mxBlock(s, mapA, true).replace('<details class="mx-d"><summary>Details and sources</summary>', '<div class="mx-d">'); h += fold('day-' + s.date + '-details', 'Event details', mb.slice(0, mb.lastIndexOf('</details>')) + '</div>'); }
-    if (XI && XI.lineups && XI.lineups.length) h += fold('day-' + s.date + '-matchups', 'Matchups' + (/Women/.test(s.team) ? ' (boys)' : ''), '<p class="mu-note">Projected until each dual is wrestled: Davie\'s most recent varsity wrestler at each weight vs each team\'s RankWrestlers roster. Each becomes the actual lineup when FloWrestling posts that dual.</p><div class="mu-list">' +
-      muOrder(s, XI).map(function (n) { var o = oppOf(n), ad = actualDual(s.date, n), sn = (D.eventInfo.short && D.eventInfo.short[n]) || n; return '<a href="#' + luHash(s, n) + '"><span class="mu-n">' + (D.eventInfo.logos && D.eventInfo.logos[n] ? '<img class="mu-logo" src="' + esc(D.eventInfo.logos[n]) + '" alt="">' : '') + '<span>' + esc(sn) + '<i class="mu-cls">' + (ad && !dualStarted(ad) ? (ad[1].round ? 'Round ' + ad[1].round + ' · ' : 'Up next · ') + (o && o.cls ? esc(o.cls) : '') : ad ? (ad[1].wl ? (ad[1].wl === 'W' ? 'Won ' : ad[1].wl === 'L' ? 'Lost ' : 'Tied ') : (isOver(s.date) ? 'Pending · ' : 'Live ')) + ad[1].us + '–' + ad[1].them : (o && o.cls ? esc(o.cls) : '')) + '</i></span></span><span>&#8250;</span></a>'; }).join('') + '</div>');
+    if (XI && XI.lineups && XI.lineups.length) h += fold('day-' + s.date + '-matchups', 'Matchups' + (/Women/.test(s.team) ? ' (boys)' : ''), '<p class="mu-note">Projected until each dual is wrestled: Davie\'s most recent varsity wrestler at each weight vs each team\'s RankWrestlers roster. Each becomes the actual lineup when FloWrestling posts that dual.</p>' + muList(s, XI));
     var links = (s.address && !XI ? ext('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address), 'Map') : '') + '';   /* Flo links: the status card before results, a compact line after (below) */
     if (anyDual && floL(s).length) h += '<p class="ds-chk" style="margin:12px 2px 0">See for yourself: ' + floL(s).map(function (f) { return '<a href="' + esc(f[1]) + '" target="_blank" rel="noopener">' + esc(f[0]) + ' &#8599;</a>'; }).join(' · ') + '</p>';
     if (links) h += '<div class="links" style="margin-top:14px">' + links + '</div>';
@@ -1321,7 +1371,13 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     home: '<path d="M5 12H3l9-9 9 9h-2"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6h6v6"/>',
     schedule: '<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/>',
     results: '<path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/>',
-    rank: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/>'   /* Rank tab (2026-11-18) */
+    rank: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/>',   /* Rank tab (2026-11-18), now Team */
+    roster: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 10h1M12 10h4M8.5 14h1M12 14h4M8.5 18h1M12 18h4"/>',   /* clipboard roster sheet (Neil, 2026-11-22) */
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    vs: '<circle cx="3.9" cy="9.3" r="2.3"/><path d="M0.5 19.5v-1a3.4 3.4 0 0 1 6.8 0v1"/><circle cx="20.1" cy="9.3" r="2.3"/><path d="M16.7 19.5v-1a3.4 3.4 0 0 1 6.8 0v1"/><path d="M10.6 12.5l1.4 3.8 1.4-3.8"/>',   /* bust v bust (Neil, 2026-11-22) */
+    calck: '<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/><path d="M10 14l2 2 3-3"/>',
+    live: '<circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4M17.7 6.3a8 8 0 0 1 0 11.4M3.5 3.5a12 12 0 0 0 0 17M20.5 3.5a12 12 0 0 1 0 17"/>',
+    src: '<ellipse cx="10" cy="5" rx="7" ry="2.5"/><path d="M3 5v10c0 1.4 3.1 2.5 7 2.5M17 5v4"/><path d="M3 10c0 1.4 3.1 2.5 7 2.5"/><circle cx="17" cy="16" r="3.2"/><path d="M19.4 18.4L22 21"/>'
   };
   function segNav(items, on, cls) {
     return '<nav class="seg' + (cls ? ' ' + cls : '') + '" style="grid-template-columns:repeat(' + items.length + ',minmax(0,1fr))">' + items.map(function (x) {
@@ -1708,7 +1764,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   function render() {
     var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
-      id === 'roster' ? roster() : id === 'schedule' ? schedule() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : /^rankings-top(1|5|10)$/.test(id) ? rankView('w', +id.slice(12)) : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
+      id === 'roster' ? roster() : id === 'schedule' || id === 'schedule-next' ? schedule() : id === 'mywrestlers' ? myWrestlersView() : id === 'matchups' ? matchupsView() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : /^rankings-top(1|5|10)$/.test(id) ? rankView('w', +id.slice(12)) : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
     if (id.indexOf('lineup-') === 0) { if (G !== 'boys') setG('boys'); html = lineupView(id); }
     if (id.indexOf('h2h-') === 0) { if (G !== 'boys') setG('boys'); html = h2hView(id); }   /* two-wrestler comparison (2026-11-21) */   /* Potential lineup (2026-11-18) */
     if (id.indexOf('wr-') === 0) { var sx = wrBySlug(id.slice(3)); if (sx) { if (sx.gender !== G) setG(sx.gender); html = seasonWrestler(sx); } }
@@ -1732,20 +1788,32 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     /* No Back where it would only go to Home: the bottom tab bar already has Home (Neil, 2026-11-15) */
     /* Back only when it leads to a detail screen, never to a screen that's on the tab bar or the ☰ menu (Neil, 2026-11-15) */
     if (id.indexOf('day-') === 0 || id.indexOf('lineup-') === 0 || id.indexOf('h2h-') === 0) hb = true;   /* lineup pages too (rule 6e) */   /* today's event page: Back returns to wherever it was opened from, Home or Schedule (Neil, 2026-11-21) */
-    if (bk && !hb && ['home', 'roster', 'schedule', 'results', 'rankings', 'tournaments', 'save', 'share', 'display', 'sources', 'updates'].indexOf(bk[0]) >= 0) bk = null;
+    if (bk && !hb && ['home', 'roster', 'schedule', 'results', 'rankings', 'tournaments', 'save', 'share', 'display', 'sources', 'updates', 'mywrestlers', 'matchups'].indexOf(bk[0]) >= 0) bk = null;
     /* Computer layout (2026-11-16): pages with side-by-side content use the wide column; the rest read in a narrower centered column */
-    var wide = id === 'home' || id === 'roster' || id === 'schedule' || id === 'results' || id.indexOf('stats-') === 0 || id.indexOf('wr-') === 0 || D.tournaments.some(function (t) { return id === t.id || id === t.id + '-wrestlers'; });
+    var wide = id === 'roster' || id === 'schedule' || id === 'schedule-next' || id === 'results' || id.indexOf('stats-') === 0 || id.indexOf('wr-') === 0 || D.tournaments.some(function (t) { return id === t.id || id === t.id + '-wrestlers'; });
     setTimeout(function () { var ht = app.querySelector('.h2h-t'), pc = ht && ht.querySelector('thead th.dprim'), lb = ht && ht.querySelector('thead th'); if (pc && lb) ht.scrollLeft = pc.offsetLeft - lb.offsetWidth; }, 0);   /* comparison opens on Davie | likely */
     app.innerHTML = '<section class="view show' + (wide ? ' vwide' : '') + '">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back</a>' : '') + (html || home()) + '</section>';
     /* One tab bar fixed at the bottom on every screen, so it never moves (Neil, 2026-11-15) */
-    var sec = id === 'home' ? 'home' : id.indexOf('rankings') === 0 ? 'rankings' : (id === 'roster' || id.indexOf('wr-') === 0 || id.indexOf('stats-') === 0) ? 'roster' : id === 'schedule' || id.indexOf('day-') === 0 || id.indexOf('lineup-') === 0 || id.indexOf('h2h-') === 0 ? 'schedule' :
+    var sec = id === 'home' ? 'home' : id.indexOf('rankings') === 0 || id.indexOf('stats-') === 0 ? 'rankings' : (id === 'roster' || id.indexOf('wr-') === 0) ? 'roster' :   /* season stats open from Team Stats now (2026-11-22) */ id === 'schedule' || id === 'schedule-next' || id.indexOf('day-') === 0 || id.indexOf('lineup-') === 0 || id.indexOf('h2h-') === 0 ? 'schedule' :
       (id === 'results' || id === 'tournaments' || id.indexOf('ev-') === 0 || D.tournaments.some(function (t) { return id === t.id || id.indexOf(t.id + '-') === 0; }) || D.events.some(function (e) { return id.indexOf(e.id + '-') === 0; })) ? 'results' : '';
     document.getElementById('bnavin').innerHTML = siteNav(sec);
     tick();
     if (id === 'share') drawQR();
-    if (JUMP) { JUMP = false; var pe = document.getElementById('pbp'); if (pe) { pe.scrollIntoView({ block: 'start' }); return; } }
+    fitHome();
+    if (JUMP) { JUMP = false; var pe = document.getElementById('pbp'); if (pe) { pe.scrollIntoView({ block: 'start' }); fadeLong(); return; } }
     window.scrollTo(0, 0);
+    if (id === 'schedule-next') {   /* Up Next: the Schedule with the next event open (Neil, 2026-11-22); the Schedule card opens it all folded */
+      var nt = app.querySelector('.nexttag'), nr = nt && nt.nextElementSibling, nd = nr && nr.querySelector('details.mx-d');
+      if (nd) { nd.open = true; var y = nt.getBoundingClientRect().top + window.scrollY - (document.querySelector('header') ? document.querySelector('header').getBoundingClientRect().height : 0) - 12; window.scrollTo(0, Math.max(0, y)); }
+    }
+    fadeLong();
   }
+  /* Long text fades out at the edge instead of ending in "…" (Neil, 2026-11-22: "use the fade everywhere") */
+  function fadeLong() {
+    var go = function () { document.querySelectorAll('#app *, #bnav *').forEach(function (el) { if (!el.clientWidth) return; var cs = getComputedStyle(el); el.classList.toggle('fadeon', cs.overflow === 'hidden' && cs.whiteSpace === 'nowrap' && el.scrollWidth > el.clientWidth + 1); }); };
+    if (window.requestAnimationFrame) requestAnimationFrame(go); else go();
+  }
+  window.addEventListener('resize', function () { fitHome(); fadeLong(); });
   /* Save to phone: its own page (#save). The header button and a one-line homepage prompt link to it. "Hide" is remembered on this device. */
   var sb = document.getElementById('savebtn') || {}, HKEY = 'davieHideSave';
   var saveHidden = false; try { saveHidden = localStorage.getItem(HKEY) === '1'; } catch (e) {}
@@ -1853,6 +1921,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     }).join('') + '</div>' : '') + (miss.length ? '<div class="mx-miss"><b>Not posted yet:</b> ' + esc(miss.join(', ')) + '. Added here when the coaches or the host post them.</div>' : '') +
       snote(s) + (links ? '<div class="notelinks">' + links + '</div>' : '') + '</div></details>';   /* no closing source note: each row links its own source (Neil, 2026-11-22: "Don't care for that bottom disclaimer") */
   }
+  function muList(s, XI) { return '<div class="mu-list">' + muOrder(s, XI).map(function (n) { var o = oppOf(n), ad = actualDual(s.date, n), sn = (D.eventInfo.short && D.eventInfo.short[n]) || n; return '<a href="#' + luHash(s, n) + '"><span class="mu-n">' + (D.eventInfo.logos && D.eventInfo.logos[n] ? '<img class="mu-logo" src="' + esc(D.eventInfo.logos[n]) + '" alt="">' : '') + '<span>' + esc(sn) + '<i class="mu-cls">' + (ad && !dualStarted(ad) ? (ad[1].round ? 'Round ' + ad[1].round + ' · ' : 'Up next · ') + (o && o.cls ? esc(o.cls) : '') : ad ? (ad[1].wl ? (ad[1].wl === 'W' ? 'Won ' : ad[1].wl === 'L' ? 'Lost ' : 'Tied ') : (isOver(s.date) ? 'Pending · ' : 'Live ')) + ad[1].us + '–' + ad[1].them : (o && o.cls ? esc(o.cls) : '')) + '</i></span></span><span>&#8250;</span></a>'; }).join('') + '</div>'; }
   /* Potential lineup (Neil, 2026-11-18): Davie's likely varsity wrestler at each weight vs the opponent's RankWrestlers roster. A projection, not the real lineup. */
   var WTS = [106, 113, 120, 126, 132, 138, 144, 150, 157, 165, 175, 190, 215, 285];
   function luDavie() {   /* varsity wrestler at each weight in Davie's most recent varsity match; others whose last varsity match was there are "also" */
@@ -2008,7 +2077,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     return h;
   }
   function rankView(tab, top) {
-    var R = D.rankings, h = '<h1>Rankings</h1>' + gSwitch() + rkTabs(tab);   /* no All/Varsity/JV here: rankings are varsity only (Neil, 2026-11-18: no buttons that don't apply) */
+    var R = D.rankings, h = '<h1>Team Stats</h1>' + gSwitch(tab === 't') + rkTabs(tab) + (tab === 't' ? '<h2>Season so far</h2>' + seasonFacts() : '');   /* Team Stats (Neil, 2026-11-22): the Rank page plus the season numbers from the old Home; All/Varsity/JV applies to those numbers only */   /* no All/Varsity/JV here: rankings are varsity only (Neil, 2026-11-18: no buttons that don't apply) */
     if (!R) return h + '<div class="card">Rankings aren\'t available right now.</div>';
     /* last-updated note (Neil, 2026-11-18) */
     var wd = new Date(R.wrestlers.readAt), up = isNaN(wd) ? '' : wd.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
@@ -2118,7 +2187,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     D.events.forEach(function (e) { evs.push({ iso: e.date, name: e.name, tags: (e.flo ? tag('Flo', e.flo) : '') + offline(e.bouts) }); });
     evs.sort(function (a, b) { return a.iso < b.iso ? 1 : -1; });
     var up = (D.schedule || []).filter(function (r) { return r.date >= D.today && r.flo; });
-    return '<h1>Sources</h1><p class="lede">Where everything in this app comes from. Tap a tag to check it yourself.</p>' +
+    return '<h1>Data Sources</h1><p class="lede">Where everything in this app comes from. Tap a tag to check it yourself.</p>' +
       '<h2>Results so far</h2><div class="card slist">' + evs.map(function (e) { return line(md(e.iso), e.name, e.tags); }).join('') + '</div>' +
       (up.length ? '<h2>Coming up</h2><div class="card slist">' + up.map(function (r) { return line(md(r.date), r.name, tag('Flo', r.flo)); }).join('') + '</div>' : '') +
       '<h2>Across the app</h2><div class="card slist">' +
@@ -2258,6 +2327,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       try { navigator.clipboard.writeText(txt).then(done, sel); } catch (err) { sel(); }
     }
   });
+  app.addEventListener('toggle', function () { fadeLong(); }, true);
   app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && (d.classList.contains('wfold') || d.classList.contains('pastfold') || d.classList.contains('evfold'))) OPEN[d.getAttribute('data-k')] = d.open; }, true);
   var NAVN = 0;
   window.addEventListener('hashchange', function () { NAVN++; });
