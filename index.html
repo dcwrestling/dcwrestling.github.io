@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261122074157"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261122075517"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1033,7 +1033,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (s.date !== D.today && evInfo(s)) {   /* any event with details, upcoming or past: the same card (Neil, 2026-11-18; past events too, 2026-11-22) */
       var lk = (s.address ? '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.address) + '" target="_blank" rel="noopener">Map &#8599;</a>' : '') + floA(s), rr = resultFor(s);
       return '<div class="row mxrow' + (s.date < D.today ? ' past' : '') + '"><div class="t"><div class="n">' + esc(s.name) + (s.venue && /home/i.test(s.venue) ? ' <span class="lvl">HOME</span>' : '') + '</div><div class="m">' + esc(s.venue) + (s.drive && s.drive !== 'Home' && s.drive !== '–' ? ' · ' + esc(s.drive) : '') + ' · ' + esc(s.team) + '</div>' +
-        (rr && rr[1] ? '<a class="mx-res" href="' + rr[0] + '">' + esc(rr[1]) + ' &#8250;</a>' : '') + mxBlock(s, lk) + snote(s) + '</div>' + swhen(s) + '</div>';
+        mxBlock(s, lk, false, rr && rr[1] ? ['Results', '<a href="' + rr[0] + '">' + esc(rr[1].replace(/^Results: /, '').replace(/^duals/, 'Duals').replace(/^team/, 'Team')) + ' &#8250;</a>', null] : null) + snote(s) + '</div>' + swhen(s) + '</div>';
     }
     var past = s.date < D.today, res = resultFor(s);   /* today's event isn't past yet (2026-11-17) */
     if (s.date === D.today) res = ['#day-' + s.date, res ? res[1] : ''];   /* no 'open' line: the whole row taps through */   /* today's row opens the event page (Neil, 2026-11-17) */
@@ -1825,7 +1825,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   function oppOf(n) { var E = D.eventInfo, R = D.rankings, id = E && E.opponents[n]; return id && R && R.opponents && R.opponents[id] ? R.opponents[id] : null; }
   function luHash(s, n) { return 'lineup-' + s.date + '-' + slug(n); }
-  function mxBlock(s, links, noLu) {
+  function mxBlock(s, links, noLu, first) {   /* first: a row shown first, e.g. a past event's results (Neil, 2026-11-22: results go in the expanded details) */
     var X = evInfo(s); if (!X) return '';
     var src = function (r) { return r ? ' <a class="mx-src" href="' + esc(r[1]) + '" target="_blank" rel="noopener">' + esc(r[0]) + ' &#8599;</a>' : ''; };
     var gen = [], L = X.lineups || [];
@@ -1840,6 +1840,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var rows = [], put = false;
     X.rows.forEach(function (r) { if (r[1] != null) rows.push(r); if (r[0] === 'Start') { rows = rows.concat(gen); put = true; } });
     if (!put) rows = gen.concat(rows);
+    if (first) rows.unshift(first);
     var miss = s.date < D.today ? [] : X.rows.filter(function (r) { return r[1] == null; }).map(function (r) { return r[0] === 'FloWrestling' ? 'FloWrestling page' : r[0].toLowerCase(); });
     return '<details class="mx-d"><summary>Details and sources</summary><div class="mx">' + (rows.length ? '<div class="mx-g">' + rows.map(function (r) {
       return '<div class="mx-k">' + esc(r[0]) + '</div><div class="mx-v">' + r[1] + src(r[2]) + '</div>';   /* r[1] is hand-kept text from events.json (may hold <b>/<br>) */
