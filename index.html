@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261123111405"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261123112155"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1934,9 +1934,10 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
      the NCHSAA's Jan 28, 2026 ranking, labeled as that (it came before the playoffs, so it isn't where teams finished). */
   function lastYr(n) {
     var R = D.rankings; if (!R) return ''; var k = n.replace(/ \(.*\)$/, ''), F = R.team.duals2026 || {}, v = R.team.lastYr[k];
-    if (F.champions && F.champions[k]) return '2026 ' + F.champions[k] + ' state dual champions';
-    if (F.runnersUp && F.runnersUp[k]) return '2026 ' + F.runnersUp[k] + ' state dual runner-up';
-    return v ? '#' + v.slice(1).replace(' ', ' in ') + ', Jan 2026 ranking' : '';
+    /* short enough for one line (Neil, 2026-11-23: "Why not just say #11 (2026)"); the class is shown beside the name */
+    if (F.champions && F.champions[k]) return 'State champs  (’26)';
+    if (F.runnersUp && F.runnersUp[k]) return 'State runner-up  (’26)';
+    return v ? '#' + v.slice(1).split(' ')[0] + '  (’26)' : '';
   }
   function oppOf(n) { var E = D.eventInfo, R = D.rankings, id = E && E.opponents[n]; return id && R && R.opponents && R.opponents[id] ? R.opponents[id] : null; }
   function luHash(s, n) { return 'lineup-' + s.date + '-' + slug(n); }
@@ -1968,7 +1969,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     };
     var gen = [], L = X.lineups || [];
     if (L.length) {
-      if (!X.teams) gen.push([L.length > 1 ? 'Teams' : 'Opponent', L.map(function (n) { var o = oppOf(n), ly = lastYr(n); return '<b>' + esc(n) + '</b>' + (o && o.cls ? ' (' + esc(o.cls) + ')' : '') + (ly ? ' · ' + esc(ly) : ''); }).join('<br>'), ['NCHSAA', NCHL]]);
+      if (!X.teams) gen.push([L.length > 1 ? 'Teams' : 'Opponent', L.map(function (n) { var o = oppOf(n), ly = lastYr(n); return '<b>' + esc(n) + '</b>' + (o && o.cls ? ' ' + esc(o.cls) : '') + (ly ? ' · ' + esc(ly) : ''); }).join('<br>'), ['NCHSAA', NCHL]]);
       /* one line per school, never wrapped: short name, "(boys)" when girls wrestle too (Neil, 2026-11-22: "Don't let matchups wrap like that") */
       var PAST = s.date < D.today, LU = PAST ? L.filter(function (n) { return dualStarted(actualDual(s.date, n)); }) : L;   /* a past event: only duals that happened, linked to their actual lineup and results */
       if (!noLu && LU.length) gen.push(['Matchups', LU.map(function (n) { var sn = (D.eventInfo.short && D.eventInfo.short[n]) || n; return '<a class="mx-one" href="#' + (PAST ? 'ev-' + actualDual(s.date, n)[0].id : luHash(s, n)) + '">' + esc(sn) + (/Women/.test(s.team) ? ' (boys)' : '') + ' &#8250;</a>'   /* just the school (Neil, 2026-11-23) */; }).join(''), null]);
