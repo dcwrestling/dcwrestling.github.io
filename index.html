@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261123154525"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261123160319"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -56,10 +56,12 @@ a.asof, a.fresh { text-decoration: none; color: var(--muted); } a.fresh .more { 
 .mvrow .mvclk { text-align: center; color: var(--muted); font-size: 13px; } .mvrow .mvsc { text-align: center; font-weight: 700; }
 .mvrow.ch span { font-size: 12px; font-style: italic; font-weight: 500; color: var(--muted); }
 .back { display: none !important; }
-.backbtn { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 6px 14px 6px 10px; margin: 0 0 10px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--fg); font-weight: 600; font-size: 15px; text-decoration: none; }
+.backbtn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; margin: 0 0 8px; border: 1px solid var(--line); border-radius: 8px !important; background: var(--panel); color: var(--muted); text-decoration: none; }   /* a small square key with a back arrow, as tall as the All / Varsity / JV buttons (Neil approved for every Back button, 2026-11-23) */
+.backbtn .bkt { display: none; } .backbtn .bkic { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.view { position: relative; } .backbtn.inl { position: absolute; left: 0; top: 11px; margin: 0; z-index: 2; } .backbtn.inl ~ h1:first-of-type { padding: 0 38px; }
+.draft .lede + .lsw { margin-top: 10px !important; }   /* room between the date / school line and All / Varsity / JV (Neil, 2026-11-23: "kind of crammed") */   /* Back sits on the title line, not its own row (Neil, 2026-11-23: "why create a whole new row for it?") */
 .backbtn span { color: var(--muted); font-weight: 500; }
-.backbtn:active { background: var(--panel2); }
-.dfback { display: flex; margin: 12px auto 4px; cursor: pointer; font-family: inherit; font-size: 15px; }   /* "All duals" at the foot of an open dual */
+.backbtn:active { background: var(--panel2); } .backbtn[hidden] { display: none; }
 .pp { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 .pph { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 14px 8px; }
 .pph b { font-family: var(--display); font-size: 22px; font-weight: 800; } .pph span { font-size: 13px; color: var(--muted); }
@@ -1266,10 +1268,11 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var bw = 0, bl = 0; B.forEach(function (b) { if (b.wl === 'W') bw++; if (b.wl === 'L') bl++; });
     return '<details class="wr wfold' + (one ? ' nofold' : '') + '" data-k="ev-' + e.id + '-' + slug(d.opp) + '"' + (one || OPEN['ev-' + e.id + '-' + slug(d.opp)] ? ' open' : '') + '><summary' + (one ? ' tabindex="-1"' : '') + '><div class="top dtop"><span class="wl ' + (d.wl || 'up') + '">' + (d.wl || '–') + '</span><span class="nm">vs ' + esc(d.opp) + '</span>' +
       '<span class="rec">' + (d.us != null ? d.us + '–' + d.them : 'Score not posted') + '</span></div><div class="status-line">Davie matches ' + bw + '–' + bl + ' <span class="fold-hint">' + B.length + ' matches</span></div></summary>' +
-      boutRows(e, B) + (d.note ? '<p class="foot" style="margin:8px 0 0">' + esc(d.note) + '</p>' : '') + (one || !D.draft ? '' : '<button type="button" class="backbtn dfback" data-dfclose>&#8249; All duals</button>') + '</details>';   /* closes this dual and returns to the day's list (Neil, 2026-11-23: "Need a back button here to get me back to the other matches of the day") */
+      boutRows(e, B) + (d.note ? '<p class="foot" style="margin:8px 0 0">' + esc(d.note) + '</p>' : '') + '' + '</details>';
   }
   function evView(e) {
-    var h = '<h1>' + esc(e.name) + '</h1><p class="lede" style="margin-top:2px">' + esc(e.label || e.date) + ' · <a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(e.address || '') + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(e.venue || '') + ' &#8599;</a></p>';
+    var h = (!oneDual(e.date) && e.duals.length > 1 ? '<a class="backbtn inl" href="#" data-evback' + (e.duals.some(function (d) { return OPEN['ev-' + e.id + '-' + slug(d.opp)]; }) ? '' : ' hidden') + ' aria-label="Back"><svg class="bkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span class="bkt">&#8249; Back</span></a>' : '') +   /* Back to the day's duals while one is open (Neil, 2026-11-23: "Just put a back button if there's the opportunity to go back") */
+      '<h1>' + esc(e.name) + '</h1><p class="lede" style="margin-top:2px">' + esc(e.label || e.date) + ' · <a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(e.address || '') + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(e.venue || '') + ' &#8599;</a></p>';
     h += lvSwitch();
     var one = oneDual(e.date);
     e.duals.forEach(function (d) { h += dualFold(e, d, one); });
@@ -1868,7 +1871,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     /* Computer layout (2026-11-16): pages with side-by-side content use the wide column; the rest read in a narrower centered column */
     var wide = id === 'roster' || id === 'schedule' || id === 'schedule-next' || id === 'results' || id.indexOf('stats-') === 0 || id.indexOf('wr-') === 0 || D.tournaments.some(function (t) { return id === t.id || id === t.id + '-wrestlers'; });
     setTimeout(function () { var ht = app.querySelector('.h2h-t'), pc = ht && ht.querySelector('thead th.dprim'), lb = ht && ht.querySelector('thead th'); if (pc && lb) ht.scrollLeft = pc.offsetLeft - lb.offsetWidth; }, 0);   /* comparison opens on Davie | likely */
-    app.innerHTML = '<section class="view show' + (wide ? ' vwide' : '') + '">' + (html && bk ? '<a class="backbtn" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + '>&#8249; Back</a>' : '') + (html || home()) + '</section>';
+    app.innerHTML = '<section class="view show' + (wide ? ' vwide' : '') + '">' + (html && bk ? '<a class="backbtn' + (/^\s*(<a class="back"[^>]*>[^<]*<\/a>\s*)?<h1/.test(html) ? ' inl' : '') + '" href="#' + bk[0] + '"' + (hb ? ' data-hback' : '') + ' aria-label="Back"><svg class="bkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span class="bkt">&#8249; Back</span></a>' : '') + (html || home()) + '</section>';
     /* One tab bar fixed at the bottom on every screen, so it never moves (Neil, 2026-11-15) */
     var sec = id === 'home' ? 'home' : id.indexOf('rankings') === 0 || id.indexOf('stats-') === 0 ? 'rankings' : (id === 'roster' || id.indexOf('wr-') === 0) ? 'roster' :   /* season stats open from Team Stats now (2026-11-22) */ id === 'schedule' || id === 'schedule-next' || id.indexOf('day-') === 0 || id.indexOf('lineup-') === 0 || id.indexOf('h2h-') === 0 ? 'schedule' :
       (id === 'results' || id === 'tournaments' || id.indexOf('ev-') === 0 || D.tournaments.some(function (t) { return id === t.id || id.indexOf(t.id + '-') === 0; }) || D.events.some(function (e) { return id.indexOf(e.id + '-') === 0; })) ? 'results' : '';
@@ -2413,8 +2416,6 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var gb = e.target.closest('[data-g]'); if (gb) { setG(gb.getAttribute('data-g')); render(); return; }
     var slv = e.target.closest('[data-setlv]'); if (slv) setL(slv.getAttribute('data-setlv'));   /* comparison links open varsity-only lists (2026-11-21) */
     var lb = e.target.closest('[data-l]'); if (lb) { var y = window.scrollY; setL(lb.getAttribute('data-l')); render(); window.scrollTo(0, y); return; }
-    var dfc = e.target.closest('[data-dfclose]');
-    if (dfc) { var dd = dfc.closest('details'); if (dd) { dd.open = false; if (dd.getAttribute('data-k')) OPEN[dd.getAttribute('data-k')] = false; var top = dd.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' }); } return; }
     var phw = e.target.closest('[data-photo]');
     if (phw && (D.photoForm || D.photoEmail)) {   /* "send a photo": the upload form, with the wrestler's name filled in; else the phone's mail app (Neil, 2026-11-23) */
       e.preventDefault(); e.stopPropagation();
@@ -2440,6 +2441,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     }
   });
   app.addEventListener('toggle', function () { fadeLong(); }, true);
+  app.addEventListener('click', function (e) { var eb = e.target.closest('[data-evback]'); if (!eb) return; e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); eb.hidden = true; window.scrollTo(0, 0); });
+  app.addEventListener('toggle', function (e) { var eb = app.querySelector('[data-evback]'); if (eb && e.target.classList && e.target.classList.contains('wfold')) eb.hidden = !app.querySelector('details.wfold[open]'); }, true);
   app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && (d.classList.contains('wfold') || d.classList.contains('pastfold') || d.classList.contains('evfold'))) OPEN[d.getAttribute('data-k')] = d.open; }, true);
   var NAVN = 0;
   window.addEventListener('hashchange', function () { NAVN++; });
