@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125094652"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125094744"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1860,8 +1860,11 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       var sc = w && l && w.sc !== '' && l.sc !== '' && !/^(F|FOR|MFF|INJ|DQ|BYE)$/.test(b.wt) ? ' ' + w.sc + '-' + l.sc : '';
       return (b.wt || 'Won') + sc + (b.c ? ' · ' + b.c : '');
     }
-    return b.mn ? '#' + b.mn + (b.mat ? ' · Mat ' + b.mat : '') : '';
+    var et = b.mn && BRETA[String(b.mn)] ? new Date(BRETA[String(b.mn)]) : null, es = '';
+    if (et && !isNaN(et)) es = Date.now() > et.getTime() ? ' · any minute' : ' · ~' + et.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).replace(/\s?[AP]M$/i, '');
+    return b.mn ? '#' + b.mn + (b.mat ? ' · Mat ' + b.mat : '') + es : '';
   }
+  var BRETA = {};   /* estimated start per bout number (tourney.py bout_times), set by bracketView */
   function brSvg(t, rounds, focus, endLabel) {
     if (!rounds.length) return '';
     var cw = 172, U = 36, G = 14, top = 50, X = function (k) { return 8 + k * cw; }, g = '', fx = function (s) { return s.length > 24 ? s.slice(0, 23) + '…' : s; };
@@ -1917,7 +1920,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var fx = fslug ? t.davie.filter(function (x) { return slug(x.name) === fslug; })[0] : null, focus = fx ? fx.name : '';
     var h = head(t) + tabs(t, '-br');
     if (!cur) return h + '<p class="note" style="margin-top:14px">Brackets aren\'t posted on FloWrestling yet. They\'ll show here as soon as they are.</p>';
-    var bouts = brBouts(t.brackets[cur.k]);
+    var bouts = brBouts(t.brackets[cur.k]); BRETA = t.etas || {};
     if (focus) { var fl = bouts.filter(function (b) { return [b.a, b.b].some(function (p) { return p && p.t === 'DAVI' && p.n.replace(/[^a-z]/gi, '').toLowerCase() === focus.replace(/[^a-z]/gi, '').toLowerCase(); }); })[0]; if (fl) [fl.a, fl.b].forEach(function (p) { if (p && p.t === 'DAVI' && p.n.replace(/[^a-z]/gi, '').toLowerCase() === focus.replace(/[^a-z]/gi, '').toLowerCase()) focus = p.n; }); }
     var dvAt = function (w) { return t.davie.filter(function (x) { return !x.out && x.weight === w.n && (x.level === 'JV') === w.jv; }).map(function (x) { return x.name.split(' ').slice(-1)[0]; }); };
     h += '<div class="brw">' + W.map(function (w) { var d = dvAt(w); return '<a href="#' + t.id + '-br-' + w.slug + '"' + (w === cur ? ' class="on"' : '') + '>' + esc(w.label) + '<small' + (d.length ? ' class="dv"' : '') + '>' + (d.length ? '&#9679; ' + esc(d[0]) + (d.length > 1 ? ' +' + (d.length - 1) : '') : '–') + '</small></a>'; }).join('') + '</div>';
@@ -1926,6 +1929,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     h += '<h2>Championship</h2>' + (C.length ? brSvg(t, C, focus, '1st place') : '<p class="note">Not drawn yet.</p>');
     if (K.length) h += '<h2>Consolation</h2>' + brSvg(t, K, focus, '3rd place');
     O.forEach(function (b) { h += '<h2>' + esc(b.r) + '</h2>' + brSvg(t, [[b]], focus, b.r.replace(/\s*match$/i, '')); });
+    if (t.pace && t.pace.perBout && Object.keys(t.etas || {}).length) h += '<p class="foot">Times like ~10:40 are estimated start times from today\'s pace (about ' + (Math.round(t.pace.perBout * 10) / 10) + ' min per bout across all mats). They firm up as each bout gets closer.</p>';
     h += '<p class="foot">Swipe sideways to see the whole bracket. Davie wrestlers are in orange; tap a Davie bout for that wrestler, any other bout for FloWrestling. From FloWrestling\'s brackets, updated with the app.</p>' +
       '<div class="links" style="margin-top:10px">' + ext((t.bracketsFlo || t.flo || 'https://www.flowrestling.org') + '/brackets', 'the brackets on FloWrestling') + '</div>';
     return h;
