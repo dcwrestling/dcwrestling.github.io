@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261124203517"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261124204302"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -548,7 +548,15 @@ img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .bnav .seg { margin: 0 !important; }
 .bnav .seg a { padding: 5px 2px 4px !important; font-size: 13.5px !important; }
 .bnav .seg a svg { width: 20px; height: 20px; }
-body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
+/* The page itself never scrolls (Neil, 2026-11-24 6:37 PM, second "tab bar mid-screen" screenshot from the home-screen app): iOS kept
+   drawing the fixed tab bar and sticky header at stale spots after a scroll. Now the body is a fixed column: header on top, the
+   content (#sc) scrolls inside it, the tab bar sits below as an ordinary block, so nothing fixed is left to drift. */
+html { height: 100%; overflow: hidden; }
+body { position: fixed; inset: env(safe-area-inset-top, 0px) 0 0 0; display: flex; flex-direction: column; overflow: hidden; padding: 0 !important; }
+body > .bar { flex: none; position: relative; top: 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#sc { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+  padding: 0 max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
+.bnav { position: relative !important; flex: none; transform: none !important; -webkit-transform: none !important; will-change: auto !important; }
 /* Page titles nudged up so they aren't pressed against the Boys/Girls toggles; nothing else moves (Neil, 2026-11-15) */
 .view > h1:not(.hometitle) { position: relative; top: -8px; text-align: center; text-wrap: balance; }   /* page titles centered (Neil, 2026-11-22) */
 /* Home directory (Neil, 2026-11-22) */
@@ -777,7 +785,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   </nav>
 </div></header>
 
-<main class="wrap" id="app"></main>
+<div id="sc"><main class="wrap" id="app"></main></div>
 <nav class="bnav" id="bnav" aria-label="Sections"><div class="wrap" id="bnavin"></div></nav>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -787,7 +795,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   var D = JSON.parse(document.getElementById('data').textContent);
   if (D.draft) document.documentElement.classList.add('draft');
   { var ul0 = document.querySelector('.asof .ul'); if (ul0) ul0.textContent = 'Updated:'; }   /* (Neil, 2026-11-24: "Change last update to updated:") */   /* local preview only: unconfirmed features show (2026-11-23) */
-  var app = document.getElementById('app');
+  var app = document.getElementById('app'), SC = document.getElementById('sc');   /* the scrolling area (the page itself never scrolls) */
   var NEXT = D.nextAt ? Date.parse(D.nextAt) : NaN, ASOF = D.asofAt ? Date.parse(D.asofAt) : NaN;
   /* "Updated" shows just the time when it was today, otherwise the day too (2026-11-16: Sunday's 8:11 AM read as today's) */
   function asofShort() {
@@ -1068,7 +1076,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   setTimeout(function () { if (!HOMEREADY) { HOMEREADY = true; fitHome(); var d = app.querySelector('.dir'); if (d) d.classList.remove('hwait'); } }, 1100);
   function fitHome() {
     var dr = app.querySelector('.dir'); if (!dr) return;
-    if (window.scrollY) window.scrollTo(0, 0);
+    if (SC.scrollTop) SC.scrollTop = 0;
     var nav = document.getElementById('bnav').getBoundingClientRect(), bar = document.querySelector('.bar'), r = dr.getBoundingClientRect();
     var top = Math.max(r.top, bar ? bar.getBoundingClientRect().bottom + 8 : r.top), W = r.width;
     var H = Math.max(360, nav.top - top - 10); dr.style.height = H + 'px';
@@ -1961,10 +1969,10 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (id === 'share') drawQR();
     fitHome();
     if (JUMP) { JUMP = false; var pe = document.getElementById('pbp'); if (pe) { pe.scrollIntoView({ block: 'start' }); fadeLong(); return; } }
-    window.scrollTo(0, 0);
+    SC.scrollTop = 0;
     if (id === 'schedule-next') {   /* Up Next: the Schedule with the next event open (Neil, 2026-11-22); the Schedule card opens it all folded */
       var nt = app.querySelector('.nexttag'), nr = nt && nt.nextElementSibling, nd = nr && nr.querySelector('details.mx-d');
-      if (nd) { nd.open = true; var y = nt.getBoundingClientRect().top + window.scrollY - (document.querySelector('header') ? document.querySelector('header').getBoundingClientRect().height : 0) - 12; window.scrollTo(0, Math.max(0, y)); }
+      if (nd) { nd.open = true; var y = nt.getBoundingClientRect().top - SC.getBoundingClientRect().top + SC.scrollTop - 12; SC.scrollTop = Math.max(0, y); }
     }
     fadeLong();
   }
@@ -2640,7 +2648,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   })();
   app.addEventListener('click', function (e) {
     var hbk = e.target.closest('[data-hback]');
-    if (hbk && /^#ev-/.test(location.hash) && app.querySelector('details.wfold[open]')) { e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); window.scrollTo(0, 0); return; }   /* DRAFT: first Back closes an open dual, the next goes back */
+    if (hbk && /^#ev-/.test(location.hash) && app.querySelector('details.wfold[open]')) { e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); SC.scrollTop = 0; return; }   /* DRAFT: first Back closes an open dual, the next goes back */
     if (hbk && NAVN > 0) { e.preventDefault(); NAVN = Math.max(0, NAVN - 2); history.back(); return; }
     if (hbk) { e.preventDefault(); SKIPNAV = true; location.replace(hbk.getAttribute('href')); return; }   /* DRAFT: nothing behind this screen (a shared link): go to its parent WITHOUT adding a step, so the next Back keeps going up, not back down */
     var tb = e.target.closest('[data-theme-set]'); if (tb) { try { localStorage.setItem(TKEY, tb.getAttribute('data-theme-set')); } catch (err) {} applyTheme(); render(); return; }
@@ -2654,7 +2662,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var rr = e.target.closest('tr.rk-row'); if (rr && !e.target.closest('a')) { var rx = rr.nextElementSibling; if (rx && rx.classList.contains('rk-x')) { rx.hidden = !rx.hidden; rr.classList.toggle('open', !rx.hidden); } return; }   /* Rank: tap a row for its numbers */
     var gb = e.target.closest('[data-g]'); if (gb) { setG(gb.getAttribute('data-g')); render(); return; }
     var slv = e.target.closest('[data-setlv]'); if (slv) setL(slv.getAttribute('data-setlv'));   /* comparison links open varsity-only lists (2026-11-21) */
-    var lb = e.target.closest('[data-l]'); if (lb) { var y = window.scrollY; setL(lb.getAttribute('data-l')); render(); window.scrollTo(0, y); return; }
+    var lb = e.target.closest('[data-l]'); if (lb) { var y = SC.scrollTop; setL(lb.getAttribute('data-l')); render(); SC.scrollTop = y; return; }
     var phw = e.target.closest('[data-photo]');
     if (phw && (D.photoForm || D.photoEmail)) {   /* "send a photo": the upload form, with the wrestler's name filled in; else the phone's mail app (Neil, 2026-11-23) */
       e.preventDefault(); e.stopPropagation();
@@ -2664,7 +2672,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       return;
     }
     var f = e.target.closest('[data-fav]');
-    if (f) { e.preventDefault(); toggleFav(f.getAttribute('data-fav')); var y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    if (f) { e.preventDefault(); toggleFav(f.getAttribute('data-fav')); var y = SC.scrollTop; render(); SC.scrollTop = y; return; }
     var sc = e.target.closest('[data-scroll]'); if (sc) { var st = document.querySelector(sc.getAttribute('data-scroll')); if (st) st.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     var gc = e.target.closest('[data-go]'); if (gc && !e.target.closest('a') && !e.target.closest('details')) { location.hash = gc.getAttribute('data-go'); return; }
     var pb = e.target.closest('[data-pbp]'); if (pb) { JUMP = true; }
@@ -2680,13 +2688,13 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     }
   });
   app.addEventListener('toggle', function () { fadeLong(); }, true);
-  app.addEventListener('click', function (e) { var eb = e.target.closest('[data-evback]'); if (!eb) return; e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); eb.hidden = true; window.scrollTo(0, 0); });
+  app.addEventListener('click', function (e) { var eb = e.target.closest('[data-evback]'); if (!eb) return; e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); eb.hidden = true; SC.scrollTop = 0; });
   app.addEventListener('toggle', function (e) { var eb = app.querySelector('[data-evback]'); if (eb && e.target.classList && e.target.classList.contains('wfold')) eb.hidden = !app.querySelector('details.wfold[open]'); }, true);
   app.addEventListener('toggle', function (e) { var d = e.target; if (d.classList && (d.classList.contains('wfold') || d.classList.contains('pastfold') || d.classList.contains('evfold'))) OPEN[d.getAttribute('data-k')] = d.open; }, true);
   var NAVN = 0, SKIPNAV = false;
   (function () { var tb = document.getElementById('topback'); if (!tb) return;   /* DRAFT: top-bar Back: close an open dual first, else the screen you were just on, else the parent without adding a step */
     tb.addEventListener('click', function (e) { e.preventDefault();
-      if (/^#ev-/.test(location.hash) && app.querySelector('details.wfold[open]')) { app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); window.scrollTo(0, 0); return; }
+      if (/^#ev-/.test(location.hash) && app.querySelector('details.wfold[open]')) { app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); SC.scrollTop = 0; return; }
       if (NAVN > 0) { NAVN = Math.max(0, NAVN - 2); history.back(); return; }
       SKIPNAV = true; location.replace(tb.getAttribute('href')); }); })();
   window.addEventListener('hashchange', function () { if (SKIPNAV) { SKIPNAV = false; return; } NAVN++; });
