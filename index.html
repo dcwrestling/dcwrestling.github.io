@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125163749"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125163859"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -813,8 +813,50 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
 .rk-upd { font-size: 12.5px; color: var(--muted); margin: 8px 2px 0; } .rk-upd b { color: var(--fg); font-weight: 600; }
 .rk-tbl td.num, .rk-tbl th.num { white-space: nowrap; }
 @media (max-width: 360px) { .rk-tbl th, .rk-tbl td { padding: 8px 7px; } }
+/* Cold intro (Neil, 2026-11-25: "a DC logo that does some animation to reveal the home screen ... just when you're first arriving"):
+   the logo slams onto the mat, a shockwave rings out, the name spells out, then the logo flies to its spot in the header as the
+   screen lifts. Once per visit, only when arriving on Home; a tap skips it; reduced motion gets a short fade. DRAFT until Neil says go. */
+#intro { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; cursor: pointer; transition: opacity .45s ease .05s; }
+#intro.out { opacity: 0; pointer-events: none; }
+#intro .il { position: relative; width: min(46vw, 220px); aspect-ratio: 3 / 2; }
+#intro .il img { width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transform: scale(1.9); filter: blur(10px); animation: dcSlam .42s cubic-bezier(.2,.9,.25,1.25) .15s forwards, dcShake .28s ease .57s; }
+:root[data-theme="light"] #intro .il img { content: url(img/dc-light.png); }
+#intro .ring { position: absolute; left: 50%; top: 50%; width: 70%; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--accent); transform: translate(-50%, -50%) scale(.3); opacity: 0; animation: dcRing .7s ease-out .55s; }
+#intro .ring.r2 { animation-delay: .68s; border-width: 2px; }
+#intro .it { text-align: center; font-family: var(--display); line-height: 1; }
+#intro .it b { display: block; font-weight: 900; font-size: clamp(30px, 9vw, 44px); letter-spacing: .06em; color: var(--fg); opacity: 0; clip-path: inset(0 100% 0 0); animation: dcWipe .45s ease-out .75s forwards; }
+#intro .it span { display: block; margin-top: 8px; font-weight: 800; font-style: italic; font-size: 13px; letter-spacing: .34em; color: var(--accent); opacity: 0; animation: dcFade .4s ease 1.05s forwards; }
+#intro.fly .il img { transition: transform .55s cubic-bezier(.6,0,.2,1); animation: none; opacity: 1; filter: none; }
+#intro.fly .it { opacity: 0; transition: opacity .2s; }
+@keyframes dcSlam { to { opacity: 1; transform: scale(1); filter: blur(0); } }
+@keyframes dcShake { 0%,100% { translate: 0 0; } 25% { translate: -5px 2px; } 50% { translate: 4px -2px; } 75% { translate: -2px 1px; } }
+@keyframes dcRing { 0% { opacity: .9; transform: translate(-50%, -50%) scale(.4); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4); } }
+@keyframes dcWipe { to { opacity: 1; clip-path: inset(0 0 0 0); } }
+@keyframes dcFade { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { #intro .il img, #intro .it b, #intro .it span { animation: dcFade .3s ease forwards; transform: none; filter: none; clip-path: none; } #intro .ring { display: none; } }
 </style>
 
+<div id="intro" aria-hidden="true"><div class="il"><span class="ring"></span><span class="ring r2"></span><img src="img/dc.png" alt=""></div><div class="it"><b>WAR EAGLES</b><span>DAVIE COUNTY WRESTLING</span></div></div>
+<script>(function () {   /* cold intro: once per visit, only when arriving on Home (see #intro CSS) */
+  var el = document.getElementById('intro'), seen = false;
+  try { seen = sessionStorage.getItem('dcIntro') === '1'; sessionStorage.setItem('dcIntro', '1'); } catch (e) {}
+  var h = location.hash;
+  if (seen || (h && h !== '#home') || /[?&]nointro\b/.test(location.search)) { el.remove(); return; }
+  var done = false, quick = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function finish() {
+    if (done) return; done = true;
+    var img = el.querySelector('.il img'), to = document.querySelector('.homelink img');
+    if (to && !quick) {   /* fly the logo to the header's DC logo */
+      var a = img.getBoundingClientRect(), b = to.getBoundingClientRect();
+      if (a.width && b.width) { el.classList.add('fly'); var sc = b.height / a.height;
+        img.style.transform = 'translate(' + (b.left + b.width / 2 - (a.left + a.width / 2)) + 'px,' + (b.top + b.height / 2 - (a.top + a.height / 2)) + 'px) scale(' + sc + ')'; }
+    }
+    setTimeout(function () { el.classList.add('out'); }, quick ? 0 : 380);
+    setTimeout(function () { el.remove(); }, quick ? 500 : 950);
+  }
+  el.addEventListener('click', finish);
+  setTimeout(finish, quick ? 700 : 1750);
+})();</script>
 <header class="bar"><div class="wrap">
   <a class="backbtn topback" id="topback" href="#home" aria-label="Back" hidden><svg class="bkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span class="bkt">&#8249; Back</span></a>
   <a class="homelink" href="#home" aria-label="Davie Wrestling home"><img src="img/dc.png" alt=""><span class="brand"><b>WAR EAGLES WRESTLING</b><span>DAVIE COUNTY</span></span></a>
