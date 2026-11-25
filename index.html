@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125082832"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125083307"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1051,7 +1051,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       if (d && !d.wl) return bar('#day-' + td.date, 'live', isOver(td.date) ? 'Pending Updates' : 'Live Now', esc(kindOf(td)) + ' · Davie ' + (d.us != null ? d.us : '–') + '–' + (d.them != null ? d.them : '–') + ' ' + esc(d.opp), true);
       if (d) return bar('#day-' + td.date, 'calck', 'Today · Final', esc(kindOf(td)) + ' · ' + (d.wl === 'W' ? 'Won ' : d.wl === 'L' ? 'Lost ' : 'Tied ') + d.us + '–' + d.them + ' vs ' + esc(d.opp), false);
       var st = startMs(td), lv = LIVE && !isNaN(st) && Date.now() >= st;
-      return bar('#day-' + td.date, lv ? 'live' : 'calck', lv ? (isOver(td.date) ? 'Pending Updates' : 'Live Now') : 'Today', esc(kindOf(td)) + (td.time ? ' · ' + esc(td.time) : '') + (lv ? ' · no results yet' : ''), lv);
+      var tdT = gTours().filter(function (t) { return t.iso === td.date; })[0], tdDrawn = !!tdT && tdT.davie.some(function (x) { return !x.out && (x.bouts || []).length; });
+      return bar('#day-' + td.date, lv ? 'live' : 'calck', lv ? (isOver(td.date) ? 'Pending Updates' : 'Live Now') : 'Today', esc(kindOf(td)) + (td.time ? ' · ' + esc(td.time) : '') + (lv ? ' · no results yet' : tdDrawn ? ' · Brackets posted' : ''), lv);
     }
     if (nx) return bar('#schedule-next', 'calck', 'Up Next', esc(kindOf(nx)) + ' · ' + esc(nx.label) + (nx.time ? ' · ' + esc(nx.time) : ''), false);   /* opens the Schedule at the next event, expanded */
     return bar('#schedule', 'cal', 'Season Schedule', 'No more events this season', false);
@@ -1303,9 +1304,12 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var h = '<h1>' + esc(s.name) + '</h1><p class="lede" style="margin-top:2px">' + esc(s.label) + (s.time ? ' · <b>' + esc(s.time) + '</b>' : '') + ' · ' + esc(s.venue) +
       (s.drive && s.drive !== 'Home' && s.drive !== '–' ? ' · ' + esc(s.drive) + ' drive' : '') + ' · ' + esc(s.team) + '</p>';
     var duals = e ? e.duals.filter(function (d) { return d.started !== false; }) : [];
+    /* Brackets being posted is the big moment of a tournament morning (Neil, 2026-11-25): before the start the card leads with it */
+    var TT0 = !duals.length ? gTours().filter(function (t) { return t.iso === date; })[0] : null;
+    var drawn = !!TT0 && TT0.davie.some(function (x) { return !x.out && (x.bouts || []).length; });
     if (!duals.length) {
-      h += '<div class="daystat"><div class="ds-k">' + (started ? (isOver(date) ? 'Wrestling is over' : 'Underway') : 'This event has not started yet') + '</div><div class="ds-s">' +
-        (started ? (isOver(date) ? 'FloWrestling hasn\'t posted the results yet. They\'ll show here as soon as it does.' : 'No results posted on FloWrestling yet. They\'ll show here as soon as they are.') : (s.time ? 'Wrestling starts at ' + esc(s.time) + '. ' : '') + 'Results will show here as FloWrestling posts them.') + '</div>' +
+      h += '<div class="daystat"><div class="ds-k">' + (started ? (isOver(date) ? 'Wrestling is over' : 'Underway') : drawn ? 'Brackets are posted' : 'This event has not started yet') + '</div><div class="ds-s">' +
+        (started ? (isOver(date) ? 'FloWrestling hasn\'t posted the results yet. They\'ll show here as soon as it does.' : 'No results posted on FloWrestling yet. They\'ll show here as soon as they are.') : (drawn ? 'Davie\'s first bouts are below. ' : '') + (s.time ? 'Wrestling starts at ' + esc(s.time) + '. ' : '') + 'Results will show here as FloWrestling posts them.') + '</div>' +
         (function () {   /* this event's own next check, never another event's (Neil, 2026-11-24) */
           var nb = (D.nextBy || {})[date + '|' + G];
           if (nb) return nb.nextAt ? '<div class="ds-s" style="margin-top:6px">' + esc(nb.next) + '. Next check <b class="cd" data-at="' + esc(nb.nextAt) + '"></b></div>' : '<div class="ds-s" style="margin-top:6px">' + esc(nb.next) + '.</div>';
@@ -1313,6 +1317,17 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
         })() +
         '<div class="ds-s" style="margin-top:6px;font-size:13px">How results arrive: at dual meets, FloWrestling often posts results only after each dual is over, sometimes not until the end of the day. Tournaments post bout by bout as they happen.</div>' +   /* parents kept asking (Neil, 2026-11-21) */
         (floL(s).length ? '<div class="ds-chk">See for yourself: ' + floL(s).map(function (f) { return '<a href="' + esc(f[1]) + '" target="_blank" rel="noopener">' + esc(f[0]) + ' &#8599;</a>'; }).join(' · ') + (s.flosNote ? ' <i>(' + esc(s.flosNote) + ')</i>' : '') + '</div>' : '') + '</div>';
+    }
+    /* A bracket tournament on this day (Neil, 2026-11-25: "If there is information available about this tournament, why would it not
+       be showing on the screen?"): the event page shows the tournament's own data, Davie's bouts as Flo draws them and a way into
+       the tournament page, never only "not started". */
+    var TT = !duals.length ? gTours().filter(function (t) { return t.iso === date; })[0] : null;
+    if (TT) {
+      var IN = TT.davie.filter(function (x) { return !x.out; }), DB = IN.filter(function (x) { return (x.bouts || []).length; });
+      h += '<a class="note" href="#' + TT.id + '" style="display:block;margin:12px 0 4px;background:var(--panel);border-color:var(--line)">' +
+        (DB.length ? 'Brackets are up: ' + DB.length + ' of ' + IN.length + ' Davie wrestlers have a bout.' : IN.length ? 'Davie\'s ' + IN.length + ' entries are in; waiting on the brackets.' : 'Entries, brackets, mats and results.') + ' <b>Open the tournament page &#8250;</b></a>';
+      if (IN.length) h += '<h2>' + (DB.length ? 'Davie\'s bouts' : 'Davie\'s entries') + '</h2><div class="list">' + IN.map(function (x) {
+        return '<a class="wr cdw" href="#' + wHash(TT, x) + '">' + wrestlerMatchCard(TT, x) + '</a>'; }).join('') + '</div>';
     }
     var anyDual = duals.length > 0;
     var DAYFOLD = false;   /* folds on today's page: waiting on Neil (keep the LIVE card or not), 2026-11-21 */
@@ -2101,6 +2116,9 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (X.teams) gen.push([X.teams.label || 'Teams', X.teams.list.length + ' teams<details class="mx-tl"><summary>Show all ' + X.teams.list.length + '</summary><div>' +
       X.teams.list.map(function (n) { var ly = lastYr(n); return '<span>' + esc(n) + (ly ? ' <i>' + esc(ly) + '</i>' : '') + '</span>'; }).join('') + '</div></details>', X.teams.src]);
     var rows = [], put = false;
+    var TB = gTours().filter(function (t) { return t.iso === s.date; })[0];   /* saved "Pending" text goes stale once Flo draws (2026-11-25) */
+    if (TB && TB.davie.some(function (x) { return (x.bouts || []).length; }))
+      X = Object.assign({}, X, { rows: X.rows.map(function (r) { return r[0] === 'Brackets' ? ['Brackets', 'Posted · <a href="#' + TB.id + '">Davie\'s bouts &#8250;</a>', r[2]] : r; }) });
     X.rows.forEach(function (r) { if (r[1] != null) rows.push(r); if (r[0] === 'Start') { rows = rows.concat(gen); put = true; } });
     if (!put) rows = gen.concat(rows);
     if (first) rows.unshift(first);
