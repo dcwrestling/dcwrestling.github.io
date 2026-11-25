@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125113029"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125113235"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -345,7 +345,7 @@ td.num, th.num { text-align: right; }
 #sc.brpage { overflow-x: auto; }
 #sc.brpage .brsc { overflow: visible; margin: 0; padding: 0 0 6px; }
 #sc.brpage #app { width: max-content; min-width: 100%; max-width: none; }
-#sc.brpage .brfix { position: sticky; left: 16px; width: min(calc(100vw - 32px), 760px); box-sizing: border-box; }
+#sc.brpage .brfix { position: sticky; left: 0; width: min(calc(100vw - 32px), 760px); box-sizing: border-box; }
 .brsvg .brh { font: 700 11px var(--body); letter-spacing: 1.5px; fill: var(--muted); }
 .brsvg .brl { stroke: var(--ring); stroke-width: 1.3; fill: none; } .brsvg .brl.me { stroke: var(--accent); stroke-width: 2.6; }
 .brsvg .brn { font: 400 12.5px var(--body); fill: var(--fg); } .brsvg .brn.w { font-weight: 700; } .brsvg .brn.l { fill: var(--muted); }
@@ -1911,7 +1911,22 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   function brSvg(t, rounds, focus, endLabel) {
     if (!rounds.length) return '';
-    var cw = 172, U = 36, G = 14, top = 50, X = function (k) { return 8 + k * cw; }, g = '', fx = function (s) { return s.length > 24 ? s.slice(0, 23) + '…' : s; };
+    var U = 36, G = 14, top = 50, g = '', fx = function (s) { return s.length > 24 ? s.slice(0, 23) + '…' : s; };
+    /* Each column is as wide as its longest line (Neil, 2026-11-25: "Choose a width of the brackets that are not larger than the
+       longest required text of a column"): names with team, the result/bout label, and the round heading, measured in the page's font. */
+    var MC = brSvg.mc || (brSvg.mc = document.createElement('canvas').getContext('2d'));
+    if (document.fonts && !brSvg.fr) { brSvg.fr = 1; document.fonts.ready.then(function () { if (SC.classList.contains('brpage')) render(); }); }   /* measure again once the page font has loaded */
+    var tw = function (txt, font, ls) { MC.font = font; return MC.measureText(txt).width + (ls || 0) * txt.length; };
+    var FB = getComputedStyle(document.body).getPropertyValue('--body') || 'Barlow, sans-serif';
+    var hdr = function (rd) { var r = rd[0].r; return /quarter/i.test(r) ? 'Quarterfinals' : /semi/i.test(r) && !/consi/i.test(r) ? 'Semifinals' : /^finals?$|1st/i.test(r) ? 'Final' : r.replace(/-/g, ' '); };
+    var nameW = function (p) { if (!p || !p.n) return 0; var real = p.t || p.w; return tw(fx(real ? (p.sd ? p.sd + ' ' : '') + p.n : p.n), '700 12.5px ' + FB) + (real && p.t ? tw(' ' + (p.t === 'DAVI' ? 'DAV' : p.t), '600 10.5px ' + FB) : 0); };
+    var CW = rounds.map(function (rd) {
+      var w = tw(hdr(rd).toUpperCase(), '700 11px ' + FB, 1.5) + 8;
+      rd.forEach(function (b) { w = Math.max(w, nameW(b.a) + 10, nameW(b.b) + 10, tw(brRes(b) || '', '600 10.5px ' + FB) + 14, tw('Bye', '400 12.5px ' + FB) + 10); });
+      return Math.ceil(Math.max(70, w));
+    });
+    var XS = [8]; CW.forEach(function (w, k) { XS[k + 1] = XS[k] + w; });
+    var X = function (k) { return XS[k]; }, cw = 0;
     var pos = [];   /* pos[k][j] = {a: y, b: y} */
     rounds.forEach(function (rd, k) {
       pos[k] = [];
@@ -1931,8 +1946,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var H = 0; pos.forEach(function (P) { P.forEach(function (p) { H = Math.max(H, p.b); }); }); H += 22;
     var names = ['', '', '', '', ''];
     rounds.forEach(function (rd, k) {
-      var nm = /quarter/i.test(rd[0].r) ? 'Quarterfinals' : /semi/i.test(rd[0].r) && !/consi/i.test(rd[0].r) ? 'Semifinals' : /^finals?$|1st/i.test(rd[0].r) ? 'Final' : rd[0].r.replace(/-/g, ' ');
-      g += '<text x="' + X(k) + '" y="14" class="brh">' + esc(nm.toUpperCase()) + '</text>';
+      var nm = hdr(rd); cw = CW[k];
+      g += '<text x="' + (X(k) + cw / 2) + '" y="14" text-anchor="middle" class="brh">' + esc(nm.toUpperCase()) + '</text>';   /* centered over its column */
       rd.forEach(function (b, j) {
         var P = pos[k][j], me = focus && [b.a, b.b].some(function (p) { return p && p.n === focus; });
         if (BRMATSEL && String(b.mat) === BRMATSEL && b.st !== 'completed') g += '<rect x="' + (X(k) - 2) + '" y="' + (P.a - 22) + '" width="' + (cw + 4) + '" height="' + (P.b - P.a + 28) + '" rx="7" class="brmat"/>';
@@ -1954,7 +1969,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       });
     });
     var L = rounds.length, fb = rounds[L - 1][0], fp = pos[L - 1][0], fy = (fp.a + fp.b) / 2, w = fb && fb.st === 'completed' ? [fb.a, fb.b].filter(function (p) { return p && p.w; })[0] : null;
-    g += '<text x="' + X(L) + '" y="14" class="brh">' + esc(endLabel.toUpperCase()) + '</text><line x1="' + X(L) + '" y1="' + fy + '" x2="' + (X(L) + cw) + '" y2="' + fy + '" class="brl' + (w && w.n === focus ? ' me' : '') + '"/>' +
+    cw = Math.ceil(Math.max(70, tw(endLabel.toUpperCase(), '700 11px ' + FB, 1.5) + 8, w ? nameW(w) + 10 : tw(endLabel, '400 12.5px ' + FB) + 10));
+    g += '<text x="' + (X(L) + cw / 2) + '" y="14" text-anchor="middle" class="brh">' + esc(endLabel.toUpperCase()) + '</text><line x1="' + X(L) + '" y1="' + fy + '" x2="' + (X(L) + cw) + '" y2="' + fy + '" class="brl' + (w && w.n === focus ? ' me' : '') + '"/>' +
       '<text x="' + (X(L) + 4) + '" y="' + (fy - 6) + '" class="brn' + (w ? (w.t === 'DAVI' ? ' dv w' : ' w') : ' gh') + '">' + esc(w ? fx(w.n) : endLabel) + '</text>';
     var Wd = X(L) + cw + 10;
     return '<div class="brsc"><svg class="brsvg" width="' + Wd + '" height="' + H + '" viewBox="0 0 ' + Wd + ' ' + H + '">' + g + '</svg></div>';
