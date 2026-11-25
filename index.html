@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125093618"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125093942"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -322,6 +322,8 @@ td.num, th.num { text-align: right; }
 .ck { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .cbig { font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1; white-space: nowrap; }
 .cmed { font-family: var(--display); font-weight: 800; font-size: 15px; line-height: 1.15; color: var(--muted); white-space: nowrap; }
+.cest { display: block; font-family: var(--display); font-weight: 700; font-size: 13px; line-height: 1.2; color: var(--accent); white-space: nowrap; margin-top: 1px; }   /* estimated bout time, 2026-11-25 */
+.bout .eta { color: var(--accent); font-weight: 600; }
 .cr.up .cbig, .cr.up .cmed, .cr.plc .cbig { color: var(--accent); }
 .cr.done.W .ck { color: var(--win); } .cr.done.L .ck { color: var(--loss); }
 .wtb { display: inline-flex; flex: none; font-family: var(--display); font-weight: 800; font-size: 15px; line-height: 1; border: 1.5px solid var(--accent); border-radius: 5px; overflow: hidden; }
@@ -904,20 +906,30 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (m === 'Fall') return { big: 'Fall', med: r.time || '' };
     return { big: label || (b.wl === 'W' ? 'Won' : 'Lost'), med: r.time || '' };
   }
+  /* Estimated bout time (Neil, 2026-11-25: approximate, firming up through the day): "On deck", "Wrestling now", or "Est. ~10:40 AM"
+     from the event's measured pace (tourney.py bout_times); "Any minute" once the estimate has passed. */
+  function etaTxt(b) {
+    if (!b || b.wl || b.bye) return '';
+    if (b.etaNote) return b.etaNote;
+    if (!b.eta) return '';
+    var d = new Date(b.eta); if (isNaN(d)) return '';
+    if (Date.now() > d.getTime()) return 'Any minute';
+    return 'Est. ~' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
   function boutRight(b) {
     if (!b) return { k: '', big: '–', med: '', cls: '' };
     if (b.wl === 'W' || b.wl === 'L') { var p = resParts(b); return { k: b.wl === 'W' ? 'Won' : 'Lost', big: esc(p.big), med: p.med, cls: 'done ' + b.wl }; }
     if (b.result) return { k: '', big: esc(b.result), med: '', cls: '' };
-    if (b.bout) return { k: 'Bout', big: esc(b.bout), med: b.mat ? 'Mat ' + b.mat : 'Mat TBD', cls: 'up' };
+    if (b.bout) return { k: 'Bout', big: esc(b.bout), med: b.mat ? 'Mat ' + b.mat : 'Mat TBD', est: etaTxt(b), cls: 'up' };
     return { k: '', big: '–', med: 'Not posted', cls: '' };
   }
   function card(p) {
     var R = p.right || { k: '', big: '', med: '' };
     if (p.compact) return '<div class="wcard compact"><div class="cl"><div class="c2">' + wtBadge(p.weight, p.level) + (p.l2 || '') + '</div><div class="c3">' + (p.l3 || '&nbsp;') + '</div></div>' +
-      '<div class="cr ' + (R.cls || '') + '"><span class="ck">' + esc(R.k || '') + '</span><span class="cbig">' + R.big + '</span><span class="cmed">' + esc(R.med || '') + '</span></div></div>';
+      '<div class="cr ' + (R.cls || '') + '"><span class="ck">' + esc(R.k || '') + '</span><span class="cbig">' + R.big + '</span><span class="cmed">' + esc(R.med || '') + '</span>' + (R.est ? '<span class="cest">' + esc(R.est) + '</span>' : '') + '</div></div>';
     return '<div class="wcard"><div class="cl"><div class="ctop">' + wtBadge(p.weight, p.level) + '<span class="cnm">' + esc(p.name) + '</span></div>' +
       '<div class="c2">' + (p.l2 || '&nbsp;') + '</div><div class="c3">' + (p.l3 || '&nbsp;') + '</div></div>' +
-      '<div class="cr ' + (R.cls || '') + '"><span class="ck">' + esc(R.k || '') + '</span><span class="cbig">' + R.big + '</span><span class="cmed">' + esc(R.med || '') + '</span></div></div>';
+      '<div class="cr ' + (R.cls || '') + '"><span class="ck">' + esc(R.k || '') + '</span><span class="cbig">' + R.big + '</span><span class="cmed">' + esc(R.med || '') + '</span>' + (R.est ? '<span class="cest">' + esc(R.est) + '</span>' : '') + '</div></div>';
   }
   /* One match as a card. x supplies weight/level/name; b is the bout. */
   function boutCard(t, x, b) {
@@ -1571,7 +1583,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     return '<div class="bout"><span class="wl ' + cls + '">' + (b.wl || '·') + '</span><span class="rd">' + esc((b.round || '').replace(/(\d)St\b/, '$1st')) + '</span>' +
       '<span class="op">' + (b.bye ? 'No opponent: advances' : b.opp ? esc(b.opp) + (b.oppTeam ? ' <span class="lvl">' + esc(b.oppTeam) + '</span>' : '') : 'Opponent TBD') + '</span>' +
       (b.result ? '<span class="res">' + esc(b.result) + '</span>' : '') +
-      ((b.bout || b.mat) && !b.result ? '<span class="mat">' + (b.bout ? 'Bout ' + esc(b.bout) : '') + (b.mat ? ' · Mat ' + esc(b.mat) : '') + '</span>' : '') + '</div>';
+      ((b.bout || b.mat) && !b.result ? '<span class="mat">' + (b.bout ? 'Bout ' + esc(b.bout) : '') + (b.mat ? ' · Mat ' + esc(b.mat) : '') + (etaTxt(b) ? ' · <b class="eta">' + esc(etaTxt(b)) + '</b>' : '') + '</span>' : '') + '</div>';
   }
   function record(t) {
     var w = 0, l = 0; t.davie.forEach(function (x) { x.bouts.forEach(function (b) { if (b.wl === 'W') w++; if (b.wl === 'L') l++; }); });
@@ -1599,6 +1611,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       h += '<div class="note">' + esc(t.statusNote) + '<div class="nlist">' +
         '<a href="' + esc(fb + '/brackets') + '" target="_blank" rel="noopener">' + ic.b + '<span class="l">Brackets</span><span class="r">FloWrestling &#8599;</span></a>' +
         '<a href="' + esc(fb + '/mat-center') + '" target="_blank" rel="noopener">' + ic.m + '<span class="l">MatCenter</span><span class="r">FloWrestling &#8599;</span></a></div></div>'; }
+    /* how bout times are estimated (2026-11-25) */
+    if (t.status !== 'final' && t.pace && t.pace.perBout) h += '<p class="foot" style="margin:8px 2px 0">Bout times are estimates from today\'s pace: about ' + (Math.round(t.pace.perBout * 10) / 10) + ' min per bout across all mats (' + t.pace.bouts + ' bouts in the last ' + t.pace.minutes + ' min). They firm up as each bout gets closer; "On deck" comes straight from FloWrestling.</p>';
     var mine = mineSection(t, false);
     h += '<h2>My Wrestlers</h2>' + (mine || '<div class="mine-empty">Tap &#9734; next to a wrestler on the <a href="#' + t.id + '-wrestlers">Davie Wrestlers</a> tab to keep them at the top here. Saved on this device only.</div>');
     var info = '#' + t.id + '-info', wl = '#' + t.id + '-wrestlers', ts = '#' + t.id + '-teams';
