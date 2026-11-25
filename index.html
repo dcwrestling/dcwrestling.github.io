@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125112941"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125113029"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1712,9 +1712,17 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   function done(b) { return b.wl === 'W' || b.wl === 'L'; }
   function mHash(t, x, i) { return wHash(t, x) + '-m' + i; }
+  /* An upcoming bout opens its opponent's page in the app, not Flo (Neil, 2026-11-25: "I click on the opponent's name and it takes me
+     to flow"): the record, results and history the app has on him; that page links on to Flo. */
+  function oppPageFor(t, b) {
+    if (!b || !b.opp || /^(Loser|Winner) of|^Opponent/i.test(b.opp)) return '';
+    var code = Object.keys(t.bracketTeams || {}).filter(function (c) { return brNorm(t.bracketTeams[c]) === brNorm(b.oppTeam); })[0] || b.oppTeam || '';
+    return brHref(t, { n: b.opp, t: code });
+  }
   function boutLink(t, x, b, i) {
     if (done(b)) return '<div class="boutlink"><a class="bmain" href="#' + mHash(t, x, i) + '">' + boutRow(b) + '</a><span class="bl"><a href="#' + mHash(t, x, i) + '">Match details &#8250;</a>' + (b.moves && b.moves.length ? '<a href="#' + mHash(t, x, i) + '" data-pbp="1">Point by point &#8250;</a>' : '') + '</span></div>';
-    var url = b.url || (t.flo || 'https://www.flowrestling.org') + '/brackets';
+    var url = b.url || (t.flo || 'https://www.flowrestling.org') + '/brackets', oh = oppPageFor(t, b);
+    if (oh) return '<a class="boutlink" href="' + esc(oh) + '">' + boutRow(b) + '<span class="bl">Scout ' + esc(b.opp) + ' &#8250;</span></a>';
     if (b.url) return '<a class="boutlink" href="' + esc(url) + '" target="_blank" rel="noopener">' + boutRow(b) + '<span class="bl">Open this bout on FloWrestling &#8599;</span></a>';
     return '<a class="boutlink" href="' + esc(url) + '" target="_blank" rel="noopener">' + boutRow(b) + '<span class="bl">Open on FloWrestling &#8599; <span class="blw">(' + x.weight + ' lb bracket)</span></span></a>';
   }
@@ -1824,7 +1832,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (!B.length) return '<div class="wr cdw">' + wrestlerMatchCard(t, x) + '</div>';
     return B.map(function (o) {
       if (done(o.b)) return '<a class="wr cdw" href="#' + mHash(t, x, o.i) + '">' + boutCard(t, x, o.b) + '</a>';
-      var url = o.b.url || (t.flo || 'https://www.flowrestling.org') + '/brackets';
+      var url = o.b.url || (t.flo || 'https://www.flowrestling.org') + '/brackets', oh = oppPageFor(t, o.b);
+      if (oh) return '<a class="wr cdw" href="' + esc(oh) + '">' + boutCard(t, x, o.b) + '</a>';
       return '<a class="wr cdw" href="' + esc(url) + '" target="_blank" rel="noopener">' + boutCard(t, x, o.b) + '</a>';
     }).join('');
   }
@@ -2580,8 +2589,29 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   /* The opponent page is one screen of summary (Neil, 2026-11-24: "a summary level view in one screen that you can click into to go to
      more detail"): header, tonight's matchup, three numbers, a few scouting notes, then rows that open the detail pages
      (#opp-...---matches, ---davie, ---numbers). */
+  /* Today's bouts from the filed brackets (Neil, 2026-11-25: wants to learn more about Harris's opponent): a tournament still running
+     isn't on the wrestler's Flo profile yet, so his finished bracket bouts are added as that tournament's event. */
+  function brEventsFor(name) {
+    var out = [], nn = brNorm(name);
+    D.tournaments.forEach(function (t) {
+      var rows = [];
+      Object.keys(t.brackets || {}).forEach(function (k) {
+        var wt = +((k.split('|')[1] || '').match(/\d+/) || [0])[0];
+        brBouts(t.brackets[k]).forEach(function (b) {
+          if (b.st !== 'completed') return;
+          var me = [b.a, b.b].filter(function (p) { return p && brNorm(p.n) === nn; })[0]; if (!me) return;
+          var op = me === b.a ? b.b : b.a, tm = op && op.t ? (op.t === 'DAVI' ? 'Davie' : (t.bracketTeams || {})[op.t] || op.t) : '';
+          var sc = /^(F|FOR|MFF|BYE)$/.test(b.wt) ? (b.c || '') : (me.sc !== '' && op && op.sc !== '' ? (me.w ? me.sc + '-' + op.sc : op.sc + '-' + me.sc) : '') + (b.c ? ' ' + b.c : '');
+          rows.push([me.w ? 'W' : 'L', op ? op.n : '', tm, b.wt || '', sc.trim(), roundName(b.r), wt]);
+        });
+      });
+      if (rows.length) out.push({ name: (t.year ? t.year + ' ' : '') + t.name + ' (today, from the brackets)', date: t.iso, rows: rows, fromBrackets: true });
+    });
+    return out;
+  }
   function oppIntel(o) {
-    var r = o.r, fp = o.fp, EVS = (fp && fp.events) || [], RO = [];
+    var r = o.r, fp = o.fp, EVS = ((fp && fp.events) || []).slice(), RO = [];
+    brEventsFor(o.name).forEach(function (be) { if (!EVS.some(function (ev) { return ev.date === be.date && ev.rows && ev.rows.length >= be.rows.length; })) EVS.unshift(be); });
     EVS.forEach(function (ev) { ev.rows.forEach(function (x) { RO.push({ ev: ev, wl: x[0], opp: x[1], team: x[2], type: x[3], score: x[4], round: x[5], wt: x[6] }); }); });
     var W = RO.filter(function (x) { return x.wl === 'W'; }), L = RO.filter(function (x) { return x.wl === 'L'; });
     var secs = function (t) { var m = String(t || '').match(/^(\d+):(\d\d)$/); return m ? +m[1] * 60 + +m[2] : null; };
