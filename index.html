@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125092352"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125092743"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -921,6 +921,8 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   }
   /* One match as a card. x supplies weight/level/name; b is the bout. */
   function boutCard(t, x, b) {
+    if (b.bye) return card({ weight: b.weight || x.weight, level: x.level, name: x.name, l2: '<span class="wl up">·</span><span class="crd">' + esc(roundName(b.round)) + '</span>',
+      l3: '<span class="cop">Bye: advances without wrestling</span>', right: { k: '', big: 'Bye', med: '', cls: '' } });   /* 2026-11-25 */
     var cls = b.wl === 'W' || b.wl === 'L' ? b.wl : 'up';
     var opp = b.opp ? esc(b.opp) : (b.wl ? 'Opponent not posted' : 'Opponent TBD');
     return card({ weight: b.weight || x.weight, level: x.level, name: x.name,
@@ -1567,7 +1569,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   function boutRow(b) {
     var cls = b.wl === 'W' || b.wl === 'L' ? b.wl : 'up';
     return '<div class="bout"><span class="wl ' + cls + '">' + (b.wl || '·') + '</span><span class="rd">' + esc((b.round || '').replace(/(\d)St\b/, '$1st')) + '</span>' +
-      '<span class="op">' + (b.opp ? esc(b.opp) + (b.oppTeam ? ' <span class="lvl">' + esc(b.oppTeam) + '</span>' : '') : 'Opponent TBD') + '</span>' +
+      '<span class="op">' + (b.bye ? 'No opponent: advances' : b.opp ? esc(b.opp) + (b.oppTeam ? ' <span class="lvl">' + esc(b.oppTeam) + '</span>' : '') : 'Opponent TBD') + '</span>' +
       (b.result ? '<span class="res">' + esc(b.result) + '</span>' : '') +
       ((b.bout || b.mat) && !b.result ? '<span class="mat">' + (b.bout ? 'Bout ' + esc(b.bout) : '') + (b.mat ? ' · Mat ' + esc(b.mat) : '') + '</span>' : '') + '</div>';
   }
