@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125103127"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125103615"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1627,13 +1627,14 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     if (t.statusNote) { var fb = t.flo || 'https://www.flowrestling.org';
       var ic = { w: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M15.5 5.2a3 3 0 0 1 0 5.6M17.5 13.6A5.5 5.5 0 0 1 20.5 19"/></svg>',
                  b: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h5v5H3M3 14h5v5H3M8 7.5h4v9H8M12 12h5M17 9h4v6h-4z"/></svg>',
-                 m: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg>' };
+                 m: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg>',
+                 n: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg>' };
       h += '<div class="note">' + esc(t.statusNote) + '<div class="nlist">' +
         (t.brackets && Object.keys(t.brackets).length ? '<a href="#' + t.id + '-br">' + ic.b + '<span class="l">Brackets</span><span class="r">Every weight &#8250;</span></a>' : '<a href="' + esc(fb + '/brackets') + '" target="_blank" rel="noopener">' + ic.b + '<span class="l">Brackets</span><span class="r">FloWrestling &#8599;</span></a>') +
+        (t.davie.some(function (x) { return x.bouts.length; }) ? '<a href="#' + t.id + '-next">' + ic.n + '<span class="l">Bouts</span><span class="r">Next up &#8250;</span></a>' : '') +   /* Bouts beside Brackets (Neil, 2026-11-25; published on his "Publish it") */
         '<a href="' + esc(fb + '/mat-center') + '" target="_blank" rel="noopener">' + ic.m + '<span class="l">MatCenter</span><span class="r">FloWrestling &#8599;</span></a></div></div>'; }
     /* how bout times are estimated (2026-11-25) */
     if (t.status !== 'final' && t.pace && t.pace.perBout) h += '<p class="foot" style="margin:8px 2px 0">Bout times are estimates from today\'s pace: about ' + (Math.round(t.pace.perBout * 10) / 10) + ' min per bout across all mats (' + t.pace.bouts + ' bouts in the last ' + t.pace.minutes + ' min). They firm up as each bout gets closer; "On deck" comes straight from FloWrestling.</p>';
-    if (D.draft && t.status !== 'final' && t.davie.some(function (x) { return x.bouts.length; })) h += '<a class="note brgo" href="#' + t.id + '-next"><b>Davie\'s next bouts · all weights</b><span>&#8250;</span></a>';   /* DRAFT 2026-11-25 */
     var mine = mineSection(t, false);
     h += '<h2>My Wrestlers</h2>' + (mine || '<div class="mine-empty">Tap &#9734; next to a wrestler on the <a href="#' + t.id + '-wrestlers">Davie Wrestlers</a> tab to keep them at the top here. Saved on this device only.</div>');
     var info = '#' + t.id + '-info', wl = '#' + t.id + '-wrestlers', ts = '#' + t.id + '-teams';
@@ -1946,6 +1947,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     var bouts = brBouts(t.brackets[cur.k]); BRETA = t.etas || {};
     if (focus) { var fl = bouts.filter(function (b) { return [b.a, b.b].some(function (p) { return p && p.t === 'DAVI' && p.n.replace(/[^a-z]/gi, '').toLowerCase() === focus.replace(/[^a-z]/gi, '').toLowerCase(); }); })[0]; if (fl) [fl.a, fl.b].forEach(function (p) { if (p && p.t === 'DAVI' && p.n.replace(/[^a-z]/gi, '').toLowerCase() === focus.replace(/[^a-z]/gi, '').toLowerCase()) focus = p.n; }); }
     var dvAt = function (w) { return t.davie.filter(function (x) { return !x.out && x.weight === w.n && (x.level === 'JV') === w.jv; }).map(function (x) { return x.name.split(' ').slice(-1)[0]; }); };
+    h += brSwitch(t, 'br', cur.slug);
     h += '<div class="brw">' + W.map(function (w) { var d = dvAt(w); return '<a href="#' + t.id + '-br-' + w.slug + '"' + (w === cur ? ' class="on"' : '') + '>' + esc(w.label) + '<small' + (d.length ? ' class="dv"' : '') + '>' + (d.length ? '&#9679; ' + esc(d[0]) + (d.length > 1 ? ' +' + (d.length - 1) : '') : '–') + '</small></a>'; }).join('') + '</div>';
     if (fx) h += '<a class="brf" href="#' + t.id + '-br-' + cur.slug + '"><b>' + esc(fx.name) + '</b> · ' + esc(cur.label) + ' lb<span>Showing his path &#10005;</span></a>';
     var C = brLayout(bouts, true), K = brLayout(bouts, false), O = bouts.filter(function (b) { return /(5th|7th|fifth|seventh)\s*place/i.test(b.r); });
@@ -1957,24 +1959,57 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       '<div class="links" style="margin-top:10px">' + ext((t.bracketsFlo || t.flo || 'https://www.flowrestling.org') + '/brackets', 'the brackets on FloWrestling') + '</div>';
     return h;
   }
-  /* DRAFT (Neil, 2026-11-25: "a full roster schedule of all the next bout, regardless of the weight"): every Davie wrestler's next
+  /* Next bouts (Neil, 2026-11-25: "a full roster schedule of all the next bout, regardless of the weight"): every Davie wrestler's next
      bout in the order they'll wrestle: wrestling now, on deck, then by bout number with estimated times; then wrestlers waiting
      on their next opponent, then those done for the day. Route #<t>-next; button on the Overview (draft only until Neil confirms). */
-  function nextView(t) {
-    var n = function (b) { return +(String(b.bout || '').replace(/\D/g, '')) || 99999; }, rows = [], wait = [], done_ = [];
-    t.davie.filter(function (x) { return !x.out; }).forEach(function (x) {
-      var o = boutOrder(x).filter(function (o) { return !o.b.bye && !done(o.b) && !o.b.result; })[0];
-      if (o && (o.b.bout || o.b.etaNote)) rows.push({ x: x, b: o.b, i: o.i });
-      else if (o || !x.bouts.length) wait.push(x);
-      else done_.push(x);
+  /* Bracket / Bout list switch (Neil, 2026-11-25: "Can you get to the screen from the same page as the brackets? ... The app will allow
+     users to get to similar screens from various pages"): same bouts, two formats; the weight carries over. */
+  function brSwitch(t, on, wslug, every) {
+    return '<nav class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px"><a href="#' + t.id + '-br' + (wslug ? '-' + wslug : '') + '"' + (on === 'br' ? ' class="on" aria-current="page"' : '') + '>Bracket</a>' +
+      '<a href="#' + t.id + '-next' + (every === false ? '' : '-all') + (wslug ? '-' + wslug : '') + '"' + (on === 'list' ? ' class="on" aria-current="page"' : '') + '>Bout list</a></nav>';
+  }
+  function nextView(t, rest) {
+    /* filters (Neil, 2026-11-25: "filters ... to show all, to show just Davie, Davie weight class, all weight class"): who = Davie or
+       everyone at the tournament; weight = all or one. Route #<t>-next[-all][-<weight>]. */
+    var m = (rest || '').match(/^(-all)?(?:-((?:jv)?\d+))?$/) || [], every = !!m[1], wsel = m[2] || '';
+    var W = brWeights(t), wcur = W.filter(function (w) { return w.slug === wsel; })[0] || null;
+    var n = function (v) { return +(String(v || '').replace(/\D/g, '')) || 99999; };
+    var base = '#' + t.id + '-next' + (every ? '-all' : '');
+    var dvAt = function (w) { return t.davie.filter(function (x) { return !x.out && x.weight === w.n && (x.level === 'JV') === w.jv; }); };
+    var h = head(t) + tabs(t, '-next') + brSwitch(t, 'list', wcur ? wcur.slug : '', every) + '<div class="h2row"><h2>Next bouts</h2></div>' +
+      '<nav class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:4px"><a href="#' + t.id + '-next' + (wcur ? '-' + wcur.slug : '') + '"' + (every ? '' : ' class="on"') + '>Davie</a><a href="#' + t.id + '-next-all' + (wcur ? '-' + wcur.slug : '') + '"' + (every ? ' class="on"' : '') + '>Everyone</a></nav>' +
+      '<div class="brw" style="margin-top:8px"><a href="' + base + '"' + (wcur ? '' : ' class="on"') + '>All<small>weights</small></a>' + W.map(function (w) { var d = dvAt(w); return '<a href="' + base + '-' + w.slug + '"' + (w === wcur ? ' class="on"' : '') + '>' + esc(w.label) + '<small' + (d.length ? ' class="dv"' : '') + '>' + (d.length ? '&#9679; ' + esc(d[0].name.split(' ').slice(-1)[0]) + (d.length > 1 ? ' +' + (d.length - 1) : '') : '–') + '</small></a>'; }).join('') + '</div>';
+    var inW = function (wt, lv) { return !wcur || (wcur.n === wt && wcur.jv === (lv === 'JV')); };
+    var rank = function (s) { return s === 'Wrestling now' || s === 'live' ? 0 : s === 'On deck' || s === 'on-deck' ? 1 : 2; };
+    if (!every) {
+      var rows = [], wait = [], done_ = [];
+      t.davie.filter(function (x) { return !x.out && inW(x.weight, x.level); }).forEach(function (x) {
+        var o = boutOrder(x).filter(function (o) { return !o.b.bye && !done(o.b) && !o.b.result; })[0];
+        if (o && (o.b.bout || o.b.etaNote)) rows.push({ x: x, b: o.b });
+        else if (o || !x.bouts.length) wait.push(x);
+        else done_.push(x);
+      });
+      rows.sort(function (p, q) { return rank(p.b.etaNote) - rank(q.b.etaNote) || n(p.b.bout) - n(q.b.bout); });
+      h += '<p class="foot" style="margin:6px 2px 10px">Each Davie wrestler\'s next bout, in the order they\'ll wrestle. Times are estimates from today\'s pace and firm up as each bout gets closer.</p>';
+      h += rows.length ? '<div class="list">' + rows.map(function (r) { return '<a class="wr cdw" href="#' + wHash(t, r.x) + '">' + boutCard(t, r.x, r.b) + '</a>'; }).join('') + '</div>' : '<p class="note">No Davie bouts numbered yet' + (wcur ? ' at ' + esc(wcur.label) : '') + '.</p>';
+      if (wait.length) h += '<h2>Waiting on the next opponent</h2><div class="list">' + wait.map(function (x) { return '<a class="wr cdw" href="#' + wHash(t, x) + '">' + wrestlerMatchCard(t, x) + '</a>'; }).join('') + '</div>';
+      if (done_.length) h += '<h2>Done for the day</h2><div class="list">' + done_.map(function (x) { return '<a class="wr cdw" href="#' + wHash(t, x) + '">' + wrestlerMatchCard(t, x) + '</a>'; }).join('') + '</div>';
+      return h;
+    }
+    /* everyone: every upcoming numbered bout in the filed brackets */
+    var L = [];
+    W.filter(function (w) { return !wcur || w === wcur; }).forEach(function (w) {
+      brBouts(t.brackets[w.k]).forEach(function (b) { if (b.mn && /^(upcoming|no-info|on-deck|live)$/.test(b.st)) L.push({ w: w, b: b }); });
     });
-    var rank = function (r) { return r.b.etaNote === 'Wrestling now' ? 0 : r.b.etaNote === 'On deck' ? 1 : 2; };
-    rows.sort(function (p, q) { return rank(p) - rank(q) || n(p.b) - n(q.b); });
-    var h = head(t) + tabs(t, '-next') + '<div class="h2row"><h2>Davie\'s next bouts</h2></div>' +
-      '<p class="foot" style="margin:0 2px 10px">Every Davie wrestler\'s next bout, all weights, in the order they\'ll wrestle. Times are estimates from today\'s pace and firm up as each bout gets closer.</p>';
-    h += rows.length ? '<div class="list">' + rows.map(function (r) { return '<a class="wr cdw" href="#' + wHash(t, r.x) + '">' + boutCard(t, r.x, r.b) + '</a>'; }).join('') + '</div>' : '<p class="note">No Davie bouts are numbered yet.</p>';
-    if (wait.length) h += '<h2>Waiting on the next opponent</h2><div class="list">' + wait.map(function (x) { return '<a class="wr cdw" href="#' + wHash(t, x) + '">' + wrestlerMatchCard(t, x) + '</a>'; }).join('') + '</div>';
-    if (done_.length) h += '<h2>Done for the day</h2><div class="list">' + done_.map(function (x) { return '<a class="wr cdw" href="#' + wHash(t, x) + '">' + wrestlerMatchCard(t, x) + '</a>'; }).join('') + '</div>';
+    L.sort(function (p, q) { return rank(p.b.st) - rank(q.b.st) || n(p.b.mn) - n(q.b.mn); });
+    var nm = function (p, x) { if (!p || !p.n) return '<i style="color:var(--muted)">' + esc(x || 'TBD') + '</i>'; var dv = p.t === 'DAVI'; return '<span' + (dv ? ' style="color:var(--accent);font-weight:700"' : '') + '>' + esc(p.n) + '</span>' + (p.t ? ' <span class="csch">' + esc(dv ? 'Davie' : ((t.bracketTeams || {})[p.t] || p.t)) + '</span>' : ''); };
+    h += '<p class="foot" style="margin:6px 2px 10px">Every upcoming bout' + (wcur ? ' at ' + esc(wcur.label) : '') + ', in the order they\'ll wrestle (' + L.length + '). Davie wrestlers in orange. Times are estimates from today\'s pace.</p>';
+    h += L.length ? '<div class="list">' + L.slice(0, 120).map(function (o) {
+      var b = o.b, dv = [b.a, b.b].some(function (p) { return p && p.t === 'DAVI'; }), x = dv ? t.davie.filter(function (d) { return [b.a, b.b].some(function (p) { return p && p.t === 'DAVI' && brNorm(p.n) === brNorm(d.name); }); })[0] : null;
+      var et = (t.etas || {})[String(b.mn)], est = b.st === 'live' ? 'Wrestling now' : b.st === 'on-deck' ? 'On deck' : et ? etaTxt({ eta: et }) : '';
+      var href = x ? '#' + wHash(t, x) : '#' + t.id + '-br-' + o.w.slug;
+      return '<a class="wr cdw" href="' + href + '">' + card({ weight: o.w.n, level: o.w.jv ? 'JV' : 'V', name: roundName(b.r), l2: nm(b.a), l3: '<span class="cvs">vs</span> ' + nm(b.b), right: { k: 'Bout', big: esc(b.mn), med: b.mat ? 'Mat ' + b.mat : 'Mat TBD', est: est, cls: 'up' } }) + '</a>';
+    }).join('') + '</div>' : '<p class="note">No upcoming bouts' + (wcur ? ' at ' + esc(wcur.label) : '') + '.</p>';
     return h;
   }
   function wrestlerView(t, x) {
@@ -2139,7 +2174,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       if (id === t.id || id === t.id + '-wrestlers' || id === t.id + '-teams' || id === t.id + '-info') { out = ['results', 'results']; return; }
       if (id.indexOf(t.id + '-team-') === 0 || id.indexOf(t.id + '-wt-') === 0) { out = [t.id + '-teams', 'teams']; return; }
       if (id.indexOf(t.id + '-br') === 0 && /^(-|$)/.test(id.slice((t.id + '-br').length))) { out = [t.id, 'overview']; return; }
-      if (id === t.id + '-next') { out = [t.id, 'overview']; return; }
+      if (id.indexOf(t.id + '-next') === 0 && /^(-|$)/.test(id.slice((t.id + '-next').length))) { out = [t.id, 'overview']; return; }
       t.davie.forEach(function (x) {
         if (out) return;
         if (id === wHash(t, x)) out = [t.id + '-wrestlers', 'Davie Wrestlers'];
@@ -2166,7 +2201,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
       else if (id === t.id + '-wrestlers') html = wrestlers(t);
       else if (id === t.id + '-teams') html = teams(t);
       else if (id === t.id + '-info') html = info(t);
-      else if (id === t.id + '-next') html = nextView(t);   /* DRAFT: Davie's next bouts (2026-11-25) */
+      else if (id.indexOf(t.id + '-next') === 0 && /^(-|$)/.test(id.slice((t.id + '-next').length))) html = nextView(t, id.slice((t.id + '-next').length));   /* next bouts (2026-11-25) */
       else if (id.indexOf(t.id + '-br') === 0 && /^(-|$)/.test(id.slice((t.id + '-br').length))) html = bracketView(t, id.slice((t.id + '-br').length));   /* brackets (2026-11-25) */
       else if (t.rosters && id.indexOf(t.id + '-team-') === 0) { var c = id.slice((t.id + '-team-').length).toUpperCase(); if (t.rosters[c]) html = teamView(t, c); }
       else if (t.rosters && id.indexOf(t.id + '-wt-') === 0) html = weightView(t, Number(id.slice((t.id + '-wt-').length)));
@@ -2186,6 +2221,7 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     { var tb = document.getElementById('topback'); if (tb) { tb.hidden = !bk; if (bk) tb.setAttribute('href', '#' + bk[0]); var hb0 = document.querySelector('header.bar'); if (hb0) hb0.classList.toggle('hasback', !!bk); } bk = null; }   /* DRAFT: Back lives in the top bar, never in the page */
     /* Computer layout (2026-11-16): pages with side-by-side content use the wide column; the rest read in a narrower centered column */
     var wide = id === 'roster' || id === 'schedule' || id === 'schedule-next' || id === 'results' || id.indexOf('stats-') === 0 || id.indexOf('wr-') === 0 || D.tournaments.some(function (t) { return id === t.id || id === t.id + '-wrestlers' || id.indexOf(t.id + '-br') === 0; });
+    setTimeout(function () { app.querySelectorAll('.brw').forEach(function (r) { var on = r.querySelector('a.on'); if (on) r.scrollLeft = Math.max(0, on.getBoundingClientRect().left - r.getBoundingClientRect().left + r.scrollLeft - (r.clientWidth - on.offsetWidth) / 2); }); }, 0);   /* weight row shows the selected weight (2026-11-25) */
     setTimeout(function () { var ht = app.querySelector('.h2h-t'), pc = ht && ht.querySelector('thead th.dprim'), lb = ht && ht.querySelector('thead th'); if (pc && lb) ht.scrollLeft = pc.offsetLeft - lb.offsetWidth; }, 0);   /* comparison opens on Davie | likely */
     if (false && D.draft && html && bk && /^\s*(<a class="back"[^>]*>[^<]*<\/a>\s*)?(<figure[\s\S]*?<\/figure>\s*)?<div class="thead">/.test(html)) {   /* DRAFT: a page that opens with a header row (wrestler, tournament) gets Back inside that row, not on a row of its own */
       html = html.replace('<div class="thead">', '<div class="thead"><a class="backbtn inrow" href="#' + bk[0] + '" data-hback aria-label="Back"><svg class="bkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span class="bkt">&#8249; Back</span></a>'); bk = null;
