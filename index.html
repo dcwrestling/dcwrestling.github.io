@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125123040"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125123448"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -325,11 +325,15 @@ td.num, th.num { text-align: right; }
 .cest { display: block; font-family: var(--display); font-weight: 700; font-size: 13px; line-height: 1.2; color: var(--accent); white-space: nowrap; margin-top: 1px; }   /* estimated bout time, 2026-11-25 */
 .bout .eta { color: var(--accent); font-weight: 600; }
 .brsvg .brmat { fill: rgba(232,178,26,.12); stroke: var(--live); stroke-width: 1.6; }
-.wtpick { position: relative; display: flex; align-items: center; gap: 10px; margin: 12px 0 6px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel2); color: var(--fg); }
+.wtpick { margin: 12px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel2); color: var(--fg); overflow: hidden; }
+.wtpick > summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; }
+.wtpick > summary::-webkit-details-marker { display: none; }
 .wtpick .wtk { font: 600 11px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .wtpick .wtv { flex: 1; min-width: 0; font: 700 17px var(--display); white-space: nowrap; overflow: hidden; }
-.wtpick .wtc { color: var(--accent); }
-.wtpick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; font-size: 16px; }   /* the phone's own picker opens on tap */
+.wtpick .wtc { color: var(--accent); transition: transform .15s; } .wtpick[open] .wtc { transform: rotate(180deg); }
+.wtpick .wtlist { border-top: 1px solid var(--line); }
+.wtpick .wtlist a { display: block; padding: 11px 14px; border-top: 1px solid var(--line); color: var(--fg); text-decoration: none; font: 600 15px var(--body); }
+.wtpick .wtlist a:first-child { border-top: 0; } .wtpick .wtlist a.on { color: var(--accent); font-weight: 700; }
 .matf { display: flex; align-items: center; gap: 5px; margin: 6px 0 10px; font: 600 12px var(--body); color: var(--muted); }
 .matf span { margin-right: 3px; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
 .matf a { padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel2); color: var(--fg); text-decoration: none; line-height: 1.5; }
@@ -2046,8 +2050,9 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
   /* Weight dropdown (Neil, 2026-11-25: "Do a drop down"): one line, the phone's own picker; replaces the row of weight keys */
   function wtPick(opts) {
     var cur = opts.filter(function (o) { return o[2]; })[0] || opts[0];
-    return '<label class="wtpick"><span class="wtk">Weight</span><span class="wtv">' + esc(cur[1]) + '</span><span class="wtc">&#9662;</span>' +
-      '<select data-go aria-label="Weight">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (o[2] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select></label>';
+    /* the app's own list, not the phone's picker (Neil, 2026-11-25: the native dropdown sent the app back to Home) */
+    return '<details class="wtpick"><summary><span class="wtk">Weight</span><span class="wtv">' + esc(cur[1]) + '</span><span class="wtc">&#9662;</span></summary><div class="wtlist">' +
+      opts.map(function (o) { return '<a href="' + esc(o[0]) + '"' + (o[2] ? ' class="on"' : '') + '>' + esc(o[1]) + '</a>'; }).join('') + '</div></details>';
   }
   function brSwitch(t, on, wslug, every, mat) {
     var mq = mat ? '-m' + mat : '';
@@ -3041,7 +3046,6 @@ tr.lu-row.lu-hl td { background: var(--panel2); } tr.lu-row.lu-hl td.w { box-sha
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
     window.addEventListener('hashchange', function () { setOpen(false); });
   })();
-  app.addEventListener('change', function (e) { var g = e.target.closest && e.target.closest('select[data-go]'); if (g && g.value) location.hash = g.value; });   /* weight dropdown */
   app.addEventListener('click', function (e) {
     var hbk = e.target.closest('[data-hback]');
     if (hbk && /^#ev-/.test(location.hash) && app.querySelector('details.wfold[open]')) { e.preventDefault(); app.querySelectorAll('details.wfold[open]').forEach(function (d) { d.open = false; }); SC.scrollTop = 0; return; }   /* DRAFT: first Back closes an open dual, the next goes back */
