@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126135026"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126144641"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -708,6 +708,7 @@ body > .bar { flex: none; position: relative; top: 0; padding-left: max(16px, en
 .ia-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #140c06; font-weight: 800; display: grid; place-items: center; }
 .ia-mail { margin-top: 10px; background: #f5f5f7; color: #1d1d1f; border-radius: 12px; padding: 12px 14px; max-width: 360px; } .ia-from { font-size: 12px; color: #6e6e73; } .ia-subj { font-size: 14.5px; font-weight: 600; margin: 2px 0 10px; } .ia-btn { display: inline-block; background: #0a84ff; color: #fff; font-size: 14px; font-weight: 600; padding: 7px 16px; border-radius: 8px; }
 .ia-alt { margin: 18px 0 8px; padding: 14px; border: 1.5px solid var(--accent); border-radius: 14px; background: var(--panel); } .ia-alt b { font-size: 16px; } .ia-alt p { margin: 6px 0 12px; color: var(--muted); font-size: 15px; line-height: 1.45; } .ia-alt p b { color: var(--fg); font-size: inherit; } .ia-alt .btn { display: block; text-align: center; padding: 10px; text-decoration: none; }
+.ia-send { display: block; width: 100%; margin: 2px 0 14px; padding: 11px; font-size: 16px; }
 .ia-notes { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 6px; } .ia-notes ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; color: var(--muted); } .ia-notes b { color: var(--fg); }
 .sv-steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; } .sv-steps li { display: flex; gap: 12px; align-items: flex-start; }
 .sv-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #140c06; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
@@ -3240,6 +3241,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     var mail = function (from, subj, btn) { return '<div class="ia-mail"><div class="ia-from">From ' + from + '</div><div class="ia-subj">' + subj + '</div><span class="ia-btn">' + btn + '</span></div>'; };
     return '<a class="back" href="#home">&#8249; Back</a><h1>Getting the iPhone app</h1>' +
       '<div class="ia-top"><img src="img/apple-touch-icon.png" alt=""><div><b>DC Wrestling</b><span>For Davie wrestling families. Invite only.</span></div></div>' +
+      '<button type="button" class="btn solid ia-send" data-sharepage="https://dcwrestling.github.io/#iphone-app">Send this page to a parent</button>' +   /* Neil, 2026-11-26: "make a button on here for me to copy this so I can send it" */
       '<p class="lede">The app is private, so it isn\'t in the App Store. Apple delivers it through its free <b>TestFlight</b> app instead. Here\'s what to expect after Neil Wagstaff invites you.</p>' +
       '<div class="ia-step">' + I(1) + '<div><b>An email to join the team</b><p>Tap <b>Accept</b> and sign in with your Apple ID. This only lets you get the app; you can\'t see or change anything else.</p>' + mail('App Store Connect', 'You\'ve been invited to join Neil Wagstaff\'s team', 'Accept invitation') + '</div></div>' +
       '<div class="ia-step">' + I(2) + '<div><b>An email with the app</b><p>Open it on your iPhone and tap <b>View in TestFlight</b>.</p>' + mail('TestFlight', 'Neil Wagstaff has invited you to test DC Wrestling.', 'View in TestFlight') + '</div></div>' +
@@ -3420,6 +3422,15 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     var jb = e.target.closest('[data-jump]'); if (jb) { var el = document.getElementById('pbp'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (e.target.closest('#saveshow')) { saveHidden = false; sb.hidden = false; try { localStorage.removeItem(HKEY); } catch (err) {} render(); return; }
     var sh = e.target.closest('#savehide'); if (sh) { saveHidden = true; sb.hidden = true; try { localStorage.setItem(HKEY, '1'); } catch (err) {} if (/^#save/.test(location.hash)) location.hash = '#home'; else render(); return; }
+    var sp = e.target.closest('[data-sharepage]');   /* the phone's own share sheet (Messages, Mail...); copies the link where sharing isn't offered */
+    if (sp) {
+      var u = sp.getAttribute('data-sharepage'), lab = sp.textContent;
+      var copied = function () { sp.textContent = 'Link copied: paste it in a text'; setTimeout(function () { sp.textContent = lab; }, 2500); };
+      var copy = function () { try { navigator.clipboard.writeText(u).then(copied, function () { prompt('Copy this link', u); }); } catch (err) { prompt('Copy this link', u); } };
+      if (navigator.share) navigator.share({ title: 'Getting the DC Wrestling iPhone app', text: 'Here\'s what to expect when you get the DC Wrestling app:', url: u }).catch(function (err) { if (!err || err.name !== 'AbortError') copy(); });
+      else copy();
+      return;
+    }
     var c = e.target.closest('[data-copy]');
     if (c) {
       var txt = c.getAttribute('data-copy');
