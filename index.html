@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126133724"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126135026"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -703,6 +703,12 @@ body > .bar { flex: none; position: relative; top: 0; padding-left: max(16px, en
 .sv-rn { display: inline-grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; background: var(--accent); color: #140c06; font-size: 11.5px; font-weight: 800; margin-right: 5px; vertical-align: 1px; }
 .sv-icon { display: flex; align-items: center; gap: 12px; margin: 6px 0 10px; color: var(--muted); font-size: 14px; } .sv-icon img { width: 44px; height: 44px; border-radius: 10px; background: #0d0c0b; } .sv-icon b { color: var(--fg); }
 .sv-pics > summary { cursor: pointer; color: var(--accent); font-weight: 700; font-size: 15px; list-style: none; padding: 8px 0; } .sv-pics > summary::-webkit-details-marker { display: none; } .sv-pics > summary::after { content: ' \25BE'; font-size: 11px; } .sv-pics[open] > summary::after { content: ' \25B4'; }
+.ia-top { display: flex; align-items: center; gap: 14px; margin: 4px 0 10px; } .ia-top img { width: 60px; height: 60px; border-radius: 14px; background: #0d0c0b; } .ia-top b { display: block; font-size: 18px; } .ia-top span { color: var(--muted); font-size: 14px; }
+.ia-step { display: flex; gap: 12px; margin: 16px 0; } .ia-step b { font-size: 16px; } .ia-step p { margin: 4px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; } .ia-step p b { color: var(--fg); font-size: inherit; }
+.ia-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #140c06; font-weight: 800; display: grid; place-items: center; }
+.ia-mail { margin-top: 10px; background: #f5f5f7; color: #1d1d1f; border-radius: 12px; padding: 12px 14px; max-width: 360px; } .ia-from { font-size: 12px; color: #6e6e73; } .ia-subj { font-size: 14.5px; font-weight: 600; margin: 2px 0 10px; } .ia-btn { display: inline-block; background: #0a84ff; color: #fff; font-size: 14px; font-weight: 600; padding: 7px 16px; border-radius: 8px; }
+.ia-alt { margin: 18px 0 8px; padding: 14px; border: 1.5px solid var(--accent); border-radius: 14px; background: var(--panel); } .ia-alt b { font-size: 16px; } .ia-alt p { margin: 6px 0 12px; color: var(--muted); font-size: 15px; line-height: 1.45; } .ia-alt p b { color: var(--fg); font-size: inherit; } .ia-alt .btn { display: block; text-align: center; padding: 10px; text-decoration: none; }
+.ia-notes { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 6px; } .ia-notes ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; color: var(--muted); } .ia-notes b { color: var(--fg); }
 .sv-steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; } .sv-steps li { display: flex; gap: 12px; align-items: flex-start; }
 .sv-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #140c06; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
 .sv-b { min-width: 0; flex: 1; } .sv-t { font-size: 16px; line-height: 1.35; margin: 3px 0 6px; } .sv-b svg.ill { max-width: 280px; }
@@ -931,6 +937,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
   <button type="button" class="menubtn" id="menubtn" aria-label="Menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <nav class="menu" id="menu" hidden aria-label="Menu">
     <a href="#save"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg>Save to phone</a>
+    <a href="#iphone-app"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>Getting the iPhone app</a>
     <a href="#share"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share this app</a>
     <a href="#display"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path class="half" d="M12 4a8 8 0 0 1 0 16z"/></svg>Display<span class="v" id="menutheme"></span></a>
     <a href="#updates"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>About these updates</a>
@@ -2465,7 +2472,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     return out || ['home', 'home'];
   }
   function render() {
-    var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
+    var id = (location.hash || '#home').slice(1), html = id.indexOf('stats-') === 0 ? statsView(id.slice(6)) : id === 'share' ? shareView() : id === 'display' ? displayView() : id === 'sources' ? sourcesView() : id === 'updates' ? updatesView() : id === 'iphone-app' ? appView() : id === 'save' ? saveView('') : id.indexOf('save-') === 0 ? saveView(id.slice(5)) :
       id === 'roster' ? roster() : id === 'schedule' || id === 'schedule-next' ? schedule() : id === 'mywrestlers' ? myWrestlersView() : id === 'matchups' ? matchupsView() : id === 'rankings' ? rankView('t') : id === 'rankings-wrestlers' ? rankView('w') : /^rankings-top(1|5|10)$/.test(id) ? rankView('w', +id.slice(12)) : id === 'results' || id === 'tournaments' ? results() : null;   /* old #tournaments links open Results */
     if (id.indexOf('lineup-') === 0) { if (G !== 'boys') setG('boys'); html = lineupView(id); }
     if (id.indexOf('h2h-') === 0) { if (G !== 'boys') setG('boys'); html = h2hView(id); }
@@ -3225,6 +3232,25 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     return '<h1>Team Rankings</h1>' + gSwitch(true) +
       '<div class="lb-phone"><div class="stabs">' + tabs + '</div>' + board(kind) + '</div>' +
       '<div class="lb3">' + ['matches', 'falls', 'bonus'].map(function (k) { return '<div class="lbc"><h2>' + K[k][0] + '</h2>' + board(k, 10) + '</div>'; }).join('') + '</div>';
+  }
+  /* (live since Neil: "Yes, publish it", 2026-11-26; "the big piece of this is setting expectations proactively with parents"): what to expect when Neil
+     invites you to the DC Wrestling iPhone app (TestFlight, invite-only). Link: dcwrestling.github.io/#iphone-app */
+  function appView() {
+    var I = function (n) { return '<span class="ia-n">' + n + '</span>'; };
+    var mail = function (from, subj, btn) { return '<div class="ia-mail"><div class="ia-from">From ' + from + '</div><div class="ia-subj">' + subj + '</div><span class="ia-btn">' + btn + '</span></div>'; };
+    return '<a class="back" href="#home">&#8249; Back</a><h1>Getting the iPhone app</h1>' +
+      '<div class="ia-top"><img src="img/apple-touch-icon.png" alt=""><div><b>DC Wrestling</b><span>For Davie wrestling families. Invite only.</span></div></div>' +
+      '<p class="lede">The app is private, so it isn\'t in the App Store. Apple delivers it through its free <b>TestFlight</b> app instead. Here\'s what to expect after Neil Wagstaff invites you.</p>' +
+      '<div class="ia-step">' + I(1) + '<div><b>An email to join the team</b><p>Tap <b>Accept</b> and sign in with your Apple ID. This only lets you get the app; you can\'t see or change anything else.</p>' + mail('App Store Connect', 'You\'ve been invited to join Neil Wagstaff\'s team', 'Accept invitation') + '</div></div>' +
+      '<div class="ia-step">' + I(2) + '<div><b>An email with the app</b><p>Open it on your iPhone and tap <b>View in TestFlight</b>.</p>' + mail('TestFlight', 'Neil Wagstaff has invited you to test DC Wrestling.', 'View in TestFlight') + '</div></div>' +
+      '<div class="ia-step">' + I(3) + '<div><b>Install</b><p>Install the free TestFlight app if it asks, then tap <b>Install</b> next to DC Wrestling.</p></div></div>' +
+      '<div class="ia-step">' + I(4) + '<div><b>Done</b><p>DC Wrestling is on your home screen and opens like any app. Updates arrive by themselves.</p></div></div>' +
+      '<div class="ia-notes"><h2>Good to know</h2><ul>' +
+      '<li>Apple\'s emails say <b>test</b> or <b>beta</b>. That\'s just how Apple labels private apps; it\'s the full app.</li>' +
+      '<li>The second email can take a day, because Neil adds you once you\'ve accepted the first.</li>' +
+      '<li>Didn\'t get an email? Check your spam folder, then let Neil know.</li>' +
+      '<li>Android phone or a computer? Use <b>dcwrestling.github.io</b> in your browser. It\'s the same thing.</li></ul></div>' +
+      '<div class="ia-alt"><b>Rather skip TestFlight? Save the webpage to your home screen.</b><p>Open <b>dcwrestling.github.io</b> in Safari and add it to your home screen. You get the same DC icon and everything the app has, with no invite or extra app.</p><a class="btn solid" href="#save">Show me how</a></div>';
   }
   function saveView(sub) {
     var url = D.pageUrl || '';
