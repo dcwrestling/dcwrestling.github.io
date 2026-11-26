@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126144641"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126150424"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1093,6 +1093,13 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     if (!b.eta) return '';
     var d = new Date(b.eta); if (isNaN(d)) return '';
     if (Date.now() > d.getTime()) return 'Any minute';
+    /* further out: a likely range, narrowing as the bout gets closer (Neil, 2026-11-26) */
+    var lo = b.etaLo && new Date(b.etaLo), hi = b.etaHi && new Date(b.etaHi);
+    if (lo && hi && !isNaN(lo) && !isNaN(hi) && hi > Date.now()) {
+      var f = function (x, ap) { return x.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).replace(ap ? /$/ : /\s?[AP]M$/i, ''); };
+      var same = (lo.getHours() < 12) === (hi.getHours() < 12);
+      return 'Est. ' + (lo < Date.now() ? 'now' : f(lo, !same)) + '\u2013' + f(hi, true);
+    }
     return 'Est. ~' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   }
   var MATGUESS = {}; (D.tournaments || []).forEach(function (t) { Object.keys(t.matGuess || {}).forEach(function (k) { MATGUESS[k] = t.matGuess[k]; }); });   /* likely mats (2026-11-25) */
@@ -2188,7 +2195,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     h += '<h2>Championship</h2>' + (C.length ? brSvg(t, C, focus, '1st place') : '<p class="note">Not drawn yet.</p>');
     if (K.length) h += '<h2>Consolation</h2>' + brSvg(t, K, focus, '3rd place');
     O.forEach(function (b) { h += '<h2>' + esc(b.r) + '</h2>' + brSvg(t, [[b]], focus, b.r.replace(/\s*match$/i, '')); });
-    if (t.pace && t.pace.perBout && Object.keys(t.etas || {}).length) h += '<p class="foot">Times like ~10:40 are estimated start times from today\'s pace (about ' + (Math.round(t.pace.perBout * 10) / 10) + ' min per bout across all mats). They firm up as each bout gets closer.</p>';
+    if (t.pace && t.pace.perBout && Object.keys(t.etas || {}).length) h += '<p class="foot">' + (t.pace.prior ? 'Estimated start times assume about 6\u00bd minutes per bout on each mat (6 minutes of wrestling plus stoppages and turnover) until today\'s pace is measured.' : 'Estimated start times come from today\'s pace (about ' + (Math.round(t.pace.perBout * 10) / 10) + ' min per bout across all mats).') + ' Bouts further out show a likely range, which narrows as each bout gets closer.</p>';
     h += '<p class="foot">Swipe sideways to see the whole bracket. Davie wrestlers are in orange. Tap a name for that wrestler\'s page (record and results), or a bout number or result to open that bout on FloWrestling. From FloWrestling\'s brackets, updated with the app.</p>' +
       '<div class="links" style="margin-top:10px">' + ext((t.bracketsFlo || t.flo || 'https://www.flowrestling.org') + '/brackets', 'the brackets on FloWrestling') + '</div>';
     /* only the bracket moves sideways (Neil, 2026-11-25, screenshot: the title, tabs and weights slid off with it): everything else is pinned */
@@ -2295,7 +2302,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     h += '<p class="foot" style="margin:6px 2px 10px">Every upcoming bout' + (wcur ? ' at ' + esc(wcur.label) : '') + ', in the order they\'ll wrestle (' + L.length + '). Davie wrestlers in orange. Times are estimates from today\'s pace.</p>';
     h += L.length ? '<div class="list">' + L.slice(0, 120).map(function (o) {
       var b = o.b, dv = [b.a, b.b].some(function (p) { return p && p.t === 'DAVI'; }), x = dv ? t.davie.filter(function (d) { return [b.a, b.b].some(function (p) { return p && p.t === 'DAVI' && brNorm(p.n) === brNorm(d.name); }); })[0] : null;
-      var et = (t.etas || {})[String(b.mn)], est = b.st === 'live' ? 'Wrestling now' : b.st === 'on-deck' ? 'On deck' : et ? etaTxt({ eta: et }) : '';
+      var et = (t.etas || {})[String(b.mn)], er = (t.etaRange || {})[String(b.mn)] || [], est = b.st === 'live' ? 'Wrestling now' : b.st === 'on-deck' ? 'On deck' : et ? etaTxt({ eta: et, etaLo: er[0], etaHi: er[1] }) : '';
       return tapWrap(brBoutGo(t, b), card({ weight: o.w.n, level: o.w.jv ? 'JV' : 'V', name: roundName(b.r), l2: nm(b.a), l3: '<span class="cvs">vs</span> ' + nm(b.b), right: { k: 'Bout', big: esc(b.mn), med: b.mat ? 'Mat ' + b.mat : (t.matGuess || {})[String(b.mn)] ? 'Mat ' + t.matGuess[String(b.mn)] + ' (likely)' : 'Mat TBD', est: est, cls: 'up' } }));
     }).join('') + '</div>' : '<p class="note">No upcoming bouts' + (wcur ? ' at ' + esc(wcur.label) : '') + '.</p>';
     return h + allHist(true);
