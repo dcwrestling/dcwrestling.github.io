@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126175851"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126180416"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -904,6 +904,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
 .rowA .p { flex: none; color: var(--muted); font-variant-numeric: tabular-nums; } .rowA .p b { color: var(--accent); }
 .rowA .star { flex: none; margin: 0 6px 0 2px; transform: scale(.85); }
 .hintA { margin: -2px 2px 8px; font-size: 12px; color: var(--muted); }
+.rr .rres { flex: none; margin-left: auto; padding-left: 6px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .rr .rres b { color: var(--accent); }
 </style>
 
 <div id="intro" aria-hidden="true"><div class="ibg"></div><div class="il"><span class="ring"></span><span class="ring r2"></span><div class="fl"><img src="img/dc.png" alt=""></div></div><div class="it"><b>WAR EAGLES WRESTLING</b><span>DAVIE COUNTY</span></div></div>
@@ -1801,7 +1802,19 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
       return '<a href="' + x[0] + '"' + (x[3] ? ' class="on" aria-current="page"' : '') + '><svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON[x[2]] || '') + '</svg>' + x[1] + '</a>';
     }).join('') + '</nav>';
   }
+  function tabsA(t, on) {   /* Concept A's slim text tabs (finished events) */
+    var T = [['', 'Overview'], ['-wrestlers', 'Wrestlers'], ['-teams', 'Scores'], ['-info', 'Info']];
+    return '<nav class="segA" aria-label="Event sections">' + T.map(function (x) { return '<a href="#' + t.id + x[0] + '"' + (x[0] === on ? ' class="on" aria-current="page"' : '') + '>' + x[1] + '</a>'; }).join('') + '</nav>';
+  }
+  /* one row format for a tournament's Davie wrestlers, on Overview and the Wrestlers tab (Neil, 2026-11-26: "The wrestler list: need to match in format"):
+     the Roster row (weight badge, thumbnail, name, star) plus place · day record on the right. Live since Neil: "That works" (2026-11-26). */
+  function resRow(t, x) {
+    var k = tally(x);
+    return '<div class="rr"><a class="rra" href="#' + wHash(t, x) + '">' + wtBadge(x.weight, x.level) + avatar(x.name) + '<span class="cnm">' + esc(x.name) + '</span>' +
+      '<span class="rres">' + (x.out ? 'Not entered' : (x.place ? '<b>' + esc(x.place) + '</b> · ' : '') + (k.w + k.l ? k.w + '–' + k.l : '')) + '</span></a>' + starBtn(x) + '</div>';
+  }
   function tabs(t, on) {
+    if (t.status === 'final') return tabsA(t, on);   /* live since Neil: "That works" (2026-11-26) */
     var T = [['', 'Overview', 'overview'], ['-wrestlers', 'Wrestlers', 'wrestlers'], ['-teams', 'Scores', 'scores'], ['-info', 'Info', 'info']];
     return segNav(T.map(function (x) { return ['#' + t.id + x[0], x[1], x[2], x[0] === on]; }), on);
   }
@@ -1857,6 +1870,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
       return '<div class="rowA"><a href="#' + wHash(t, x) + '"><span class="w">' + esc(x.weight) + '</span><span class="n">' + esc(x.name) + (x.level === 'JV' ? ' <i>JV</i>' : '') + '</span><span class="p">' + (x.out ? 'Not entered' : (x.place ? '<b>' + esc(x.place) + '</b> · ' : '') + k.w + '–' + k.l) + '</span></a>' + starBtn(x) + '</div>'; };
     var L = t.davie.slice().sort(function (a, b) { return a.weight - b.weight; }), F = L.filter(isFav);
     h += '<div class="h2row"><h2>My Wrestlers</h2><a href="#' + t.id + '-wrestlers">All Davie &#8250;</a></div>';
+    row = function (x) { return resRow(t, x); };
     h += F.length ? '<div class="listA">' + F.map(row).join('') + '</div>' : '<p class="hintA">&#9734; Star a wrestler below to pin them here (this device only).</p>';
     h += '<div class="h2row"><h2>Davie wrestlers</h2><span class="hintA" style="margin:0">' + L.filter(function (x) { return x.place; }).length + ' placed</span></div><div class="listA">' + L.filter(function (x) { return !isFav(x); }).map(row).join('') + '</div>';
     return h;
@@ -1920,7 +1934,7 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
       var L = t.davie.filter(function (x) { return (x.level || 'V') === lv[0]; }).sort(function (a, b) { return a.weight - b.weight; });
       if (!L.length) return;
       h += '<div class="rcol"><h2>' + lv[1] + ' · ' + L.length + '</h2><div class="list">';
-      L.forEach(function (x) { h += rosterRow('#' + wHash(t, x), x.weight, x.level, x.name, x); });
+      L.forEach(function (x) { h += t.status === 'final' ? resRow(t, x) : rosterRow('#' + wHash(t, x), x.weight, x.level, x.name, x); });
       h += '</div></div>';
     });
     return h + '</div>';
