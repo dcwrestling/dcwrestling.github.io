@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125195756"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261125200212"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -914,6 +914,10 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
   { var ul0 = document.querySelector('.asof .ul'); if (ul0) ul0.textContent = 'Updated:'; }   /* (Neil, 2026-11-24: "Change last update to updated:") */   /* local preview only: unconfirmed features show (2026-11-23) */
   var app = document.getElementById('app'), SC = document.getElementById('sc');   /* the scrolling area (the page itself never scrolls) */
   var NEXT = D.nextAt ? Date.parse(D.nextAt) : NaN, ASOF = D.asofAt ? Date.parse(D.asofAt) : NaN;
+  var STALE = 10 * 60000;   /* a countdown more than 10 min overdue means live updates ended without one more publish (2026-11-25: "Next check shortly"
+     all evening after the Gobbler's live window closed at 7 PM). Treat it as over: the header shows the date line, never "shortly" */
+  function staleNext() { return !isNaN(NEXT) && Date.now() > NEXT + STALE; }
+  if (staleNext()) { NEXT = NaN; D.nextBy = null; D.nextShort = 'at the next follow-up or event'; D.next = 'Live updates have ended for now'; }
   /* "Updated" shows just the time when it was today, otherwise the day too (2026-11-16: Sunday's 8:11 AM read as today's) */
   function asofShort() {
     if (isNaN(ASOF)) return D.asof;
@@ -927,13 +931,14 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
   if (!LIVE) { var nxe = document.querySelector('a.asof .nx'); if (nxe) nxe.innerHTML = '<b>' + esc(D.asof.replace(/^(\w+) (\w+ \d+),.*/, '$1, $2')) + '</b>'; }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   /* data-at for one day's countdown: that event's own next check (Neil, 2026-11-24) */
-  function nbAt(date) { var nb = (D.nextBy || {})[date + '|' + G]; return nb && nb.nextAt ? ' data-at="' + esc(nb.nextAt) + '"' : ''; }
+  function nbAt(date) { var nb = (D.nextBy || {})[date + '|' + G]; return nb && nb.nextAt && Date.now() < Date.parse(nb.nextAt) + STALE ? ' data-at="' + esc(nb.nextAt) + '"' : ''; }
   function cdFor(T, now) {
     var s = Math.round((T - now) / 1000);
     if (s > 0) { var h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return 'in ' + (h ? h + ':' + pad(m) : m) + ':' + pad(s % 60); }
     return 'shortly';   /* the countdown ends when the next check's results are live (Neil, 2026-11-21); the page reloads itself the moment they land. Only a late run shows "shortly" */
   }
   function tick() {
+    if (staleNext()) { location.reload(); return; }   /* an open page whose countdown ran out with no new publish: reload into the ended state above */
     var now = Date.now(), cd = '', due = false, ago = '';
     if (!isNaN(NEXT)) cd = cdFor(NEXT, now);
     else { cd = D.nextShort || ''; }
