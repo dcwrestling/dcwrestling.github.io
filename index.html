@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126170122"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126175851"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -581,6 +581,13 @@ a.fact::after { display: none !important; }
 .srcl2 a { padding: 9px 14px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; border-top: 1px solid var(--line); } .srcl2 a:first-child { border-top: 0; }
 .facts.tsq .fact .v.sm { font-size: 17px !important; line-height: 1.15; }
 @media (min-width: 900px) { .facts.tsq { grid-template-columns: repeat(4, 1fr) !important; } }
+/* short tiles, not squares (Neil, 2026-11-26: "I don't like the super big buttons down low"; published on "Publish it") */
+.facts.tsq { gap: 8px !important; }
+.facts.tsq .fact { aspect-ratio: auto !important; min-height: 0; padding: 10px 10px 11px !important; }
+.facts.tsq .fact .k { font-size: 10.5px; }
+.facts.tsq .fact .v { font-size: 20px !important; margin-top: 1px; } .facts.tsq .fact .v.na { font-size: 18px !important; }
+.facts.tsq .fact .s { font-size: 12px !important; line-height: 1.25; }
+.facts.tsq .fact.wide { padding: 10px 12px !important; } .facts.tsq .fact.wide .v { font-size: 18px !important; }
 /* Home title centered with room below it (Neil, 2026-11-15) */
 h1.hometitle { text-align: center; margin: -4px 0 24px; text-wrap: balance; }   /* set a little above center so it looks centered (Neil, 2026-11-15) */
 /* No iPhone link-preview menu or text selection on a long press of a button or card (Neil, 2026-11-15) */
@@ -876,6 +883,27 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
 .gsw button.on, .bnav .seg a.on, .seg a.on, .stab.on, .dopt.on, :root[data-theme="light"] .seg a.on, :root[data-theme="light"] .stab.on { color: var(--fg) !important; }
 .seg a.on svg, .gsw button.on svg { color: var(--fg) !important; }
 .seg a:not(.on), .stab:not(.on) { color: var(--muted) !important; }   /* unselected buttons a little gray, like Boys/Girls (Neil, 2026-11-26) */
+/* Concept A (finished tournament Overview; Neil published it 2026-11-26) */
+.segA { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 2px; margin: 14px 0 12px; padding: 3px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.segA a { height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; color: var(--muted); }
+.segA a.on { background: var(--panel2); color: var(--fg); font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--accent); }   /* the app's selected style: white text, orange border, no orange text or fill (Neil, 2026-11-26) */
+.sumA { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 4px 12px; }
+.sA3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.sA3 a { text-align: center; text-decoration: none; color: var(--fg); border-right: 1px solid var(--line); }
+.sA3 a:last-child { border-right: 0; }
+.sA3 b { display: block; font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; } .sA3 b.acc { color: var(--accent); }
+.sA3 span { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.sumA p { margin: 12px 8px 0; text-align: center; font-size: 12px; color: var(--muted); }
+.btnA { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin: 10px 0 4px; }
+.btnA a { display: flex; align-items: center; justify-content: center; height: 44px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); text-decoration: none; color: var(--fg); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.listA { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.rowA { display: flex; align-items: center; border-bottom: 1px solid var(--line); } .rowA:last-child { border-bottom: 0; }
+.rowA > a { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 4px 0 12px; text-decoration: none; color: var(--fg); font-size: 14px; }
+.rowA .w { width: 34px; flex: none; font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--muted); }
+.rowA .n { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .rowA .n i { font-style: normal; font-size: 11px; color: var(--muted); }
+.rowA .p { flex: none; color: var(--muted); font-variant-numeric: tabular-nums; } .rowA .p b { color: var(--accent); }
+.rowA .star { flex: none; margin: 0 6px 0 2px; transform: scale(.85); }
+.hintA { margin: -2px 2px 8px; font-size: 12px; color: var(--muted); }
 </style>
 
 <div id="intro" aria-hidden="true"><div class="ibg"></div><div class="il"><span class="ring"></span><span class="ring r2"></span><div class="fl"><img src="img/dc.png" alt=""></div></div><div class="it"><b>WAR EAGLES WRESTLING</b><span>DAVIE COUNTY</span></div></div>
@@ -1805,7 +1833,36 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     return out;
   }
 
+  /* DRAFT (Neil, 2026-11-26: "Show me a concept, for example, A" from the War Eagles Results Page Concepts canvas):
+     a finished tournament's Overview as Concept A: text-only tabs, a 3-number summary strip, Brackets/Bouts/Flo buttons,
+     then My Wrestlers (starred first) and every Davie wrestler as a compact row. Live since Neil: "I like the revised. Publish it" (2026-11-26). */
+  function ordn(n) { n = +n; var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  function overviewA(t) {
+    var r = record(t), fb = t.flo || 'https://www.flowrestling.org';
+    var ds = (t.teamScores || []).filter(function (s) { return /^davie/i.test(s[0]); })[0];
+    var nWr = t.teams.reduce(function (a, s) { return a + s[2]; }, 0), nT = (t.teamScores || []).length || t.teamCount;
+    var tm = (String(D.asof || '').match(/\d{1,2}:\d\d\s*[AP]M/i) || [''])[0];
+    var T = [['', 'Overview'], ['-wrestlers', 'Wrestlers'], ['-teams', 'Scores'], ['-info', 'Info']];
+    var h = saveBar() + head(t) + '<nav class="segA" aria-label="Event sections">' + T.map(function (x) { return '<a href="#' + t.id + x[0] + '"' + (x[0] === '' ? ' class="on" aria-current="page"' : '') + '>' + x[1] + '</a>'; }).join('') + '</nav>';
+    h += '<section class="sumA"><div class="sA3">' +
+      '<a href="#' + t.id + '-teams"><b class="acc">' + (ds ? ordn(ds[2]) : '–') + '</b><span>Team place</span></a>' +
+      '<a href="#' + t.id + '-teams"><b>' + (ds ? esc(ds[1]) : '–') + '</b><span>Team points</span></a>' +
+      '<a href="#' + t.id + '-wrestlers"><b>' + (r.w + r.l ? r.w + '–' + r.l : '–') + '</b><span>Match record</span></a></div>' +
+      '<p>Davie County · ' + nT + ' teams' + (nWr ? ' · ' + nWr + ' wrestlers' : '') + (tm ? ' · Updated ' + esc(tm) : '') + '</p></section>';
+    h += '<div class="btnA">' +
+      (t.brackets && Object.keys(t.brackets).length ? '<a href="#' + t.id + '-br">Brackets</a>' : '<a href="' + esc(fb + '/brackets') + '" target="_blank" rel="noopener">Brackets &#8599;</a>') +
+      '<a href="#' + t.id + '-next">Bouts</a>' +
+      '<a href="' + esc(fb + '/results') + '" target="_blank" rel="noopener">Flo results &#8599;</a></div>';
+    var row = function (x) { var k = tally(x);
+      return '<div class="rowA"><a href="#' + wHash(t, x) + '"><span class="w">' + esc(x.weight) + '</span><span class="n">' + esc(x.name) + (x.level === 'JV' ? ' <i>JV</i>' : '') + '</span><span class="p">' + (x.out ? 'Not entered' : (x.place ? '<b>' + esc(x.place) + '</b> · ' : '') + k.w + '–' + k.l) + '</span></a>' + starBtn(x) + '</div>'; };
+    var L = t.davie.slice().sort(function (a, b) { return a.weight - b.weight; }), F = L.filter(isFav);
+    h += '<div class="h2row"><h2>My Wrestlers</h2><a href="#' + t.id + '-wrestlers">All Davie &#8250;</a></div>';
+    h += F.length ? '<div class="listA">' + F.map(row).join('') + '</div>' : '<p class="hintA">&#9734; Star a wrestler below to pin them here (this device only).</p>';
+    h += '<div class="h2row"><h2>Davie wrestlers</h2><span class="hintA" style="margin:0">' + L.filter(function (x) { return x.place; }).length + ' placed</span></div><div class="listA">' + L.filter(function (x) { return !isFav(x); }).map(row).join('') + '</div>';
+    return h;
+  }
   function overview(t) {
+    if (t.status === 'final') return overviewA(t);   /* Concept A, live since Neil: "I like the revised. Publish it" (2026-11-26) */
     var r = record(t), n = upNext(t);
     var started = t.status === 'live' || t.status === 'final';
     var wi = t.weighin ? '<div class="v">' + esc(t.weighin) + '</div>' : started ? '<div class="v na">Done</div><div class="s">' + (t.status === 'final' ? 'Tournament finished' : 'Weigh-ins are over; wrestling is underway') + '</div>' : '<div class="v na">Not posted</div><div class="s">' + esc(t.weighinNote || '') + '</div>';
