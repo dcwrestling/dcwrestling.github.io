@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126121919"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126122508"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -691,6 +691,11 @@ body > .bar { flex: none; position: relative; top: 0; padding-left: max(16px, en
 .shic { display: inline-flex; vertical-align: -4px; width: 22px; height: 22px; border: 1px solid var(--line); border-radius: 5px; align-items: center; justify-content: center; }
 .shic svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .note.obw { margin: 0 0 12px; }
+.svp { position: fixed; inset: 0; z-index: 70; background: rgba(0,0,0,0); display: flex; align-items: flex-end; justify-content: center; transition: background .3s; padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
+.svp.on { background: rgba(0,0,0,.45); } .svp-c { width: 100%; max-width: 440px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; grid-template-columns: 52px 1fr; gap: 12px 14px; align-items: center; transform: translateY(120%); transition: transform .3s ease; box-shadow: 0 -6px 30px rgba(0,0,0,.5); }
+.svp.on .svp-c { transform: none; } .svp-i { width: 52px; height: 52px; border-radius: 12px; background: #0d0c0b; }
+.svp-t b { display: block; font-size: 16px; line-height: 1.25; } .svp-t span { color: var(--muted); font-size: 14px; }
+.svp-b { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .svp-b .btn { text-decoration: none !important; margin: 0; text-align: center; padding: 11px; font-size: 15px; }
 .sv-steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; } .sv-steps li { display: flex; gap: 12px; align-items: flex-start; }
 .sv-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #140c06; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
 .sv-b { min-width: 0; flex: 1; } .sv-t { font-size: 16px; line-height: 1.35; margin: 3px 0 6px; } .sv-b svg.ill { max-width: 280px; }
@@ -2531,6 +2536,29 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
   var ua = navigator.userAgent || '';
   var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   var android = /Android/.test(ua);
+  /* (Neil, 2026-11-26: "if I'm a first time user, there's nothing prompting me to add this to my homepage"): a small sheet that
+     slides up over Home on a phone's browser (never in the saved app): Show me how -> #save, Not now -> ask again in 7 days, at most
+     3 times. Over the page, so Home's no-scroll layout is untouched. */
+  (function () {
+    if (installed || saveHidden || !(ios || android)) return;   /* live since Neil: "Yes, publish that" (2026-11-26) */
+    var K = 'davieSavePrompt', st = { n: 0, last: 0 };
+    try { st = JSON.parse(localStorage.getItem(K) || '') || st; } catch (e) {}
+    if (st.n >= 3 || Date.now() - (st.last || 0) < 7 * 864e5) return;
+    function show() {
+      if (document.getElementById('svPrompt') || (location.hash && location.hash !== '#home') || document.getElementById('intro')) return;
+      st.n = (st.n || 0) + 1; st.last = Date.now(); try { localStorage.setItem(K, JSON.stringify(st)); } catch (e) {}
+      var d = document.createElement('div'); d.id = 'svPrompt'; d.className = 'svp';
+      d.innerHTML = '<div class="svp-c" role="dialog" aria-label="Save to your home screen"><img src="img/apple-touch-icon.png" alt="" class="svp-i">' +
+        '<div class="svp-t"><b>Get DC Wrestling on your home screen</b><span>Opens like an app, always up to date.</span></div>' +
+        '<div class="svp-b"><a class="btn solid" href="#save" id="svpGo">Show me how</a><button type="button" class="btn" id="svpNo">Not now</button></div></div>';
+      document.body.appendChild(d); requestAnimationFrame(function () { d.classList.add('on'); });
+      var close = function () { d.classList.remove('on'); setTimeout(function () { d.remove(); }, 300); };
+      d.querySelector('#svpNo').addEventListener('click', close);
+      d.querySelector('#svpGo').addEventListener('click', close);
+      d.addEventListener('click', function (e) { if (e.target === d) close(); });
+    }
+    setTimeout(function wait() { if (document.getElementById('intro')) { setTimeout(wait, 500); return; } setTimeout(show, 1200); }, 800);
+  })();
   /* Claude app store link for this phone: App Store on iPhone, Google Play on Android, both elsewhere. */
   var APPSTORE = 'https://apps.apple.com/us/app/claude-by-anthropic/id6473753684';
   var PLAY = 'https://play.google.com/store/apps/details?id=com.anthropic.claude';
