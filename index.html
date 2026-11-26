@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126075819"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="img/home-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="DC Wrestling"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#0d0c0b"><meta name="build" content="20261126084342"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Davie Wrestling</title>
 <script>/* Display setting: dark (default), light, or auto (match system). Saved on this device only. */
 (function(){var t="dark";try{t=localStorage.getItem("davieTheme")||"dark";}catch(e){}var l=t==="light"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);document.documentElement.setAttribute("data-theme",l?"light":"dark");})();</script>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -872,9 +872,13 @@ html.dcIntro .bar .homelink img, html.dcIntro .bar .brand { visibility: hidden; 
     if (!quick) [['.it b', '.brand b'], ['.it span', '.brand span']].forEach(function (p) {   /* the text flies to the header's text too */
       var f = el.querySelector(p[0]), g = document.querySelector(p[1]);
       if (!f || !g || !f.animate) return;
-      var fa = f.getBoundingClientRect(), gb = g.getBoundingClientRect();
-      if (!fa.width || !gb.width) return;
-      f.animate([{ transform: 'none' }, { transform: 'translate(' + (gb.left - fa.left) + 'px,' + (gb.top - fa.top) + 'px) scale(' + (gb.width / fa.width) + ')' }], { duration: ms, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
+      /* aim the letters, not the boxes: the header's "DAVIE COUNTY" is an inline span whose box sits higher around its letters than the
+         intro's block one, so box-to-box landed it 1.25 px high and it snapped down at the hand-off (Neil, 2026-11-26) */
+      var txt = function (e) { var r = document.createRange(); r.selectNodeContents(e); return r.getBoundingClientRect(); };
+      var fa = f.getBoundingClientRect(), ft = txt(f), gt = txt(g);
+      if (!ft.width || !gt.width) return;
+      var s = gt.width / ft.width, tx = gt.left - fa.left - s * (ft.left - fa.left), ty = gt.top - fa.top - s * (ft.top - fa.top);
+      f.animate([{ transform: 'none' }, { transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' }], { duration: ms, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
     });
     el.classList.add('fly'); el.style.pointerEvents = 'none';
     /* the screen stays dark until the logo is nearly home, then fades fast */
